@@ -3,7 +3,7 @@ import Sidebar from "../_components/sidebar_components/sidebar.tsx";
 
 const DashboardLayout = ({ children }: { children: React.ReactNode }) => {
   return (
-    <div className="h-full border-4 ">
+    <div className="h-full ">
       <div className="h-[80px] md:pl-56 fixed inset-y-0 w-full">
         <Navbar />
       </div>
@@ -12,7 +12,7 @@ const DashboardLayout = ({ children }: { children: React.ReactNode }) => {
         <Sidebar />
       </div>
 
-      <main className="md:pl-56 h-full ">{children}</main>
+      <main className="md:pl-56 pt-[80px] h-full ">{children}</main>
     </div>
   );
 };

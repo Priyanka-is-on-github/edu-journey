@@ -1,9 +1,9 @@
 import { createBrowserRouter } from "react-router-dom";
-import Dashboard from "./pages/dashboard";
+import Dashboard from "./pages/dashboard_folder/dashboard";
 import Error from "./pages/error";
-import SearchPage from "./pages/browse";
-import CoursePage from "./pages/courses";
-import Analytics from "./pages/analytics";
+import SearchPage from "./pages/dashboard_folder/browse";
+import CoursesPage from "./pages/teacher_folder/courses";
+import Analytics from "./pages/teacher_folder/analytics";
 
 const router = createBrowserRouter([
   {
@@ -20,7 +20,7 @@ const router = createBrowserRouter([
 
   {
     path: "/teacher/courses",
-    element: <CoursePage />,
+    element: <CoursesPage />,
     errorElement: <Error />,
   },
   {
