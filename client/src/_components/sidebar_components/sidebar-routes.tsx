@@ -38,6 +38,10 @@ export const SidebarRoutes = () => {
   const routes =
     pathname === "/" || pathname === "/search" ? guestRoutes : teacherRoutes;
 
+  // const isActiveRoute = (routeLink) => {
+  //   return pathname.startsWith(routeLink);
+  // };
+
   return (
     <>
       <div className="flex flex-col w-full ">

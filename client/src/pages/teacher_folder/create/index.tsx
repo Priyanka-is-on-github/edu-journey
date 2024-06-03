@@ -17,12 +17,14 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Link } from "react-router-dom";
 import toast from "react-hot-toast";
+import { useNavigate } from "react-router-dom";
 
 const formSchema = z.object({
   title: z.string().min(1, { message: "Title is required" }),
 });
 
 const CreatePage = () => {
+  const navigate = useNavigate();
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: {
@@ -35,7 +37,18 @@ const CreatePage = () => {
   const onSubmit = async (values: z.infer<typeof formSchema>) => {
     console.log("values=", values);
     try {
-      const response = await axios.post("/api/couorse", values);
+      const response = await fetch("http://localhost:3000/api/v1/courses", {
+        method: "POST",
+        headers: {
+          "Content-type": "application/json",
+        },
+        body: JSON.stringify(values),
+      });
+      const newcourse = await response.json();
+
+      navigate(`/teacher/courses/${newcourse.id}`);
+      toast.success("Course created");
+      console.log(newcourse);
     } catch (error) {
       toast.error("Something went wrong");
     }
