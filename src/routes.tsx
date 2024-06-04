@@ -4,7 +4,7 @@ import Error from "./pages/error";
 import SearchPage from "./pages/dashboard_folder/browse";
 import CoursesPage from "./pages/teacher_folder/courses";
 import Analytics from "./pages/teacher_folder/analytics";
-import CreatePage from "./pages/teacher_folder/create";
+import CreatePage from "./pages/teacher_folder/courses/create";
 import CourseIdPage from "./pages/teacher_folder/courses/courseid";
 
 const router = createBrowserRouter([
