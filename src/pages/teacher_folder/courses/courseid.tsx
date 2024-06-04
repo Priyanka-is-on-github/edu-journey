@@ -1,26 +1,27 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import DashboardLayout from "@/Layout/layout";
+import DescriptionForm from "@/_components/couseid_components/description-form";
 import TitleForm from "@/_components/couseid_components/title-form";
 import { IconBadge } from "@/components/icon-badge";
 import { LayoutDashboard } from "lucide-react";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 
-interface Course {
-  id: string | null;
-  userid: string | null;
-  title: string | null;
-  description: string | null;
-  imageurl: string | null;
-  price: string | null;
-  ispublished: string | null;
-  categoryid: string | null;
-  createdat: string | null;
-  updatedat: string | null;
-}
+// interface Course {
+//   id: string | null;
+//   userid: string | null;
+//   title: string | null;
+//   description: string | null;
+//   imageurl: string | null;
+//   price: string | null;
+//   ispublished: string | null;
+//   categoryid: string | null;
+//   createdat: string | null;
+//   updatedat: string | null;
+// }
 const CourseIdPage = () => {
   const params = useParams();
-  let newCourseFields: Course = {
+  const [newCourseFields, setNewCourseField] = useState({
     id: "",
     userid: "",
     title: "",
@@ -31,7 +32,7 @@ const CourseIdPage = () => {
     categoryid: "",
     createdat: "",
     updatedat: "",
-  };
+  });
 
   useEffect(() => {
     (async () => {
@@ -39,8 +40,9 @@ const CourseIdPage = () => {
         const response = await fetch(
           `http://localhost:3000/api/v1/courses/${params.id}`
         );
-        newCourseFields = await response.json();
-        console.log("newcourese=", newCourseFields);
+        const course = await response.json();
+        setNewCourseField(course);
+        console.log("course=", course);
       } catch (error) {
         console.log(error);
       }
@@ -90,7 +92,12 @@ const CourseIdPage = () => {
             </div>
             <TitleForm
               initialData={newCourseFields.title}
-              // courseId={newCourseFields.id}
+              setnewcoursefield={setNewCourseField}
+            />
+
+            <DescriptionForm
+              description={newCourseFields.description}
+              setnewcoursefield={setNewCourseField}
             />
           </div>
         </div>

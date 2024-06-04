@@ -19,19 +19,24 @@ import { Pencil } from "lucide-react";
 import { useEffect, useState } from "react";
 import toast from "react-hot-toast";
 import { useParams } from "react-router-dom";
+import { cn } from "@/lib/utils";
+import { Textarea } from "@/components/ui/textarea";
 
-interface TitleFormProps {
-  initialData: string;
+interface DescriptionFormProps {
+  description: string;
   setnewcoursefield: any;
 }
 
 const formSchema = z.object({
-  title: z.string().min(1, {
-    message: "Title is required",
+  description: z.string().min(1, {
+    message: "Description is required",
   }),
 });
 
-const TitleForm = ({ initialData, setnewcoursefield }: TitleFormProps) => {
+const DescriptionForm = ({
+  description,
+  setnewcoursefield,
+}: DescriptionFormProps) => {
   const [isEditing, setIsEditing] = useState(false);
   const params = useParams();
 
@@ -39,7 +44,7 @@ const TitleForm = ({ initialData, setnewcoursefield }: TitleFormProps) => {
     resolver: zodResolver(formSchema),
 
     defaultValues: {
-      title: initialData,
+      description: description,
     },
   });
 
@@ -73,22 +78,22 @@ const TitleForm = ({ initialData, setnewcoursefield }: TitleFormProps) => {
   };
 
   useEffect(() => {
-    if (!initialData) {
+    if (!description) {
       return;
     }
 
-    form.reset({ title: initialData });
-  }, [form, initialData]);
+    form.reset({ description: description });
+  }, [form, description]);
 
   return (
     <div className="mt-6 border p-4 bg-slate-100">
       <div>
-        Course title{" "}
+        Course description
         <Button variant="ghost" onClick={toggleEdit}>
           {!isEditing ? (
             <>
-              <Pencil className="h-4 w-4 mr-2" />
-              Edit title
+              <Pencil className="h-4 w-4 mr-2 " />
+              Edit description
             </>
           ) : (
             <>Cancel</>
@@ -96,7 +101,16 @@ const TitleForm = ({ initialData, setnewcoursefield }: TitleFormProps) => {
         </Button>
       </div>
 
-      {!isEditing && <p className="text-sm mt-2">{initialData}</p>}
+      {!isEditing && (
+        <p
+          className={cn(
+            "text-sm mt-2",
+            !description && "text-slate-500 italic"
+          )}
+        >
+          {description || "No description"}
+        </p>
+      )}
       {isEditing && (
         <Form {...form}>
           <form
@@ -105,13 +119,13 @@ const TitleForm = ({ initialData, setnewcoursefield }: TitleFormProps) => {
           >
             <FormField
               control={form.control}
-              name="title"
+              name="description"
               render={({ field }) => (
                 <FormItem>
                   <FormControl>
-                    <Input
+                    <Textarea
                       disabled={isSubmitting}
-                      placeholder="e.g. Advanced web development"
+                      placeholder="e.g. This course is about..."
                       {...field}
                     />
                   </FormControl>
@@ -130,4 +144,4 @@ const TitleForm = ({ initialData, setnewcoursefield }: TitleFormProps) => {
     </div>
   );
 };
-export default TitleForm;
+export default DescriptionForm;
