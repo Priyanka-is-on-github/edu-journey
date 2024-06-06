@@ -51,6 +51,21 @@ const DescriptionForm = ({
   const { isSubmitting, isValid } = form.formState;
 
   const onSubmit = async (values: z.infer<typeof formSchema>) => {
+    console.log(values);
+
+     const request = {  
+    userid: null,
+    title: null,
+    description: values.description,
+    imageurl: null,
+    price: null,
+    ispublished: null,
+    categoryid: null,
+    createdat: null,
+    updatedat: null,}
+
+    console.log('request=', request)
+    
     try {
       const response = await fetch(
         `http://localhost:3000/api/v1/courses/${params.id}`,
@@ -59,12 +74,12 @@ const DescriptionForm = ({
           headers: {
             "Content-type": "application/json",
           },
-          body: JSON.stringify(values),
+          body: JSON.stringify(request),
         }
       );
-      const updatedCourse = await response.json();
+      const updatedDescription = await response.json();
 
-      setnewcoursefield(updatedCourse);
+      setnewcoursefield(updatedDescription);
 
       toast.success("Course updated");
       toggleEdit();
@@ -86,7 +101,7 @@ const DescriptionForm = ({
   }, [form, description]);
 
   return (
-    <div className="mt-6 border p-4 bg-slate-100">
+    <div className="mt-6 border p-4 bg-slate-100"> 
       <div>
         Course description
         <Button variant="ghost" onClick={toggleEdit}>

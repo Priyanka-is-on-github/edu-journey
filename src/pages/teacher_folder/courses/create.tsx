@@ -34,9 +34,9 @@ const CreatePage = () => {
   const { isSubmitting, isValid } = form.formState;
 
   const onSubmit = async (values: z.infer<typeof formSchema>) => {
-    console.log("values=", values);
+  
     try {
-      const response = await fetch("http://localhost:3000/api/v1/courses", {
+      const response = await fetch("http://localhost:3000/api/v1/courses", {  
         method: "POST",
         headers: {
           "Content-type": "application/json",
@@ -44,10 +44,11 @@ const CreatePage = () => {
         body: JSON.stringify(values),
       });
       const newcourse = await response.json();
+     
 
       navigate(`/teacher/courses/${newcourse.id}`);
       toast.success("Course created");
-      console.log(newcourse);
+     
     } catch (error) {
       toast.error("Something went wrong");
     }

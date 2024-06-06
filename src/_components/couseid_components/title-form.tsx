@@ -1,6 +1,6 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import * as z from "zod";
-import { zodResolver } from "@hookform/resolvers/zod";
+import { zodResolver } from "@hookform/resolvers/zod"; 
 import { useForm } from "react-hook-form";
 
 import {
@@ -19,10 +19,11 @@ import { Pencil } from "lucide-react";
 import { useEffect, useState } from "react";
 import toast from "react-hot-toast";
 import { useParams } from "react-router-dom";
+// import {Course} form ''
 
-interface TitleFormProps {
-  initialData: string;
-  setnewcoursefield: any;
+type TitleFormProps= { 
+  initialData:string;
+  setnewcoursefield: any,
 }
 
 const formSchema = z.object({
@@ -31,11 +32,12 @@ const formSchema = z.object({
   }),
 });
 
-const TitleForm = ({ initialData, setnewcoursefield }: TitleFormProps) => {
+const TitleForm = ({ initialData, setnewcoursefield }: TitleFormProps) => {  
+  console.log('initialdata=', initialData)
   const [isEditing, setIsEditing] = useState(false);
   const params = useParams();
 
-  const form = useForm<z.infer<typeof formSchema>>({
+  const form = useForm<z.infer<typeof formSchema>>({  
     resolver: zodResolver(formSchema),
 
     defaultValues: {
@@ -46,6 +48,20 @@ const TitleForm = ({ initialData, setnewcoursefield }: TitleFormProps) => {
   const { isSubmitting, isValid } = form.formState;
 
   const onSubmit = async (values: z.infer<typeof formSchema>) => {
+    console.log(values)
+    console.log("initaildata=",initialData)
+
+    const request = {  
+    userid: null,
+    title: values.title,
+    description: null,
+    imageurl: null,
+    price: null,
+    ispublished: null,
+    categoryid: null,
+    createdat: null,
+    updatedat: null,}
+
     try {
       const response = await fetch(
         `http://localhost:3000/api/v1/courses/${params.id}`,
@@ -54,7 +70,7 @@ const TitleForm = ({ initialData, setnewcoursefield }: TitleFormProps) => {
           headers: {
             "Content-type": "application/json",
           },
-          body: JSON.stringify(values),
+          body: JSON.stringify(request),
         }
       );
       const updatedCourse = await response.json();

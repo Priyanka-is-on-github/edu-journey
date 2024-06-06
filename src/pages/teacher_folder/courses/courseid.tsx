@@ -7,18 +7,19 @@ import { LayoutDashboard } from "lucide-react";
 import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 
-// interface Course {
-//   id: string | null;
-//   userid: string | null;
-//   title: string | null;
-//   description: string | null;
-//   imageurl: string | null;
-//   price: string | null;
-//   ispublished: string | null;
-//   categoryid: string | null;
-//   createdat: string | null;
-//   updatedat: string | null;
+// interface Course ={
+//   id: string | null,
+//   userid: string | null,
+//   title: string | null,
+//   description: string | null,
+//   imageurl: string | null,
+//   price: string | null,
+//   ispublished: string | null,
+//   categoryid: string | null,
+//   createdat: string | null,
+//   updatedat: string | null,
 // }
+
 const CourseIdPage = () => {
   const params = useParams();
   const [newCourseFields, setNewCourseField] = useState({
@@ -75,7 +76,7 @@ const CourseIdPage = () => {
   return (
     <DashboardLayout>
       <div className="p-6">
-        <div className="flex items-center justify-between">
+        <div className="flex items-center justify-between"> 
           <div className="flex flex-col gap-y-2 ">
             <h1 className="text-2xl font-medium">Course setup</h1>
             <span className="text-sm text-slate-700">
@@ -91,14 +92,14 @@ const CourseIdPage = () => {
               <h2 className="text-xl ">Customize your course</h2>
             </div>
             <TitleForm
-              initialData={newCourseFields.title}
+              initialData={newCourseFields.title}  
               setnewcoursefield={setNewCourseField}
             />
 
-            <DescriptionForm
-              description={newCourseFields.description}
+             <DescriptionForm
+              description={newCourseFields.description} 
               setnewcoursefield={setNewCourseField}
-            />
+            /> 
           </div>
         </div>
       </div>
