@@ -44,6 +44,7 @@ const CreatePage = () => {
         body: JSON.stringify(values),
       });
       const newcourse = await response.json();
+      
      
 
       navigate(`/teacher/courses/${newcourse.id}`);

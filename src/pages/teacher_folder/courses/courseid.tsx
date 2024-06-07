@@ -6,6 +6,7 @@ import { IconBadge } from "@/components/icon-badge";
 import { LayoutDashboard } from "lucide-react";
 import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
+import CategoryForm from "@/_components/couseid_components/category-form";
 
 // interface Course ={
 //   id: string | null,
@@ -35,15 +36,24 @@ const CourseIdPage = () => {
     updatedat: "",
   });
 
+const [categories , setCategories]= useState([]);
+
   useEffect(() => {
     (async () => {
       try {
         const response = await fetch(
           `http://localhost:3000/api/v1/courses/${params.id}`
         );
+
+       
         const course = await response.json();
         setNewCourseField(course);
-        console.log("course=", course);
+
+         const categoryResponse = await fetch("http://localhost:3000/api/v1/category")
+        const category = await categoryResponse.json();
+        console.log('caterory=',category)
+        setCategories( category);
+      
       } catch (error) {
         console.log(error);
       }
@@ -73,6 +83,8 @@ const CourseIdPage = () => {
   //       return navigete('/')
   //     }
 
+  
+
   return (
     <DashboardLayout>
       <div className="p-6">
@@ -100,6 +112,22 @@ const CourseIdPage = () => {
               description={newCourseFields.description} 
               setnewcoursefield={setNewCourseField}
             /> 
+
+             <CategoryForm
+              categoryid={newCourseFields.categoryid} 
+              options={categories.map((category)=>{
+                return(
+                  {
+                 label:category.name,
+                  value:category.id,
+                  }
+               
+                )
+               
+              })}
+              setnewcoursefield={setNewCourseField}
+            /> 
+            
           </div>
         </div>
       </div>
