@@ -40,7 +40,7 @@ const CategoryForm = ({
   const [isEditing, setIsEditing] = useState(false);
   const params = useParams();
 
-  console.log('options=',options)
+
 
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
