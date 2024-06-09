@@ -21,6 +21,7 @@ import toast from "react-hot-toast";
 import { useParams } from "react-router-dom";
 import { cn } from "@/lib/utils";
 import { Textarea } from "@/components/ui/textarea";
+import Combobox from "@/components/combobox";
 
 interface CategoryFormProps {
   categoryid: string;
@@ -40,7 +41,7 @@ const CategoryForm = ({
   const [isEditing, setIsEditing] = useState(false);
   const params = useParams();
 
-
+console.log('option=', options)
 
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
@@ -79,9 +80,9 @@ const CategoryForm = ({
           body: JSON.stringify(values),
         }
       );
-      const updatedDescription = await response.json();
+      const updatedCategory = await response.json();
 
-      setnewcoursefield(updatedDescription);
+      setnewcoursefield(updatedCategory);
 
       toast.success("Course updated");
       toggleEdit();
@@ -94,28 +95,25 @@ const CategoryForm = ({
     setIsEditing((prevState) => !prevState);
   };
 
-  // useEffect(() => {
-  //   if (!description) {
-  //     return;
-  //   }
-
-  //   form.reset({ description: description });
-  // }, [form, description]);
+  
 const selectedOption = options.find((option)=>{
   option.value === categoryid
 })
+
   return (
     <div className="mt-6 border p-4 bg-slate-100"> 
       <div>
         Course category
         <Button variant="ghost" onClick={toggleEdit}>
           {!isEditing ? (
-            <>
-              <Pencil className="h-4 w-4 mr-2 " />
-              Edit category
-            </>
+         <>
+         <Pencil className="h-4 w-4 mr-2 " />
+         Edit category
+       </>
           ) : (
             <>Cancel</>
+            
+            
           )}
         </Button>
       </div>
@@ -142,7 +140,7 @@ const selectedOption = options.find((option)=>{
               render={({ field }) => (
                 <FormItem>
                   <FormControl>
-                    <Combobox />
+                    <Combobox options={options} {...field}/> 
                   </FormControl>
                   <FormMessage />
                 </FormItem>

@@ -1,6 +1,6 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import * as z from "zod";
-import { zodResolver } from "@hookform/resolvers/zod"; 
+import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 
 import {
@@ -19,42 +19,44 @@ import { Pencil } from "lucide-react";
 import { useEffect, useState } from "react";
 import toast from "react-hot-toast";
 import { useParams } from "react-router-dom";
-// import {Course} form ''
+import { cn } from "@/lib/utils";
+import { Textarea } from "@/components/ui/textarea";
 
-type TitleFormProps= { 
-  title:string;
-  setnewcoursefield: any,
+interface ChapterFormProps {
+  description: string;
+  setnewcoursefield: any;
 }
 
 const formSchema = z.object({
-  title: z.string().min(1, {
-    message: "Title is required",
+  description: z.string().min(1, {
+    message: "Description is required",
   }),
 });
 
-const TitleForm = ({ title, setnewcoursefield }: TitleFormProps) => {  
-
+const ChaptersForm = ({
+  description,
+  setnewcoursefield,
+}: ChapterFormProps) => {
   const [isEditing, setIsEditing] = useState(false);
   const params = useParams();
 
-  const form = useForm<z.infer<typeof formSchema>>({  
+  const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
 
     defaultValues: {
-      title: title,
+      description: description,
     },
   });
 
   const { isSubmitting, isValid } = form.formState;
 
   const onSubmit = async (values: z.infer<typeof formSchema>) => {
-    console.log(values)
-   
+    console.log(values);
 
-    const request = {  
+     const request = {  
     userid: null,
-    title: values.title,
-    description: null,
+    title: null,
+    description: values.description,
     imageurl: null,
     price: null,
     ispublished: null,
@@ -62,9 +64,11 @@ const TitleForm = ({ title, setnewcoursefield }: TitleFormProps) => {
     createdat: null,
     updatedat: null,}
 
+    console.log('request=', request)
+    
     try {
       const response = await fetch(
-        `http://localhost:3000/api/v1/courses/${params.id}`,
+        `http://localhost:3000/api/v1/courses/${params.id}`, 
         {
           method: "POST",
           headers: {
@@ -73,9 +77,9 @@ const TitleForm = ({ title, setnewcoursefield }: TitleFormProps) => {
           body: JSON.stringify(request),
         }
       );
-      const updatedCourse = await response.json();
+      const updatedDescription = await response.json();
 
-      setnewcoursefield(updatedCourse);
+      setnewcoursefield(updatedDescription);
 
       toast.success("Course updated");
       toggleEdit();
@@ -89,22 +93,22 @@ const TitleForm = ({ title, setnewcoursefield }: TitleFormProps) => {
   };
 
   useEffect(() => {
-    if (!title) {
+    if (!description) {
       return;
     }
 
-    form.reset({ title: title });
-  }, [form, title]);
+    form.reset({ description: description });
+  }, [form, description]);
 
   return (
-    <div className="mt-6 border p-4 bg-slate-100">
-      <div>
-        Course title{" "}
+    <div className="mt-6 border p-4 bg-slate-100"> 
+      <div className="justify-between">
+        Course Chapters
         <Button variant="ghost" onClick={toggleEdit}>
           {!isEditing ? (
             <>
-              <Pencil className="h-4 w-4 mr-2" />
-              Edit title
+              <Pencil className="h-4 w-4 mr-2 " />
+              Add a chapter
             </>
           ) : (
             <>Cancel</>
@@ -112,8 +116,16 @@ const TitleForm = ({ title, setnewcoursefield }: TitleFormProps) => {
         </Button>
       </div>
 
-      {!isEditing && <p className="text-sm mt-2">{title}</p>}
-      
+      {!isEditing && (
+        <p
+          className={cn(
+            "text-sm mt-2",
+            !description && "text-slate-500 italic"
+          )}
+        >
+          {description || "No description"}
+        </p>
+      )}
       {isEditing && (
         <Form {...form}>
           <form
@@ -122,13 +134,13 @@ const TitleForm = ({ title, setnewcoursefield }: TitleFormProps) => {
           >
             <FormField
               control={form.control}
-              name="title"
+              name="description"
               render={({ field }) => (
                 <FormItem>
                   <FormControl>
-                    <Input
+                    <Textarea
                       disabled={isSubmitting}
-                      placeholder="e.g. Advanced web development"
+                      placeholder="e.g. This course is about..."
                       {...field}
                     />
                   </FormControl>
@@ -147,4 +159,4 @@ const TitleForm = ({ title, setnewcoursefield }: TitleFormProps) => {
     </div>
   );
 };
-export default TitleForm;
+export default ChaptersForm;

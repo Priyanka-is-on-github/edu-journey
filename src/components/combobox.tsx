@@ -24,13 +24,14 @@ interface ComboboxProps{
     onChange:(value:string)=> void;
 }
 
-export default const Combobox=({options,value,onChange}:ComboboxProps)=> {
+ const Combobox=({options,value, onChange}:ComboboxProps)=> {
   const [open, setOpen] = React.useState(false)
   
+  console.log('comvalue=', value)
 
   return (
     <Popover open={open} onOpenChange={setOpen}>
-      <PopoverTrigger asChild>
+      <PopoverTrigger >
         <Button
           variant="outline"
           role="combobox"
@@ -51,8 +52,8 @@ export default const Combobox=({options,value,onChange}:ComboboxProps)=> {
             {options.map((option) => (
               <CommandItem
                 key={option.value}
-                
-                onSelect={(currentValue) => {
+                value={option.label}
+                onSelect={() => {
                  onChange(option.value === value?"":option.value )
                   setOpen(false)
                 }}
@@ -72,3 +73,4 @@ export default const Combobox=({options,value,onChange}:ComboboxProps)=> {
     </Popover>
   )
 }
+export default Combobox;
