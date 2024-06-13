@@ -92,18 +92,18 @@ const PriceForm = ({
     setIsEditing((prevState) => !prevState);
   };
 
-//   useEffect(() => {
-//     if (!description) {
-//       return;
-//     }
+  useEffect(() => {
+    if (!price) {
+      return;
+    }
 
-//     form.reset({ description: description });
-//   }, [form, description]);
+    form.reset({ price: price});
+  }, [form, price]);
 
   return (
     <div className="mt-6 border p-4 bg-slate-100"> 
-      <div>
-        Course Price
+      <div className=" flex justify-between ">
+       <span> Course Price</span> 
         <Button variant="ghost" onClick={toggleEdit}>
           {!isEditing ? (
             <>

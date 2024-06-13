@@ -1,6 +1,6 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import * as z from "zod";
-import { zodResolver } from "@hookform/resolvers/zod";
+import { zodResolver } from "@hookform/resolvers/zod"; 
 import { useForm } from "react-hook-form";
 
 import {
@@ -19,46 +19,39 @@ import { Pencil } from "lucide-react";
 import { useEffect, useState } from "react";
 import toast from "react-hot-toast";
 import { useParams } from "react-router-dom";
-import { cn } from "@/lib/utils";
-import { Textarea } from "@/components/ui/textarea";
-import Combobox from "@/components/combobox";
+// import {Course} form ''
 
-interface CategoryFormProps {
-  // categoryid: string;
-  setnewcoursefield: any;
-  options:{label:string, value:string}[];
+type ChapterTitleFormProps= { 
+  title:string;
+  setnewcoursefield: any,
 }
 
 const formSchema = z.object({
- categoryid: z.string().min(1),
+  title: z.string().min(1),
 });
 
-const CategoryForm = ({
-  // categoryid,
-  options,
-  setnewcoursefield,
-}: CategoryFormProps) => {
+const ChapterTitleForm = ({ title, setnewcoursefield }: ChapterTitleFormProps) => {  
+
   const [isEditing, setIsEditing] = useState(false);
   const params = useParams();
 
-// console.log('categoryid=', categoryid)
-
-  const form = useForm<z.infer<typeof formSchema>>({
+  const form = useForm<z.infer<typeof formSchema>>({  
     resolver: zodResolver(formSchema),
 
-    // defaultValues: {
-    //   categoryid: categoryid || ""
-    // },
+    defaultValues: {
+      title: title,
+    },
   });
 
   const { isSubmitting, isValid } = form.formState;
 
   const onSubmit = async (values: z.infer<typeof formSchema>) => {
-    console.log(values);
+    console.log(values)
+   
 
-     const request = {  
+    const request = {  
     userid: null,
-    title: null,
+    title: values.title,
     description: null,
     imageurl: null,
     price: null,
@@ -67,8 +60,6 @@ const CategoryForm = ({
     createdat: null,
     updatedat: null,}
 
-    console.log('request=', request)
-    
     try {
       const response = await fetch(
         `http://localhost:3000/api/v1/courses/${params.id}`,
@@ -77,14 +68,14 @@ const CategoryForm = ({
           headers: {
             "Content-type": "application/json",
           },
-          body: JSON.stringify(values),
+          body: JSON.stringify(request),
         }
       );
-      const updatedCategory = await response.json();
+      const updatedCourse = await response.json();
 
-      setnewcoursefield(updatedCategory);
+      setnewcoursefield(updatedCourse);
 
-      toast.success("Course updated");
+      toast.success("Chapter updated");
       toggleEdit();
     } catch (error) {
       toast.error("Something went wrong");
@@ -95,39 +86,32 @@ const CategoryForm = ({
     setIsEditing((prevState) => !prevState);
   };
 
-  
-// const selectedOption = options.find((option)=>{
-//   option.value === categoryid
-// })
+  useEffect(() => {
+    if (!title) {
+      return;
+    }
+
+    form.reset({ title: title });
+  }, [form, title]);
 
   return (
-    <div className="mt-6 border p-4 bg-slate-100"> 
-      <div className="flex justify-between">
-        <span>Course category</span>
+    <div className="mt-6 border p-4 bg-slate-100">
+      <div className=" flex justify-between ">
+      <span>Chapter Title</span>
         <Button variant="ghost" onClick={toggleEdit}>
           {!isEditing ? (
-         <>
-         <Pencil className="h-4 w-4 mr-2 " />
-         Edit category
-       </>
+            <>
+              <Pencil className="h-4 w-4 mr-2" />
+              Edit title
+            </>
           ) : (
             <>Cancel</>
-            
-            
           )}
         </Button>
       </div>
 
-      {!isEditing && (
-        <p
-          className={cn(
-            "text-sm mt-2",
-            !false && "text-slate-500 italic"
-          )}
-        >
-          {false  || "No category"}
-        </p>
-      )}
+      {!isEditing && <p className="text-sm mt-2">{title}</p>}
+      
       {isEditing && (
         <Form {...form}>
           <form
@@ -136,11 +120,15 @@ const CategoryForm = ({
           >
             <FormField
               control={form.control}
-              name="categoryid"
+              name="title"
               render={({ field }) => (
                 <FormItem>
                   <FormControl>
-                    <Combobox options={options} /> 
+                    <Input
+                      disabled={isSubmitting}
+                      placeholder="e.g. Introduction of the course"
+                      {...field}
+                    />
                   </FormControl>
                   <FormMessage />
                 </FormItem>
@@ -157,4 +145,4 @@ const CategoryForm = ({
     </div>
   );
 };
-export default CategoryForm;
+export default ChapterTitleForm;

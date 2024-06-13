@@ -98,8 +98,8 @@ const TitleForm = ({ title, setnewcoursefield }: TitleFormProps) => {
 
   return (
     <div className="mt-6 border p-4 bg-slate-100">
-      <div>
-        Course title{" "}
+      <div className=" flex justify-between ">
+      <span>Course Title</span>
         <Button variant="ghost" onClick={toggleEdit}>
           {!isEditing ? (
             <>

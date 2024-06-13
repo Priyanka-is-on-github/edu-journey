@@ -21,33 +21,30 @@ import toast from "react-hot-toast";
 import { useParams } from "react-router-dom";
 import { cn } from "@/lib/utils";
 import { Textarea } from "@/components/ui/textarea";
-import Combobox from "@/components/combobox";
+import { Checkbox} from "@/components/ui/checkbox"
 
-interface CategoryFormProps {
-  // categoryid: string;
+
+interface ChapterAccessFormProps {
+  description: string;
   setnewcoursefield: any;
-  options:{label:string, value:string}[];
 }
 
 const formSchema = z.object({
- categoryid: z.string().min(1),
+  isFree: z.boolean().default(false),
 });
 
-const CategoryForm = ({
-  // categoryid,
-  options,
+const ChapterAccessForm = ({
+  description,
   setnewcoursefield,
-}: CategoryFormProps) => {
+}: ChapterAccessFormProps) => {
   const [isEditing, setIsEditing] = useState(false);
   const params = useParams();
-
-// console.log('categoryid=', categoryid)
 
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
 
     // defaultValues: {
-    //   categoryid: categoryid || ""
+    //   description: description,
     // },
   });
 
@@ -71,20 +68,20 @@ const CategoryForm = ({
     
     try {
       const response = await fetch(
-        `http://localhost:3000/api/v1/courses/${params.id}`,
+        `http://localhost:3000/api/v1/courses/${params.id}`, 
         {
           method: "POST",
           headers: {
             "Content-type": "application/json",
           },
-          body: JSON.stringify(values),
+          body: JSON.stringify(request),
         }
       );
-      const updatedCategory = await response.json();
+      const updatedDescription = await response.json();
 
-      setnewcoursefield(updatedCategory);
+      setnewcoursefield(updatedDescription);
 
-      toast.success("Course updated");
+      toast.success("Chapter updated");
       toggleEdit();
     } catch (error) {
       toast.error("Something went wrong");
@@ -95,25 +92,26 @@ const CategoryForm = ({
     setIsEditing((prevState) => !prevState);
   };
 
-  
-// const selectedOption = options.find((option)=>{
-//   option.value === categoryid
-// })
+//   useEffect(() => {
+//     if (!description) {
+//       return;
+//     }
+
+//     form.reset({ description: description });
+//   }, [form, description]);
 
   return (
     <div className="mt-6 border p-4 bg-slate-100"> 
       <div className="flex justify-between">
-        <span>Course category</span>
+        <span>Chapter access setting </span>
         <Button variant="ghost" onClick={toggleEdit}>
           {!isEditing ? (
-         <>
-         <Pencil className="h-4 w-4 mr-2 " />
-         Edit category
-       </>
+            <>
+              <Pencil className="h-4 w-4 mr-2 " />
+              Edit access
+            </>
           ) : (
             <>Cancel</>
-            
-            
           )}
         </Button>
       </div>
@@ -122,10 +120,10 @@ const CategoryForm = ({
         <p
           className={cn(
             "text-sm mt-2",
-            !false && "text-slate-500 italic"
+            !description && "text-slate-500 italic"
           )}
         >
-          {false  || "No category"}
+          {description || "No description"}
         </p>
       )}
       {isEditing && (
@@ -136,12 +134,15 @@ const CategoryForm = ({
           >
             <FormField
               control={form.control}
-              name="categoryid"
+              name="isFree"
               render={({ field }) => (
-                <FormItem>
+                <FormItem className="flex flex-row items-start spaxe-x-3 space-y-0 rounded-md border p-4">
                   <FormControl>
-                    <Combobox options={options} /> 
+                    <Checkbox checked={field.value} onCheckedChange={field.onChange}/>
                   </FormControl>
+                  <div className="space-y-1 leading-none">
+                    <FormDescription> Check this box if you want to make this chapter free for preview</FormDescription>
+                  </div>
                   <FormMessage />
                 </FormItem>
               )}
@@ -157,4 +158,4 @@ const CategoryForm = ({
     </div>
   );
 };
-export default CategoryForm;
+export default ChapterAccessForm;

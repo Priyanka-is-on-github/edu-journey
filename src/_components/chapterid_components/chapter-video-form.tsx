@@ -1,3 +1,5 @@
+
+
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import * as z from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
@@ -15,40 +17,37 @@ import {
 
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
-import { Pencil } from "lucide-react";
+import { ImageDown, ImageIcon, Pencil, PlusCircle } from "lucide-react";
 import { useEffect, useState } from "react";
 import toast from "react-hot-toast";
 import { useParams } from "react-router-dom";
 import { cn } from "@/lib/utils";
 import { Textarea } from "@/components/ui/textarea";
-import Combobox from "@/components/combobox";
 
-interface CategoryFormProps {
-  // categoryid: string;
+interface VideoFormProps {
+  imageurl: string;
   setnewcoursefield: any;
-  options:{label:string, value:string}[];
 }
 
 const formSchema = z.object({
- categoryid: z.string().min(1),
+  imageurl: z.string().min(1, {
+    message: "Image is required",
+  }),
 });
 
-const CategoryForm = ({
-  // categoryid,
-  options,
+const VideoForm = ({
+  imageurl,
   setnewcoursefield,
-}: CategoryFormProps) => {
+}: VideoFormProps) => {
   const [isEditing, setIsEditing] = useState(false);
   const params = useParams();
-
-// console.log('categoryid=', categoryid)
 
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
 
-    // defaultValues: {
-    //   categoryid: categoryid || ""
-    // },
+    defaultValues: {
+      imageurl: imageurl|| "",
+    },
   });
 
   const { isSubmitting, isValid } = form.formState;
@@ -71,18 +70,18 @@ const CategoryForm = ({
     
     try {
       const response = await fetch(
-        `http://localhost:3000/api/v1/courses/${params.id}`,
+        `http://localhost:3000/api/v1/courses/${params.id}`, 
         {
           method: "POST",
           headers: {
             "Content-type": "application/json",
           },
-          body: JSON.stringify(values),
+          body: JSON.stringify(request),
         }
       );
-      const updatedCategory = await response.json();
+      const updatedDescription = await response.json();
 
-      setnewcoursefield(updatedCategory);
+      setnewcoursefield(updatedDescription);
 
       toast.success("Course updated");
       toggleEdit();
@@ -95,66 +94,58 @@ const CategoryForm = ({
     setIsEditing((prevState) => !prevState);
   };
 
-  
-// const selectedOption = options.find((option)=>{
-//   option.value === categoryid
-// })
+//   useEffect(() => {
+//     if (!description) {
+//       return;
+//     }
+
+//     form.reset({ description: description });
+//   }, [form, description]);
 
   return (
     <div className="mt-6 border p-4 bg-slate-100"> 
       <div className="flex justify-between">
-        <span>Course category</span>
+        <span>Course image </span>
         <Button variant="ghost" onClick={toggleEdit}>
-          {!isEditing ? (
-         <>
-         <Pencil className="h-4 w-4 mr-2 " />
-         Edit category
-       </>
-          ) : (
-            <>Cancel</>
-            
-            
-          )}
+
+            {isEditing && (<> cancel</>)}
+
+            {!isEditing && !imageurl && (<> <PlusCircle className="h-4 w-4 mr-2 "/> Add an image</>)}
+
+          {!isEditing && imageurl && (
+            <>
+              <Pencil className="h-4 w-4 mr-2 " />
+              Edit image
+            </>
+          ) }
         </Button>
       </div>
 
       {!isEditing && (
-        <p
-          className={cn(
-            "text-sm mt-2",
-            !false && "text-slate-500 italic"
-          )}
-        >
-          {false  || "No category"}
-        </p>
+        !imageurl ? (
+        <div className="flex items-center justify-center h-60 bg-slate-200 rounded-md">
+            <ImageIcon className="h-10 w-10 text-slate-500"/>
+        </div>):(
+            <div className="relative aspect-video mt-2">
+               {/* <Image alt='upload' fill className="object-cover rounded-md" src={imageurl}/> */}
+        </div>)
+
+        
       )}
-      {isEditing && (
-        <Form {...form}>
-          <form
-            onSubmit={form.handleSubmit(onSubmit)}
-            className="space-y-4 mt-4"
-          >
-            <FormField
-              control={form.control}
-              name="categoryid"
-              render={({ field }) => (
-                <FormItem>
-                  <FormControl>
-                    <Combobox options={options} /> 
-                  </FormControl>
-                  <FormMessage />
-                </FormItem>
-              )}
-            />
-            <div className="flex item-center gap-x-2">
-              <Button disabled={!isValid || isSubmitting} type="submit">
-                save
-              </Button>
+      {/* {isEditing && (
+        <div>
+            <FileUpload endpoint="courseImage" onChnage={(url)=>{
+                if(url){
+                    onSubmit({imageurl: url})
+                }
+            }}/>
+
+            <div className="text-xs text-muted-forground mt-4">
+                16:9 aspect ratio recommended
             </div>
-          </form>
-        </Form>
-      )}
+        </div>
+      )} */}
     </div>
   );
 };
-export default CategoryForm;
+export default VideoForm;

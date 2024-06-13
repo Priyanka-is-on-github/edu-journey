@@ -6,6 +6,7 @@ import CoursesPage from "./pages/teacher_folder/courses";
 import Analytics from "./pages/teacher_folder/analytics";
 import CreatePage from "./pages/teacher_folder/courses/create";
 import CourseIdPage from "./pages/teacher_folder/courses/courseid";
+import ChapterIdPage from "./pages/teacher_folder/courses/chapterid";
 
 const router = createBrowserRouter([
   {
@@ -42,5 +43,11 @@ const router = createBrowserRouter([
     element: <CourseIdPage />,
     errorElement: <Error />,
   },
+
+  {
+    path:"teacher/courses/chapterid",
+    element: <ChapterIdPage/>,
+    errorElement:<Error/>
+  }
 ]);
 export default router;

@@ -9,6 +9,7 @@ import { useParams } from "react-router-dom";
 import CategoryForm from "@/_components/couseid_components/category-form";
 import PriceForm from "@/_components/couseid_components/price-form";
 import ChaptersForm from "@/_components/couseid_components/chapter-form";
+import ImageForm from "@/_components/couseid_components/image-form";
 
 // interface Course ={
 //   id: string | null,
@@ -36,6 +37,7 @@ const CourseIdPage = () => {
     categoryid: "",
     createdat: "",
     updatedat: "",
+    chapters:'',
   });
 
   const [categories, setCategories] = useState([]);
@@ -68,6 +70,7 @@ const CourseIdPage = () => {
     newCourseFields.imageurl,
     newCourseFields.price,
     newCourseFields.categoryid,
+    // newCourseFields.chapters.some(chapter=> chapter.ispublished)
   ];
 
   const totalFields = requiredFields.length;
@@ -97,8 +100,8 @@ const CourseIdPage = () => {
             </span>
           </div>
         </div>
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mt-16 border-2 border-red-200">
-          <div className="border-2 border-red-200">
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mt-16">
+          <div>
             <div className="flex items-center gap-x-2 ">
               <IconBadge icon={LayoutDashboard} />
               <h2 className="text-xl ">Customize your course</h2>
@@ -112,9 +115,11 @@ const CourseIdPage = () => {
               description={newCourseFields.description}
               setnewcoursefield={setNewCourseField}
             />
+            
+            <ImageForm />
 
             <CategoryForm
-              categoryid={newCourseFields?.categoryid}
+              // categoryid={newCourseFields?.categoryid}
               options={categories?.map((category:{id:string, name:string}) => {
                 return {
                   value: category.id,
@@ -132,10 +137,12 @@ const CourseIdPage = () => {
                 <h2 className="text-xl">Course Chapter</h2>
               </div>
 
-              <ChaptersForm
-              description={newCourseFields.description}
+              {/* <ChaptersForm
+              chapters={newCourseFields.chapters}
               setnewcoursefield={setNewCourseField}
-              />
+              /> */}
+
+              {/* <ChaptersForm params={params.id}/> */}
 
             </div>
             <div>
@@ -145,7 +152,7 @@ const CourseIdPage = () => {
               </div>
 
               <PriceForm
-                price={newCourseFields.price}
+                price={parseInt(newCourseFields.price)}
                 setnewcoursefield={setNewCourseField}
               />
             </div>

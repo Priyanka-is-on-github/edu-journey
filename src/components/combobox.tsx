@@ -20,18 +20,21 @@ import {
 
 interface ComboboxProps{
     options: {label:string; value:string}[];
-    value?: string;
-    onChange:(value:string)=> void;
+    // value?: string;
+    // onChange:(value:string)=> void;
 }
 
- const Combobox=({options,value, onChange}:ComboboxProps)=> {
+ const Combobox=({options}:ComboboxProps)=> {
   const [open, setOpen] = React.useState(false)
+  const [value, setValue] = React.useState("")
   
-  console.log('comvalue=', value)
+  // console.log('comvalue=', value)
+  // console.log(onChange)
+  
 
   return (
     <Popover open={open} onOpenChange={setOpen}>
-      <PopoverTrigger >
+      <PopoverTrigger asChild>
         <Button
           variant="outline"
           role="combobox"
@@ -41,6 +44,7 @@ interface ComboboxProps{
           {value
             ? options.find((option) => option.value === value)?.label
             : "Select option..."}
+            
           <ChevronsUpDown className="ml-2 h-4 w-4 shrink-0 opacity-50" />
         </Button>
       </PopoverTrigger>
@@ -52,9 +56,10 @@ interface ComboboxProps{
             {options.map((option) => (
               <CommandItem
                 key={option.value}
-                value={option.label}
-                onSelect={() => {
-                 onChange(option.value === value?"":option.value )
+            
+                onSelect={(currentValue) => {
+                //  onChange(option.value === value?"":option.value )
+                setValue(currentValue === value ? "" : currentValue)
                   setOpen(false)
                 }}
               >
@@ -66,6 +71,8 @@ interface ComboboxProps{
                 />
                 {option.label}
               </CommandItem>
+
+            
             ))}
           </CommandGroup>
         </Command>
