@@ -26,9 +26,7 @@ const ChapterIdPage = ({ params }: { params: string }) => {
 
             <div className="flex items-center justify-between w-full ">
               <div className="flex flex-col gap-y-2 ">
-                <h1 className="text-2xl font-medium ">
-                  Chapter Creation
-                </h1>
+                <h1 className="text-2xl font-medium ">Chapter Creation</h1>
                 <span className="text-sm text-slate-700">
                   complete all fields
                 </span>
@@ -67,8 +65,7 @@ const ChapterIdPage = ({ params }: { params: string }) => {
               <h2 className="text-xl"> Add a video</h2>
             </div>
 
-            <VideoForm imageurl={""} setnewcoursefield={""}/>
-
+            <VideoForm imageurl={""} setnewcoursefield={""} />
           </div>
         </div>
       </div>
