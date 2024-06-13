@@ -6,42 +6,40 @@ import { useForm } from "react-hook-form";
 import {
   Form,
   FormControl,
-  FormDescription,
   FormField,
   FormItem,
-  FormLabel,
   FormMessage,
 } from "@/components/ui/form";
 
-import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { Pencil } from "lucide-react";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import toast from "react-hot-toast";
 import { useParams } from "react-router-dom";
 import { cn } from "@/lib/utils";
-import { Textarea } from "@/components/ui/textarea";
+
 import Combobox from "@/components/combobox";
 
 interface CategoryFormProps {
-  // categoryid: string;
+  categoryid: string;
   setnewcoursefield: any;
-  options:{label:string, value:string}[];
+  options: { label: string; value: string }[];
 }
 
 const formSchema = z.object({
- categoryid: z.string().min(1),
+  categoryname: z.string().min(1),
 });
 
 const CategoryForm = ({
-  // categoryid,
+  categoryid,
   options,
   setnewcoursefield,
 }: CategoryFormProps) => {
   const [isEditing, setIsEditing] = useState(false);
   const params = useParams();
+  console.log(options);
 
-// console.log('categoryid=', categoryid)
+  // console.log('categoryid=', categoryid)
 
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
@@ -56,19 +54,20 @@ const CategoryForm = ({
   const onSubmit = async (values: z.infer<typeof formSchema>) => {
     console.log(values);
 
-     const request = {  
-    userid: null,
-    title: null,
-    description: null,
-    imageurl: null,
-    price: null,
-    ispublished: null,
-    categoryid: null,
-    createdat: null,
-    updatedat: null,}
+    const request = {
+      userid: null,
+      title: null,
+      description: null,
+      imageurl: null,
+      price: null,
+      ispublished: null,
+      categoryid: null,
+      createdat: null,
+      updatedat: null,
+    };
 
-    console.log('request=', request)
-    
+    console.log("request=", request);
+
     try {
       const response = await fetch(
         `http://localhost:3000/api/v1/courses/${params.id}`,
@@ -95,37 +94,29 @@ const CategoryForm = ({
     setIsEditing((prevState) => !prevState);
   };
 
-  
-// const selectedOption = options.find((option)=>{
-//   option.value === categoryid
-// })
+  // const selectedOption = options.find((option)=>{
+  //   option.value === categoryid
+  // })
 
   return (
-    <div className="mt-6 border p-4 bg-slate-100"> 
+    <div className="mt-6 border p-4 bg-slate-100">
       <div className="flex justify-between">
         <span>Course category</span>
         <Button variant="ghost" onClick={toggleEdit}>
           {!isEditing ? (
-         <>
-         <Pencil className="h-4 w-4 mr-2 " />
-         Edit category
-       </>
+            <>
+              <Pencil className="h-4 w-4 mr-2 " />
+              Edit category
+            </>
           ) : (
             <>Cancel</>
-            
-            
           )}
         </Button>
       </div>
 
       {!isEditing && (
-        <p
-          className={cn(
-            "text-sm mt-2",
-            !false && "text-slate-500 italic"
-          )}
-        >
-          {false  || "No category"}
+        <p className={cn("text-sm mt-2", !false && "text-slate-500 italic")}>
+          {false || "No category"}
         </p>
       )}
       {isEditing && (
@@ -136,11 +127,11 @@ const CategoryForm = ({
           >
             <FormField
               control={form.control}
-              name="categoryid"
+              name="categoryname"
               render={({ field }) => (
                 <FormItem>
                   <FormControl>
-                    <Combobox options={options} /> 
+                    <Combobox options={options} {...field} />
                   </FormControl>
                   <FormMessage />
                 </FormItem>

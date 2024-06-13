@@ -3,7 +3,12 @@ import DashboardLayout from "@/Layout/layout";
 import DescriptionForm from "@/_components/couseid_components/description-form";
 import TitleForm from "@/_components/couseid_components/title-form";
 import { IconBadge } from "@/components/icon-badge";
-import { LayoutDashboard, ListChecks, CircleDollarSign, File } from "lucide-react";
+import {
+  LayoutDashboard,
+  ListChecks,
+  CircleDollarSign,
+  File,
+} from "lucide-react";
 import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import CategoryForm from "@/_components/couseid_components/category-form";
@@ -37,7 +42,7 @@ const CourseIdPage = () => {
     categoryid: "",
     createdat: "",
     updatedat: "",
-    chapters:'',
+    chapters: "",
   });
 
   const [categories, setCategories] = useState([]);
@@ -57,6 +62,9 @@ const CourseIdPage = () => {
         );
         const category = await categoryResponse.json();
         console.log("caterory=", category);
+        if (!category) {
+          throw new Error("error while fetching category");
+        }
         setCategories(category);
       } catch (error) {
         console.log(error);
@@ -77,16 +85,6 @@ const CourseIdPage = () => {
   const completedFields = requiredFields.filter(Boolean).length;
 
   const completionText = `(${completedFields}/${totalFields})`;
-
-  // if(!userid)
-  //   {
-  //     return Navigate('/')
-  //   }
-
-  //   if(!course)
-  //     {
-  //       return navigete('/')
-  //     }
 
   return (
     <DashboardLayout>
@@ -115,17 +113,19 @@ const CourseIdPage = () => {
               description={newCourseFields.description}
               setnewcoursefield={setNewCourseField}
             />
-            
+
             <ImageForm />
 
             <CategoryForm
-              // categoryid={newCourseFields?.categoryid}
-              options={categories?.map((category:{id:string, name:string}) => {
-                return {
-                  value: category.id,
-                  label: category.name,
-                };
-              })}
+              categoryid={newCourseFields?.categoryid}
+              options={categories?.map(
+                (category: { id: string; name: string }) => {
+                  return {
+                    value: category.id,
+                    label: category.name,
+                  };
+                }
+              )}
               setnewcoursefield={setNewCourseField}
             />
           </div>
@@ -143,7 +143,6 @@ const CourseIdPage = () => {
               /> */}
 
               {/* <ChaptersForm params={params.id}/> */}
-
             </div>
             <div>
               <div className="flex items-center gap-x-2">
