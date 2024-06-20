@@ -45,7 +45,7 @@ const router = createBrowserRouter([
   },
 
   {
-    path:"teacher/courses/chapterid",
+    path:"teacher/courses/:id/chapters/:chapterid", 
     element: <ChapterIdPage/>,
     errorElement:<Error/>
   }

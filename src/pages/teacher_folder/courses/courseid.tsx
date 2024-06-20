@@ -15,23 +15,13 @@ import CategoryForm from "@/_components/couseid_components/category-form";
 import PriceForm from "@/_components/couseid_components/price-form";
 import ChaptersForm from "@/_components/couseid_components/chapter-form";
 import ImageForm from "@/_components/couseid_components/image-form";
+import AttachmentForm from "@/_components/couseid_components/attachment-form";
 
-// interface Course ={
-//   id: string | null,
-//   userid: string | null,
-//   title: string | null,
-//   description: string | null,
-//   imageurl: string | null,
-//   price: string | null,
-//   ispublished: string | null,
-//   categoryid: string | null,
-//   createdat: string | null,
-//   updatedat: string | null,
-// }
+
 
 const CourseIdPage = () => {
   const params = useParams();
-  const [newCourseFields, setNewCourseField] = useState({
+  const [newCourseFields, setNewCourseField] = useState({  
     id: "",
     userid: "",
     title: "",
@@ -45,20 +35,24 @@ const CourseIdPage = () => {
     chapters: "",
   });
 
+  const [attachments, setAttachments]= useState([]);
   const [categories, setCategories] = useState([]);
+  const [chapters, setChapters] =useState([]);
 
   useEffect(() => {
+   
+
     (async () => {
       try {
         const response = await fetch(
-          `http://localhost:3000/api/v1/courses/${params.id}`
+          `http://localhost:3001/api/v1/courses/${params.id}`
         );
 
         const course = await response.json();
         setNewCourseField(course);
 
         const categoryResponse = await fetch(
-          "http://localhost:3000/api/v1/category"
+          "http://localhost:3001/api/v1/category"
         );
         const category = await categoryResponse.json();
         console.log("caterory=", category);
@@ -71,6 +65,37 @@ const CourseIdPage = () => {
       }
     })();
   }, [params]);
+
+  useEffect(()=>{
+    (async()=>{
+
+      try {
+        const response = await fetch( `http://localhost:3001/api/v1/fileupload/courseAttachment?courseId=${params.id}`,
+         )
+
+         const updatedAttachment= await response.json();
+         setAttachments(updatedAttachment); 
+        
+      } catch (error) {
+        console.log(error)
+      }
+
+    })()
+  },[params])
+
+  useEffect(()=>{
+    (async()=>{
+try {
+  const response = await fetch(`http://localhost:3001/api/v1/courses/chapter/${params.id}`)
+  const updatedChapter = await response.json();
+  setChapters(updatedChapter)
+} catch (error) {
+  console.log(error)
+}
+    })()
+  },[params])
+
+
 
   const requiredFields = [
     newCourseFields.title,
@@ -105,7 +130,7 @@ const CourseIdPage = () => {
               <h2 className="text-xl ">Customize your course</h2>
             </div>
             <TitleForm
-              title={newCourseFields.title}
+              title={newCourseFields.title} 
               setnewcoursefield={setNewCourseField}
             />
 
@@ -114,7 +139,7 @@ const CourseIdPage = () => {
               setnewcoursefield={setNewCourseField}
             />
 
-            <ImageForm />
+            <ImageForm imageurl={newCourseFields.imageurl}  setnewcoursefield={setNewCourseField}/>
 
             <CategoryForm
               categoryid={newCourseFields?.categoryid}
@@ -137,12 +162,12 @@ const CourseIdPage = () => {
                 <h2 className="text-xl">Course Chapter</h2>
               </div>
 
-              {/* <ChaptersForm
-              chapters={newCourseFields.chapters}
-              setnewcoursefield={setNewCourseField}
-              /> */}
+              <ChaptersForm
+              chapters={chapters}
+              setChapters={setChapters}
+              />
 
-              {/* <ChaptersForm params={params.id}/> */}
+             
             </div>
             <div>
               <div className="flex items-center gap-x-2">
@@ -161,7 +186,10 @@ const CourseIdPage = () => {
                 <IconBadge icon={File} />
                 <h2 className="text-xl">Resources & attachments</h2>
               </div>
-            </div>
+
+              <AttachmentForm attachments={attachments} setAttachments={setAttachments}/> 
+
+            </div> 
           </div>
         </div>
       </div>

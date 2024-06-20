@@ -37,22 +37,22 @@ const CategoryForm = ({
 }: CategoryFormProps) => {
   const [isEditing, setIsEditing] = useState(false);
   const params = useParams();
-  console.log(options);
+  
 
-  // console.log('categoryid=', categoryid)
+  
 
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
 
-    // defaultValues: {
-    //   categoryid: categoryid || ""
-    // },
+    defaultValues: {
+      categoryname: categoryid || ""
+    },
   });
 
   const { isSubmitting, isValid } = form.formState;
 
   const onSubmit = async (values: z.infer<typeof formSchema>) => {
-    console.log(values);
+   
 
     const request = {
       userid: null,
@@ -61,22 +61,22 @@ const CategoryForm = ({
       imageurl: null,
       price: null,
       ispublished: null,
-      categoryid: null,
+      categoryid: values?.categoryname,
       createdat: null,
       updatedat: null,
     };
 
-    console.log("request=", request);
+
 
     try {
       const response = await fetch(
-        `http://localhost:3000/api/v1/courses/${params.id}`,
+        `http://localhost:3001/api/v1/courses/${params.id}`,
         {
           method: "POST",
           headers: {
             "Content-type": "application/json",
           },
-          body: JSON.stringify(values),
+          body: JSON.stringify(request),
         }
       );
       const updatedCategory = await response.json();
@@ -94,9 +94,14 @@ const CategoryForm = ({
     setIsEditing((prevState) => !prevState);
   };
 
-  // const selectedOption = options.find((option)=>{
-  //   option.value === categoryid
-  // })
+  const selectedOption = options.find((option)=>{
+    return(
+      option.value === String(categoryid)
+    )
+    
+  })
+
+  
 
   return (
     <div className="mt-6 border p-4 bg-slate-100">
@@ -115,8 +120,8 @@ const CategoryForm = ({
       </div>
 
       {!isEditing && (
-        <p className={cn("text-sm mt-2", !false && "text-slate-500 italic")}>
-          {false || "No category"}
+        <p className={cn("text-sm mt-2", !categoryid && "text-slate-500 italic")}>
+          {selectedOption?.label || "No category"}
         </p>
       )}
       {isEditing && (

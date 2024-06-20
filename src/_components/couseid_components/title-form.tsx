@@ -48,7 +48,7 @@ const TitleForm = ({ title, setnewcoursefield }: TitleFormProps) => {
   const { isSubmitting, isValid } = form.formState;
 
   const onSubmit = async (values: z.infer<typeof formSchema>) => {
-    console.log(values)
+    
    
 
     const request = {  
@@ -64,7 +64,7 @@ const TitleForm = ({ title, setnewcoursefield }: TitleFormProps) => {
 
     try {
       const response = await fetch(
-        `http://localhost:3000/api/v1/courses/${params.id}`,
+        `http://localhost:3001/api/v1/courses/${params.id}`,
         {
           method: "POST",
           headers: {

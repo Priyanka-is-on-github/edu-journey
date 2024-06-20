@@ -6,10 +6,48 @@ import VideoForm from "@/_components/chapterid_components/chapter-video-form";
 import { IconBadge } from "@/components/icon-badge";
 import { Button } from "@/components/ui/button";
 import { ArrowLeft, Eye, LayoutDashboard, Video } from "lucide-react";
+import { useEffect, useState } from "react";
 import { useParams, Link } from "react-router-dom";
 
-const ChapterIdPage = ({ params }: { params: string }) => {
-  console.log("params", params);
+const ChapterIdPage = () => {
+  const params = useParams()
+  const [chapterDetail, setChapterDetail] =useState({
+    id: '',
+    title:'',
+    description:'',
+    videourl:'',
+    position:'',
+    ispublished:'',
+    isfree:'',
+    courseid:'',
+    createdat:'',
+    updatedat:'',
+  })
+
+  // const requiredFields = [
+  //   chapters.title,
+  //   chapters.description,
+  //   chapters.videoUrl,
+  // ]
+
+  useEffect(()=>{
+    (async()=>{
+
+      try {
+        const response = await fetch( `http://localhost:3001/api/v1/courses/chapterdetail/${params.chapterid}`)
+      const chapterDetail = await response.json();
+
+      
+      setChapterDetail(chapterDetail)
+      } catch (error) {
+        console.log(error)
+      }
+      
+
+
+    })()
+  },[params])
+
 
   return (
     <DashboardLayout>
@@ -17,7 +55,7 @@ const ChapterIdPage = ({ params }: { params: string }) => {
         <div className="flex items-center justify-between">
           <div className="w-full ">
             <Link
-              href={`/teacher/courses/${params}`}
+              to={`/teacher/courses/${params.id}`}
               className="flex items-center text-sm hover:opacity-75 transition mb-6"
             >
               <ArrowLeft className="h-4 w-4 mr-2" />
@@ -47,7 +85,7 @@ const ChapterIdPage = ({ params }: { params: string }) => {
                 <h2 className="text-xl">Customize your chapter</h2>
               </div>
 
-              <ChapterTitleForm title={""} setnewcoursefield={""} />
+              <ChapterTitleForm title={chapterDetail.title} setnewcoursefield={''} />
               <ChapterDescriptionForm description={""} setnewcoursefield={""} />
             </div>
 

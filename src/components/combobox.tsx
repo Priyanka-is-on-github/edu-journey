@@ -26,7 +26,8 @@ const Combobox = React.forwardRef<HTMLDivElement, ComboboxProps>(
   ({ options, onChange }, ref) => {
     const [open, setOpen] = React.useState(false);
     const [value, setValue] = React.useState("");
-    console.log(options);
+
+    
 
     return (
       <Popover open={open} onOpenChange={setOpen}>
@@ -35,7 +36,7 @@ const Combobox = React.forwardRef<HTMLDivElement, ComboboxProps>(
             variant="outline"
             role="combobox"
             aria-expanded={open}
-            className="w-[200px] justify-between"
+            className="w-full justify-between"
             ref={ref}
           >
             {value
@@ -47,14 +48,14 @@ const Combobox = React.forwardRef<HTMLDivElement, ComboboxProps>(
             <ChevronsUpDown className="ml-2 h-4 w-4 shrink-0 opacity-50" />
           </Button>
         </PopoverTrigger>
-        <PopoverContent className="w-[200px] p-0">
+        <PopoverContent className="w-full p-0">
           <Command>
             <CommandInput placeholder="Search option..." />
             <CommandList>
               <CommandEmpty>No option found.</CommandEmpty>
               <CommandGroup>
                 {options.map((option) => {
-                  console.log("from map", option);
+                  
                   return (
                     <CommandItem
                       key={option.value}

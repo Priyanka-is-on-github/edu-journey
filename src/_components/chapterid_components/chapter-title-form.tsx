@@ -46,34 +46,37 @@ const ChapterTitleForm = ({ title, setnewcoursefield }: ChapterTitleFormProps) =
   const { isSubmitting, isValid } = form.formState;
 
   const onSubmit = async (values: z.infer<typeof formSchema>) => {
-    console.log(values)
+   
    
 
-    const request = {  
-    userid: null,
-    title: values.title,
-    description: null,
-    imageurl: null,
-    price: null,
-    ispublished: null,
-    categoryid: null,
-    createdat: null,
-    updatedat: null,}
+  //   const request = {  
+  //   id: null,
+  //   title: values.title,
+  //   description: null,
+  //  videourl: null,
+  //  position:null,
+  //  ispublished:null,
+  //  isfree:null,
+  //  courseid:null,
+  //  createdat:null,
+  //  updatedat:null,
+  // }
 
     try {
       const response = await fetch(
-        `http://localhost:3000/api/v1/courses/${params.id}`,
+       `http://localhost:3001/api/v1/courses/chapterdetail/${params.chapterid}`,
         {
           method: "POST",
           headers: {
             "Content-type": "application/json",
           },
-          body: JSON.stringify(request),
+          body: JSON.stringify(values),
         }
       );
-      const updatedCourse = await response.json();
+      const updatedChapterTitle = await response.json();
+      console.log(updatedChapterTitle)
 
-      setnewcoursefield(updatedCourse);
+      // setnewcoursefield(updatedChapterTitle);
 
       toast.success("Chapter updated");
       toggleEdit();

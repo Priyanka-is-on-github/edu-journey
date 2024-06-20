@@ -82,6 +82,27 @@ body,
   .ql-container{
     font-size: 16px !important;
   }
+
+
 }
 
-@import "~@uploadthing/react/style.css"
+.wrapper {
+  border: none;
+  border-radius: 30%;
+}
+
+.container {
+  background-color: slategray;
+}
+
+.barCompleted {
+  background-color: skyblue;
+  width: 80%;
+}
+
+.label {
+  font-size: 20px;
+  color: green;
+}
+
+

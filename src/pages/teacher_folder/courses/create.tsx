@@ -36,7 +36,7 @@ const CreatePage = () => {
   const onSubmit = async (values: z.infer<typeof formSchema>) => {
   
     try {
-      const response = await fetch("http://localhost:3000/api/v1/courses", {  
+      const response = await fetch("http://localhost:3001/api/v1/courses", {  
         method: "POST",
         headers: {
           "Content-type": "application/json",
