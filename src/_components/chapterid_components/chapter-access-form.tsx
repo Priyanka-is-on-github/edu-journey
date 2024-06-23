@@ -25,50 +25,47 @@ import { Checkbox} from "@/components/ui/checkbox"
 
 
 interface ChapterAccessFormProps {
-  description: string;
-  setnewcoursefield: any;
+  isfree: boolean;
+  setChapterDetail: any;
 }
 
 const formSchema = z.object({
-  isFree: z.boolean().default(false),
+  isfree: z.boolean().default(false),
 });
 
 const ChapterAccessForm = ({
-  description,
-  setnewcoursefield,
+  isfree,
+  setChapterDetail,
 }: ChapterAccessFormProps) => {
   const [isEditing, setIsEditing] = useState(false);
   const params = useParams();
 
+
+  
+
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
 
-    // defaultValues: {
-    //   description: description,
-    // },
+    defaultValues: {
+      isfree: !!isfree,
+    },
   });
 
   const { isSubmitting, isValid } = form.formState;
 
   const onSubmit = async (values: z.infer<typeof formSchema>) => {
-    console.log(values);
+  
 
      const request = {  
-    userid: null,
-    title: null,
+      title: null,
     description: null,
-    imageurl: null,
-    price: null,
-    ispublished: null,
-    categoryid: null,
-    createdat: null,
-    updatedat: null,}
+   videourl: null,
+   isfree:values.isfree,
+  }
 
-    console.log('request=', request)
-    
-    try {
+  try {
       const response = await fetch(
-        `http://localhost:3001/api/v1/courses/${params.id}`, 
+        `http://localhost:3001/api/v1/courses/chapterdetail/${params.chapterid}`, 
         {
           method: "POST",
           headers: {
@@ -77,9 +74,9 @@ const ChapterAccessForm = ({
           body: JSON.stringify(request),
         }
       );
-      const updatedDescription = await response.json();
+      const updatedAccess = await response.json();
 
-      setnewcoursefield(updatedDescription);
+      setChapterDetail(updatedAccess);
 
       toast.success("Chapter updated");
       toggleEdit();
@@ -91,14 +88,6 @@ const ChapterAccessForm = ({
   const toggleEdit = () => {
     setIsEditing((prevState) => !prevState);
   };
-
-//   useEffect(() => {
-//     if (!description) {
-//       return;
-//     }
-
-//     form.reset({ description: description });
-//   }, [form, description]);
 
   return (
     <div className="mt-6 border p-4 bg-slate-100"> 
@@ -120,10 +109,10 @@ const ChapterAccessForm = ({
         <p
           className={cn(
             "text-sm mt-2",
-            !description && "text-slate-500 italic"
+            !isfree && "text-slate-500 italic"
           )}
         >
-          {description || "No description"}
+          {isfree?(<>This chapter is free for preview.</>): (<>This chapter is not free</>)}
         </p>
       )}
       {isEditing && (
@@ -134,14 +123,14 @@ const ChapterAccessForm = ({
           >
             <FormField
               control={form.control}
-              name="isFree"
+              name="isfree"
               render={({ field }) => (
-                <FormItem className="flex flex-row items-start spaxe-x-3 space-y-0 rounded-md border p-4">
+                <FormItem className="flex flex-row items-center spaxe-x-3 space-y-0 rounded-md border p-4 ">
                   <FormControl>
                     <Checkbox checked={field.value} onCheckedChange={field.onChange}/>
                   </FormControl>
-                  <div className="space-y-1 leading-none">
-                    <FormDescription> Check this box if you want to make this chapter free for preview</FormDescription>
+                  <div className="pl-2 leading-none">
+                    <FormDescription> Check this box if you want to make this chapter free for preview.</FormDescription>
                   </div>
                   <FormMessage />
                 </FormItem>

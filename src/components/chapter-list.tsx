@@ -37,11 +37,12 @@ const ChapterList =({onEdit, onReorder, items}: ChapterListProps)=>{
     },[])
 
     const onDragEnd =(result: DropResult)=>{
+        console.log('result=', result)
         if(!result.destination) return;
 
         const items = Array.from(chapters);
-        const [reorderItem] = items.splice(result.destination.index,1);
-        items.splice(result.destination.index,0,reorderItem);
+        const [reorderedItem] = items.splice(result.source.index,1);
+        items.splice(result.destination.index,0,reorderedItem);
 
         const startIndex= Math.min(result.source.index, result.destination.index)
         const endIndex= Math.max(result.source.index, result.destination.index)
@@ -82,9 +83,9 @@ const ChapterList =({onEdit, onReorder, items}: ChapterListProps)=>{
                                                         </div>
                                                          {chapter.title}
 
-                                                        <div className='ml-auto pr-2 flex items-center gap-x-2'>
+                                                        <div className='ml-auto pr-2 flex items-center gap-x-2 '>
                                                             {chapter.isfree && (
-                                                           <div>
+                                                           <div className='text-white bg-black px-3  py-1 rounded-xl text-sm'>
                                                                 Free
                                                            </div>
                                                                 

@@ -22,10 +22,11 @@ import { useParams } from "react-router-dom";
 import { cn } from "@/lib/utils";
 import { Textarea } from "@/components/ui/textarea";
 import Editor from "@/components/editor";
+import Preview from "@/components/preview";
 
 interface ChapterDescriptionFormProps {
   description: string;
-  setnewcoursefield: any;
+  setChapterDetail: any;
 }
 
 const formSchema = z.object({
@@ -34,10 +35,12 @@ const formSchema = z.object({
 
 const ChapterDescriptionForm = ({
   description,
-  setnewcoursefield,
+  setChapterDetail
 }: ChapterDescriptionFormProps) => {
   const [isEditing, setIsEditing] = useState(false);
   const params = useParams();
+
+ 
 
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
@@ -50,24 +53,19 @@ const ChapterDescriptionForm = ({
   const { isSubmitting, isValid } = form.formState;
 
   const onSubmit = async (values: z.infer<typeof formSchema>) => {
-    console.log(values);
+ 
 
      const request = {  
-    userid: null,
-    title: null,
-    description: values.description,
-    imageurl: null,
-    price: null,
-    ispublished: null,
-    categoryid: null,
-    createdat: null,
-    updatedat: null,}
+      title:null,
+      description:values.description,
+      videourl:null
+    }
 
-    console.log('request=', request)
+    
     
     try {
       const response = await fetch(
-        `http://localhost:3001/api/v1/courses/${params.id}`, 
+        `http://localhost:3001/api/v1/courses/chapterdetail/${params.chapterid}`, 
         {
           method: "POST",
           headers: {
@@ -77,8 +75,9 @@ const ChapterDescriptionForm = ({
         }
       );
       const updatedDescription = await response.json();
+      
 
-      setnewcoursefield(updatedDescription);
+      setChapterDetail(updatedDescription);
 
       toast.success("Chapter updated");
       toggleEdit();
@@ -116,14 +115,17 @@ const ChapterDescriptionForm = ({
       </div>
 
       {!isEditing && (
-        <p
+        <div
           className={cn(
             "text-sm mt-2",
             !description && "text-slate-500 italic"
           )}
         >
-          {description || "No description"}
-        </p>
+          {!description && "No description"}
+          {
+            description && (<Preview value={description}/>) 
+          }
+        </div>
       )}
       {isEditing && (
         <Form {...form}>

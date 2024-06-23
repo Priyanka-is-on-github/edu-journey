@@ -21,6 +21,7 @@ import AttachmentForm from "@/_components/couseid_components/attachment-form";
 
 const CourseIdPage = () => {
   const params = useParams();
+  const [count, setCount] =useState(0);
   const [newCourseFields, setNewCourseField] = useState({  
     id: "",
     userid: "",
@@ -88,6 +89,9 @@ const CourseIdPage = () => {
 try {
   const response = await fetch(`http://localhost:3001/api/v1/courses/chapter/${params.id}`)
   const updatedChapter = await response.json();
+
+  setCount(updatedChapter.length)
+ 
   setChapters(updatedChapter)
 } catch (error) {
   console.log(error)
@@ -165,6 +169,7 @@ try {
               <ChaptersForm
               chapters={chapters}
               setChapters={setChapters}
+              count={count}
               />
 
              

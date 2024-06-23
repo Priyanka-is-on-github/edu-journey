@@ -23,14 +23,14 @@ import { useParams } from "react-router-dom";
 
 type ChapterTitleFormProps= { 
   title:string;
-  setnewcoursefield: any,
+  setChapterDetail: any,
 }
 
 const formSchema = z.object({
   title: z.string().min(1),
 });
 
-const ChapterTitleForm = ({ title, setnewcoursefield }: ChapterTitleFormProps) => {  
+const ChapterTitleForm = ({ title, setChapterDetail }: ChapterTitleFormProps) => {  
 
   const [isEditing, setIsEditing] = useState(false);
   const params = useParams();
@@ -49,18 +49,13 @@ const ChapterTitleForm = ({ title, setnewcoursefield }: ChapterTitleFormProps) =
    
    
 
-  //   const request = {  
-  //   id: null,
-  //   title: values.title,
-  //   description: null,
-  //  videourl: null,
-  //  position:null,
-  //  ispublished:null,
-  //  isfree:null,
-  //  courseid:null,
-  //  createdat:null,
-  //  updatedat:null,
-  // }
+    const request = {  
+    
+    title: values.title,
+    description: null,
+   videourl: null,
+   
+  }
 
     try {
       const response = await fetch(
@@ -70,13 +65,13 @@ const ChapterTitleForm = ({ title, setnewcoursefield }: ChapterTitleFormProps) =
           headers: {
             "Content-type": "application/json",
           },
-          body: JSON.stringify(values),
+          body: JSON.stringify(request),
         }
       );
       const updatedChapterTitle = await response.json();
-      console.log(updatedChapterTitle)
+     
 
-      // setnewcoursefield(updatedChapterTitle);
+      setChapterDetail(updatedChapterTitle);
 
       toast.success("Chapter updated");
       toggleEdit();

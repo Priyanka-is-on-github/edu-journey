@@ -40,13 +40,14 @@ interface ChapterFormProps {
     updatedat: string;
   }[];
   setChapters: any;
+  count:number;
 }
 
 const formSchema = z.object({
   title: z.string().min(1),
 });
 
-const ChaptersForm = ( {chapters, setChapters }: ChapterFormProps) => {
+const ChaptersForm = ( {chapters, setChapters, count }: ChapterFormProps) => {
 
   const [isCreating, setIsCreating] = useState(false);
   const [isUpdating, setIsUpdating] = useState(false);
@@ -67,7 +68,7 @@ const ChaptersForm = ( {chapters, setChapters }: ChapterFormProps) => {
 
   const onSubmit = async (values: z.infer<typeof formSchema>) => {
 
-    console.log('first=', values)
+  
     try {
       const response = await fetch(
         `http://localhost:3001/api/v1/courses/chapter/${params.id}`, 
@@ -76,7 +77,7 @@ const ChaptersForm = ( {chapters, setChapters }: ChapterFormProps) => {
           headers: {
             "Content-type": "application/json",
           },
-          body: JSON.stringify(values),
+          body: JSON.stringify({...values, count:count}),
         }
       );
       const updatedChapter = await response.json();
@@ -95,17 +96,18 @@ const ChaptersForm = ( {chapters, setChapters }: ChapterFormProps) => {
     setIsCreating((prevState) => !prevState);
   };
 
-  // const onReorder = async (updateData:{id:string; position:string}[])=>{
-  //   try {
-  //     setIsUpdating(true)
-  //     toast.success('chapters reordered')
-  //   } catch (error) {
-  //     toast.error('Something went wrong')
-  //   }finally{
-  //     setIsUpdating(false)
-  //   }
+  const onReorder = async (updateData:{id:string; position:string}[])=>{
+    try {
+      setIsUpdating(true)
 
-  // }
+      toast.success('chapters reordered')
+    } catch (error) {
+      toast.error('Something went wrong')
+    }finally{
+      setIsUpdating(false)
+    }
+
+  }
 
   const onEdit = async(id:string)=>{
     navigate(`/teacher/courses/${params.id}/chapters/${id}`) 
@@ -172,7 +174,7 @@ const ChaptersForm = ( {chapters, setChapters }: ChapterFormProps) => {
           {!chapters.length && " No chapters"}
 
           <ChapterList onEdit={onEdit}
-          onReorder={()=>{}}
+          onReorder={onReorder}
           items={chapters || []}/>
 
         </div>

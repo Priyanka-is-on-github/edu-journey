@@ -17,73 +17,66 @@ import {
 
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
-import { ImageDown, ImageIcon, Pencil, PlusCircle } from "lucide-react";
+import { ImageDown, ImageIcon, Pencil, PlusCircle, Video } from "lucide-react";
 import { useEffect, useState } from "react";
 import toast from "react-hot-toast";
 import { useParams } from "react-router-dom";
 import { cn } from "@/lib/utils";
 import { Textarea } from "@/components/ui/textarea";
+import VideoUploader from "@/components/video-upload";
 
 interface VideoFormProps {
-  imageurl: string;
-  setnewcoursefield: any;
+  videourl: string;
+  setChapterDetail: any;
 }
 
 const formSchema = z.object({
-  imageurl: z.string().min(1, {
-    message: "Image is required",
-  }),
+  videourl: z.custom<File[]>(), 
 });
 
 const VideoForm = ({
-  imageurl,
-  setnewcoursefield,
-}: VideoFormProps) => {
+  videourl,
+  setChapterDetail,
+}:VideoFormProps) => {
   const [isEditing, setIsEditing] = useState(false);
   const params = useParams();
 
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
 
-    defaultValues: {
-      imageurl: imageurl|| "",
-    },
+    // defaultValues: {
+    //   videourl: videourl,
+    // },
   });
 
   const { isSubmitting, isValid } = form.formState;
 
   const onSubmit = async (values: z.infer<typeof formSchema>) => {
-    console.log(values);
+    // console.log(values);
 
-     const request = {  
-    userid: null,
-    title: null,
-    description: null,
-    imageurl: null,
-    price: null,
-    ispublished: null,
-    categoryid: null,
-    createdat: null,
-    updatedat: null,}
+    const formData = new FormData();
+    formData.append(`file`, values.videourl[0]);
 
-    console.log('request=', request)
+
+   
+
+
+    
     
     try {
       const response = await fetch(
-        `http://localhost:3001/api/v1/courses/${params.id}`, 
+       `http://localhost:3001/api/v1/videoupload/chapterVideo/${params.chapterid}`, 
         {
           method: "POST",
-          headers: {
-            "Content-type": "application/json",
-          },
-          body: JSON.stringify(request),
+          
+          body: JSON.stringify(formData)
         }
       );
-      const updatedDescription = await response.json();
+      const updatedVideo= await response.json();
 
-      setnewcoursefield(updatedDescription);
+      // setChapterDetail(updatedVideo);
 
-      toast.success("Course updated");
+      toast.success("Chapter updated");
       toggleEdit();
     } catch (error) {
       toast.error("Something went wrong");
@@ -105,46 +98,72 @@ const VideoForm = ({
   return (
     <div className="mt-6 border p-4 bg-slate-100"> 
       <div className="flex justify-between">
-        <span>Course image </span>
+        <span>Chapter video </span>
         <Button variant="ghost" onClick={toggleEdit}>
 
             {isEditing && (<> cancel</>)}
 
-            {!isEditing && !imageurl && (<> <PlusCircle className="h-4 w-4 mr-2 "/> Add an image</>)}
+            {!isEditing && !videourl && (<> <PlusCircle className="h-4 w-4 mr-2 "/> Add a video</>)}
 
-          {!isEditing && imageurl && (
+          {!isEditing && videourl && (
             <>
               <Pencil className="h-4 w-4 mr-2 " />
-              Edit image
+              Edit video
             </>
           ) }
         </Button>
       </div>
 
       {!isEditing && (
-        !imageurl ? (
+        !videourl ? (
         <div className="flex items-center justify-center h-60 bg-slate-200 rounded-md">
-            <ImageIcon className="h-10 w-10 text-slate-500"/>
+            <Video className="h-10 w-10 text-slate-500"/>
         </div>):(
             <div className="relative aspect-video mt-2">
-               {/* <Image alt='upload' fill className="object-cover rounded-md" src={imageurl}/> */}
+             {/* <MuxPlayer
+              playbackId={muxdata.playbackid || ''}  
+              
+    /> */}
         </div>)
 
         
       )}
-      {/* {isEditing && (
-        <div>
-            <FileUpload endpoint="courseImage" onChnage={(url)=>{
-                if(url){
-                    onSubmit({imageurl: url})
-                }
-            }}/>
-
-            <div className="text-xs text-muted-forground mt-4">
-                16:9 aspect ratio recommended
+      {isEditing && (
+        <Form {...form} >
+          <form
+            onSubmit={form.handleSubmit(onSubmit)}
+            className="space-y-4 mt-4 "
+          >
+            <FormField
+              control={form.control}
+              name="videourl"
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel>Upload this chapter's video</FormLabel>
+                  <FormControl>
+                    <VideoUploader 
+                      fieldChange={field.onChange}
+                      mediaUrl={videourl} 
+                    />
+                  </FormControl>
+                 
+                </FormItem>
+              )}
+            />
+            <div className="flex item-center gap-x-2">
+              <Button  disabled={!isValid || isSubmitting} type="submit">save</Button>
             </div>
-        </div>
-      )} */}
+          </form>
+        </Form>
+      )}
+
+      {
+        videourl && !isEditing && (
+          <div className="text-xs text-muted-foreground mt-2">
+            Videos can take a few minutes to process. Refresh the page if video does not appear.
+          </div>
+        )
+      }
     </div>
   );
 };
