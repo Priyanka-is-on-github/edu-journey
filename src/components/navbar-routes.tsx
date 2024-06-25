@@ -1,4 +1,4 @@
-"use client";
+
 
 import {
   SignedIn,
@@ -14,7 +14,7 @@ const NavbarRoutes = () => {
   const { pathname } = useLocation();
 
   return (
-    <div className="flex gap-x-2 ml-auto">
+    <div className="flex gap-x-2 ml-auto items-center">
       {pathname === "/teacher/courses" || pathname === "/teacher/create" ? (
         <Link to="/">
           <Button size="sm" variant="ghost">

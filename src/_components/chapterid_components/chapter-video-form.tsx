@@ -52,24 +52,19 @@ const VideoForm = ({
   const { isSubmitting, isValid } = form.formState;
 
   const onSubmit = async (values: z.infer<typeof formSchema>) => {
-    // console.log(values);
+    
 
     const formData = new FormData();
-    formData.append(`file`, values.videourl[0]);
-
-
-   
-
-
+    formData.append(`videourl`, values.videourl[0]);
     
-    
-    try {
+
+     try {
       const response = await fetch(
        `http://localhost:3001/api/v1/videoupload/chapterVideo/${params.chapterid}`, 
         {
           method: "POST",
           
-          body: JSON.stringify(formData)
+          body: formData,
         }
       );
       const updatedVideo= await response.json();
@@ -133,6 +128,7 @@ const VideoForm = ({
           <form
             onSubmit={form.handleSubmit(onSubmit)}
             className="space-y-4 mt-4 "
+            
           >
             <FormField
               control={form.control}

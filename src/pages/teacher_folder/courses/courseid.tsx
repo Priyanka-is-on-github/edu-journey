@@ -75,6 +75,7 @@ const CourseIdPage = () => {
          )
 
          const updatedAttachment= await response.json();
+         
          setAttachments(updatedAttachment); 
         
       } catch (error) {

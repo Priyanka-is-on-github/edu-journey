@@ -59,9 +59,9 @@ const ChaptersForm = ( {chapters, setChapters, count }: ChapterFormProps) => {
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
 
-    // defaultValues: {
-    //   title: "",
-    // },
+    defaultValues: {
+      title: "",
+    },
   });
 
   const { isSubmitting, isValid } = form.formState;
@@ -84,6 +84,7 @@ const ChaptersForm = ( {chapters, setChapters, count }: ChapterFormProps) => {
       
 
       setChapters(updatedChapter);
+      window.location.reload();
 
       toast.success("Chapter created");
       toggleCreating();
@@ -99,8 +100,17 @@ const ChaptersForm = ( {chapters, setChapters, count }: ChapterFormProps) => {
   const onReorder = async (updateData:{id:string; position:string}[])=>{
     try {
       setIsUpdating(true)
+        await fetch('http://localhost:3001/api/v1/courses/chapters/reorder',{
+        method:'PUT',
+        headers:{
+          "Content-type" : "application/json",
+        },
+        body:JSON.stringify(updateData),
+      })
+
 
       toast.success('chapters reordered')
+      // window.locate.reload();
     } catch (error) {
       toast.error('Something went wrong')
     }finally{

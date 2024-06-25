@@ -53,7 +53,11 @@ const ChapterList =({onEdit, onReorder, items}: ChapterListProps)=>{
         const bulkUpdateData = updatedChapters.map((chapter)=>({
             id: chapter.id,
             position: items.findIndex((item)=>item.id === chapter.id)
+
+          
     })) 
+
+    // console.log('bl=',bulkUpdateData) 
 
     onReorder(bulkUpdateData)
     }

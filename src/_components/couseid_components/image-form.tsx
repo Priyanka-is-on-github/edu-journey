@@ -113,10 +113,10 @@ formData.append(`file`, values.file[0]);
             <ImageIcon className="h-10 w-10 text-slate-500" />
           </div>
         ) : (
-          <div className="  flex items-center justify-center  mt-2 relative aspect-video">
+          <div className="  flex items-center justify-center  mt-2 relative aspect-video  ">
             <img
               alt="upload"
-              className="object-cover rounded-md marker  "
+              className="object-cover rounded-md h-[100%] w-[100%]"
               src={imageurl}   
 
             />

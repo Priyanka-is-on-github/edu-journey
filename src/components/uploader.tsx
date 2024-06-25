@@ -71,13 +71,13 @@ const Uploader = ({ fieldChange, mediaUrl }: UploaderProps) => {
           
         </>
       ) : (
-        <div className="flex justify-center items-center flex-center flex-col p-7 h-72 bg-gray-100 rounded-xl border border-blue-800">
-          <img
+        <div className="flex justify-center items-center flex-center flex-col p-7 h-72 bg-gray-100 rounded-xl ">
+          {/* <img
             src="/assets/upload.svg"
             alt="file-upload"
             height={77}
             width={106}
-          /> 
+          />  */}
          
           <p className="text-xs text-gray-400">IMAGE,PDF,VIDEO,AUDIO,DOC</p>
           <Button className=" my-2">Select from Device</Button> 
