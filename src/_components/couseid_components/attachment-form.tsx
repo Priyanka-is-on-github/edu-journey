@@ -43,6 +43,7 @@ import Uploader from "@/components/uploader";
     const [isEditing, setIsEditing] = useState(false);
     const [deletingId, setDeletingId]= useState<string| null>(null)
     const params = useParams();
+    const [isUpdating, setIsUpdating] = useState(false);
  
    
     const form = useForm<z.infer<typeof formSchema>>({ 
@@ -57,7 +58,7 @@ import Uploader from "@/components/uploader";
      
     const formData = new FormData();
 formData.append(`url`, values.url[0]);
- 
+setIsUpdating(true)
        try {
         const response = await fetch(
           `http://localhost:3001/api/v1/fileupload/courseAttachment?courseId=${params.id}`, 
@@ -75,6 +76,8 @@ formData.append(`url`, values.url[0]);
         toggleEdit();
       } catch (error) {
         toast.error("Something went wrong");
+      }finally{
+        setIsUpdating(false)
       }
     };
   
@@ -107,7 +110,10 @@ formData.append(`url`, values.url[0]);
     }
     }
     return (
-      <div className="mt-6 border p-4 bg-slate-100">
+      <div className="mt-6 border p-4 bg-slate-100 relative">
+         {isUpdating && (<div className="absolute h-full w-full bg-slate-500/20 top-0 right-0 rounded-m flex items-center justify-center">
+      <Loader2 className='animate-spin h-6 w-6 text-sky-700'/> 
+    </div>)}
         <div className="flex justify-between">
           <span>Course attachments </span>
           <Button variant="ghost" onClick={toggleEdit}>

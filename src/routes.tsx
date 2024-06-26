@@ -21,6 +21,13 @@ const router = createBrowserRouter([
     errorElement: <Error />,
   },
 
+  // {
+  //   path:"/search?cateroryId=:id",
+  //   element:<SearchPage/>,
+  //   errorElement: <Error/>,
+
+  // },
+
   {
     path: "/teacher/courses",
     element: <CoursesPage />,

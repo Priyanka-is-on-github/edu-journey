@@ -24,6 +24,7 @@ import { useParams } from "react-router-dom";
 import { cn } from "@/lib/utils";
 import { Textarea } from "@/components/ui/textarea";
 import VideoUploader from "@/components/video-upload";
+import MuxPlayer from '@mux/mux-player-react';
 
 interface VideoFormProps {
   videourl: string;
@@ -116,9 +117,9 @@ const VideoForm = ({
         </div>):(
             <div className="relative aspect-video mt-2">
              {/* <MuxPlayer
-              playbackId={muxdata.playbackid || ''}  
+              playbackId={muxData.playbackid || ''}  
               
-    /> */}
+    />  */}
         </div>)
 
         

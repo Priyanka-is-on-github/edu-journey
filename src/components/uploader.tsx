@@ -49,22 +49,17 @@ const Uploader = ({ fieldChange, mediaUrl }: UploaderProps) => {
       {fileUrl ? (
         <>
         
-          <div className="flex flex-1 justify-center w-full py-3 px-1   ">
-            {/* <img
+          {/* <div className="flex flex-1 justify-center w-full py-3 px-1   ">
+            <img
               src={fileUrl}
               alt={mediaUrl[0].name}
               height={"100%"}
               width={"100%"}
               className="h-full lg:h-[100%] w-full rounded-[24px] object-cover object-top "
-            /> */}
+            />
 
-<ProgressBar completed={80}
-  className="wrapper"
-  barContainerClassName="container"
-  completedClassName="barCompleted"
-  labelClassName="label" />
-          </div>
-          <p className="text-xs text-gray-400 text-center"> 
+          </div> */}
+          <p className="text-sm text-gray-400 text-center"> 
             Click or Drag to add file
           </p>
           
@@ -72,12 +67,7 @@ const Uploader = ({ fieldChange, mediaUrl }: UploaderProps) => {
         </>
       ) : (
         <div className="flex justify-center items-center flex-center flex-col p-7 h-72 bg-gray-100 rounded-xl ">
-          {/* <img
-            src="/assets/upload.svg"
-            alt="file-upload"
-            height={77}
-            width={106}
-          />  */}
+         
          
           <p className="text-xs text-gray-400">IMAGE,PDF,VIDEO,AUDIO,DOC</p>
           <Button className=" my-2">Select from Device</Button> 

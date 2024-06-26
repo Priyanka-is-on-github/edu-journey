@@ -22,7 +22,7 @@ const iconMap: Record<string, IconType>={
 function Categories({items}:CategoriesProps) {
 
   return (
-    <div className='flex items-center gap-x-2 averflow-x-auto pb-2'>
+    <div className='flex items-center gap-x-2 overflow-x-auto pb-2'>
         {items.map((item)=>{
 
             return ( <CategoryItem

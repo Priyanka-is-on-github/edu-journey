@@ -18,7 +18,7 @@ import {
 
 import { Input } from "@/components/ui/input";
 
-import { Pencil, PlusCircle } from "lucide-react";
+import { Loader2, Pencil, PlusCircle } from "lucide-react";
 import { useEffect, useState } from "react";
 import toast from "react-hot-toast";
 import { useParams } from "react-router-dom";
@@ -128,7 +128,11 @@ const ChaptersForm = ( {chapters, setChapters, count }: ChapterFormProps) => {
   
 
   return (
-    <div className="mt-6 border p-4 bg-slate-100  ">
+
+    <div className="mt-6 border p-4 bg-slate-100 relative  border-red-800">
+    {isUpdating && (<div className="absolute h-full w-full bg-slate-500/20 top-0 right-0 rounded-m flex items-center justify-center">
+      <Loader2 className='animate-spin h-6 w-6 text-sky-700'/> 
+    </div>)}
       <div className=" flex justify-between ">
         <span>Course Chapters</span>
         <Button variant="ghost" onClick={toggleCreating}>

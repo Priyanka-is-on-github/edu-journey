@@ -9,11 +9,18 @@ import {
 import { Button } from "./ui/button";
 import { LogOut } from "lucide-react";
 import { Link, useLocation } from "react-router-dom";
+import SearchInput from "./search-input";
 
 const NavbarRoutes = () => {
   const { pathname } = useLocation();
+const isSearchPage = pathname === '/search';
+
 
   return (
+    <>
+   {isSearchPage && (<div className="hidden md:block">
+    <SearchInput/>
+    </div>)}
     <div className="flex gap-x-2 ml-auto items-center">
       {pathname === "/teacher/courses" || pathname === "/teacher/create" ? (
         <Link to="/">
@@ -39,6 +46,7 @@ const NavbarRoutes = () => {
         </SignedIn>
       </header>
     </div>
+    </>
   );
 };
 export default NavbarRoutes;

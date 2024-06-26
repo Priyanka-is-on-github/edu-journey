@@ -16,6 +16,9 @@ import PriceForm from "@/_components/couseid_components/price-form";
 import ChaptersForm from "@/_components/couseid_components/chapter-form";
 import ImageForm from "@/_components/couseid_components/image-form";
 import AttachmentForm from "@/_components/couseid_components/attachment-form";
+import ChapterActions from "@/_components/chapterid_components/chapter-actions";
+import Banner from "@/components/banner";
+import CourseActions from "@/_components/couseid_components/course-actions";
 
 
 
@@ -33,13 +36,13 @@ const CourseIdPage = () => {
     categoryid: "",
     createdat: "",
     updatedat: "",
-    chapters: "",
+    // chapters: "",
   });
 
   const [attachments, setAttachments]= useState([]);
   const [categories, setCategories] = useState([]);
-  const [chapters, setChapters] =useState([]);
-
+  const [chapters, setChapters] =useState<{id:string, title:string,courseid: string,createdat: string,description: string,isfree:string,ispublished: string,muxdata: string,position: string,updatedat:string,videourl:string}[]>([]); 
+console.log('ch=',chapters)
   useEffect(() => {
    
 
@@ -50,7 +53,8 @@ const CourseIdPage = () => {
         );
 
         const course = await response.json();
-        setNewCourseField(course);
+        console.log('course=',course)
+        setNewCourseField(course); 
 
         const categoryResponse = await fetch(
           "http://localhost:3001/api/v1/category"
@@ -85,12 +89,12 @@ const CourseIdPage = () => {
     })()
   },[params])
 
-  useEffect(()=>{
+  useEffect(()=>{ 
     (async()=>{
 try {
   const response = await fetch(`http://localhost:3001/api/v1/courses/chapter/${params.id}`)
   const updatedChapter = await response.json();
-
+  console.log('up=',updatedChapter)
   setCount(updatedChapter.length)
  
   setChapters(updatedChapter)
@@ -108,7 +112,8 @@ try {
     newCourseFields.imageurl,
     newCourseFields.price,
     newCourseFields.categoryid,
-    // newCourseFields.chapters.some(chapter=> chapter.ispublished)
+    // newCourseFields.chapters.some(chapter=> chapter.ispublished) 
+    chapters[0]?.ispublished,
   ];
 
   const totalFields = requiredFields.length;
@@ -116,8 +121,13 @@ try {
 
   const completionText = `(${completedFields}/${totalFields})`;
 
+  const isComplete = requiredFields.every(Boolean)
+
   return (
     <DashboardLayout>
+       {!newCourseFields.ispublished && (
+        <Banner variant='warning' label='This course is unpublished. It will not be visible to the students'/>
+      )}
       <div className="p-6">
         <div className="flex items-center justify-between">
           <div className="flex flex-col gap-y-2 ">
@@ -127,6 +137,9 @@ try {
               Complete all fields {completionText}
             </span>
           </div>
+
+          <CourseActions disabled={!isComplete} ispublished={Boolean(newCourseFields.ispublished)}/>
+
         </div>
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mt-16">
           <div>

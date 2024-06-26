@@ -4,48 +4,48 @@ import ConfirmModal from "@/components/modals/confirm-modal";
 import toast from "react-hot-toast";
 import { useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
+import { useConfettiStore } from "@/hooks/use-confetti-store";
 
-interface ChapterActionProps{
+interface CourseActionProps{
     disabled: boolean;
     ispublished: boolean;
 }
 
 
-const ChapterActions =({disabled,ispublished}:ChapterActionProps)=>{
+const CourseActions =({disabled,ispublished}:CourseActionProps)=>{
     const navigate = useNavigate();
+    const confetti = useConfettiStore();
     const params = useParams();
 
-
-  
-
-    const [isLoading, setIsLoading] = useState(false);
+     const [isLoading, setIsLoading] = useState(false);
     const onClick = async()=>{
         try {
             setIsLoading(true)
            if(ispublished)
             {
                 ispublished=false;
-                await fetch(`http://localhost:3001/api/v1/courses/chapterdetail?chapterId=${params.chapterid}&ispublish=${ispublished}`,{
+                await fetch(`http://localhost:3001/api/v1/courses?Id=${params.id}&ispublish=${ispublished}`,{
                     method:'PUT',
                     headers:{
                         "Content-type":"application/json"
                     }
                 }) 
-                toast.success('Chapter unpublished')
+                toast.success('Course unpublished')
                 
             window.location.reload();
             }
             else{
-                ispublished=true;
-                await fetch(`http://localhost:3001/api/v1/courses/chapterdetail?chapterId=${params.chapterid}&ispublish=${ispublished}`,{
+               ispublished=true;
+                await fetch(`http://localhost:3001/api/v1/courses?Id=${params.id}&ispublish=${ispublished}`,{
                     method:'PUT',
                     headers:{
                         "Content-type":"application/json"
                     }
                 })
-                toast.success('Chapter published')
+                toast.success('Course published')
+                confetti.onOpen();
                 
-            window.location.reload();
+            // window.location.reload(); 
             }
 
         } catch (error) { 
@@ -58,15 +58,15 @@ const ChapterActions =({disabled,ispublished}:ChapterActionProps)=>{
     const  onDelete =async()=>{
         try {
             setIsLoading(true);
-             await fetch(`http://localhost:3001/api/v1/courses/chapterdetail/${params.chapterid}`,{
+             await fetch(`http://localhost:3001/api/v1/courses/${params.id}`,{
                 method: 'DELETE',
                 headers:{
                     'Content-type' : 'application/json',
                 },
             })
 
-            toast.success('Chapter deleted');
-            navigate(`/teacher/courses/${params.id}`);
+            toast.success('Course deleted');
+            navigate(`/teacher/courses`);
         } catch (error) {
             toast.error('Something went wrong');
         }finally{
@@ -77,7 +77,7 @@ const ChapterActions =({disabled,ispublished}:ChapterActionProps)=>{
     return(
         <div className="flex items-center gap-x-2">
             <Button onClick={onClick} disabled={disabled || isLoading} variant='outline' size='sm'>
-                {ispublished? "Unpublish" : "Publish"}
+                {ispublished? "Unpublish" : "Publish"}  
             </Button>
 
         <ConfirmModal onConfirm={onDelete}>
@@ -89,4 +89,4 @@ const ChapterActions =({disabled,ispublished}:ChapterActionProps)=>{
         </div> 
     )
 }
-export default ChapterActions
+export default CourseActions
