@@ -19,14 +19,14 @@ const ChapterIdPage = () => {
     description:'',
     videourl:'',
     isfree:'',
-    ispublished:'',
+    ispublished:false,
     
   })
 
   const requiredFields = [
-    chapterDetail.title,
-    chapterDetail.description,
-    chapterDetail.videourl,
+    chapterDetail?.title,
+    chapterDetail?.description,
+    chapterDetail?.videourl,
   ]
 
   const totalfields = requiredFields.length;
@@ -57,7 +57,7 @@ const ChapterIdPage = () => {
 
   return (
     <DashboardLayout>
-      {!chapterDetail.ispublished && (
+      {!chapterDetail?.ispublished && (
         <Banner variant='warning' label='This chapter is unpublished. It will not be visible in the course'/>
       )}
       <div className="p-6 ">
@@ -79,7 +79,7 @@ const ChapterIdPage = () => {
                 </span>
               </div>
 
-              <ChapterActions disabled={!isComplete} ispublished={Boolean(chapterDetail.ispublished)}/>
+              <ChapterActions disabled={!isComplete} ispublished={Boolean(chapterDetail?.ispublished)} setChapterDetail={setChapterDetail}/>
               
             </div>
           </div>
@@ -93,8 +93,8 @@ const ChapterIdPage = () => {
                 <h2 className="text-xl">Customize your chapter</h2>
               </div>
 
-              <ChapterTitleForm title={chapterDetail.title} setChapterDetail={setChapterDetail} />
-              <ChapterDescriptionForm description={chapterDetail.description}  setChapterDetail={setChapterDetail}/>
+              <ChapterTitleForm title={chapterDetail?.title} setChapterDetail={setChapterDetail} />
+              <ChapterDescriptionForm description={chapterDetail?.description}  setChapterDetail={setChapterDetail}/>
             </div>
 
             <div className="flex items-center gap-x-2">
@@ -102,7 +102,7 @@ const ChapterIdPage = () => {
               <h2 className="text-xl">Access Settings</h2>
             </div>
 
-            <ChapterAccessForm isfree={Boolean(chapterDetail.isfree)} setChapterDetail={setChapterDetail} />
+            <ChapterAccessForm isfree={Boolean(chapterDetail?.isfree)} setChapterDetail={setChapterDetail} />
           </div>
 
           <div>
@@ -111,7 +111,7 @@ const ChapterIdPage = () => {
               <h2 className="text-xl"> Add a video</h2>
             </div>
 
-            <VideoForm videourl={chapterDetail.videourl} setChapterDetail={setChapterDetail} />
+            <VideoForm videourl={chapterDetail?.videourl} setChapterDetail={setChapterDetail} />
           </div>
         </div>
       </div>

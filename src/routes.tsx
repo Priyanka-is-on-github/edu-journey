@@ -7,6 +7,8 @@ import Analytics from "./pages/teacher_folder/analytics";
 import CreatePage from "./pages/teacher_folder/courses/create";
 import CourseIdPage from "./pages/teacher_folder/courses/courseid";
 import ChapterIdPage from "./pages/teacher_folder/courses/chapterid";
+import CoursesIdPage from "./pages/dashboard_folder/browse/courses-id-page";
+
 
 const router = createBrowserRouter([
   {
@@ -21,12 +23,12 @@ const router = createBrowserRouter([
     errorElement: <Error />,
   },
 
-  // {
-  //   path:"/search?cateroryId=:id",
-  //   element:<SearchPage/>,
-  //   errorElement: <Error/>,
+  {
+    path:'/courses/:id',
+    element:<CoursesIdPage/>,
+    errorElement:<Error/>,
 
-  // },
+  },
 
   {
     path: "/teacher/courses",

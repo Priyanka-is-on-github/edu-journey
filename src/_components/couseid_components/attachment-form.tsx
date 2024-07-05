@@ -57,8 +57,8 @@ import Uploader from "@/components/uploader";
     const onSubmit = async (values: z.infer<typeof formSchema>) => {
      
     const formData = new FormData();
-formData.append(`url`, values.url[0]);
-setIsUpdating(true)
+      formData.append(`url`, values.url[0]);
+      setIsUpdating(true)
        try {
         const response = await fetch(
           `http://localhost:3001/api/v1/fileupload/courseAttachment?courseId=${params.id}`, 

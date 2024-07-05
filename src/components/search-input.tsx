@@ -9,7 +9,7 @@ function SearchInput() {
     const [value, setValue] = useState("");
     const [debouncedValue] = useDebounce(value);
 
-    console.log('db=',debouncedValue)
+    // console.log('db=',debouncedValue)
 
     const [params] = useSearchParams();
     const location = useLocation();

@@ -11,7 +11,7 @@ interface ChapterListProps{
         description: string;
         videourl: string;
         position: string;
-        ispublished: string;
+        ispublished: boolean;
         isfree: string;
         courseid: string;
         createdat: string;

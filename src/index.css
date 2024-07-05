@@ -106,3 +106,15 @@ body,
 }
 
 
+/* styles.css or similar */
+.relative {
+  position: relative;
+}
+
+.w-full {
+  width: 100%;
+}
+
+.h-64 {
+  height: 16rem; /* Adjust the height as needed */
+}

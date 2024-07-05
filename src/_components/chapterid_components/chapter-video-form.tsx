@@ -17,7 +17,7 @@ import {
 
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
-import { ImageDown, ImageIcon, Pencil, PlusCircle, Video } from "lucide-react";
+import { ImageDown, ImageIcon, Loader2, Pencil, PlusCircle, Video } from "lucide-react";
 import { useEffect, useState } from "react";
 import toast from "react-hot-toast";
 import { useParams } from "react-router-dom";
@@ -41,6 +41,10 @@ const VideoForm = ({
 }:VideoFormProps) => {
   const [isEditing, setIsEditing] = useState(false);
   const params = useParams();
+  const [updatedVideo, setUpdatedVideo] = useState({ videoUrl: '', playbackId: '' }); 
+
+
+  const [isUpdating, setIsUpdating] = useState(false);
 
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
@@ -58,7 +62,7 @@ const VideoForm = ({
     const formData = new FormData();
     formData.append(`videourl`, values.videourl[0]);
     
-
+    setIsUpdating(true)
      try {
       const response = await fetch(
        `http://localhost:3001/api/v1/videoupload/chapterVideo/${params.chapterid}`, 
@@ -68,14 +72,21 @@ const VideoForm = ({
           body: formData,
         }
       );
-      const updatedVideo= await response.json();
+     const updatedVideoData= await response.json();
+     console.log(updatedVideoData)
+     
+     setChapterDetail(updatedVideoData.videoUrl);
 
-      // setChapterDetail(updatedVideo);
+      setUpdatedVideo(updatedVideoData)
+
+     
 
       toast.success("Chapter updated");
       toggleEdit();
     } catch (error) {
       toast.error("Something went wrong");
+    }finally{
+      setIsUpdating(false)
     }
   };
 
@@ -83,16 +94,33 @@ const VideoForm = ({
     setIsEditing((prevState) => !prevState);
   };
 
-//   useEffect(() => {
-//     if (!description) {
-//       return;
-//     }
+useEffect(()=>{
 
-//     form.reset({ description: description });
-//   }, [form, description]);
+  (async()=>{
+    try {
+      const response = await fetch(`http://localhost:3001/api/v1/videoupload/chapterVideo/${params.chapterid}`)
+      const updatedvideo = await response.json();
+      console.log('upv=',updatedvideo)
+
+      setUpdatedVideo(updatedvideo)
+    } catch (error) {
+      console.log(error)
+    }
+  
+
+  })()
+  
+    
+},[])
+
 
   return (
-    <div className="mt-6 border p-4 bg-slate-100"> 
+    <div className="mt-6 border p-4 bg-slate-100 relative"> 
+
+{isUpdating && (<div className="absolute h-full w-full bg-slate-500/20 top-0 right-0 rounded-m flex items-center justify-center">
+      <Loader2 className='animate-spin h-6 w-6 text-sky-700'/> 
+    </div>)}
+
       <div className="flex justify-between">
         <span>Chapter video </span>
         <Button variant="ghost" onClick={toggleEdit}>
@@ -116,10 +144,11 @@ const VideoForm = ({
             <Video className="h-10 w-10 text-slate-500"/>
         </div>):(
             <div className="relative aspect-video mt-2">
-             {/* <MuxPlayer
-              playbackId={muxData.playbackid || ''}  
+
+               <MuxPlayer
+              playbackId={updatedVideo?.playbackId || ''}   
               
-    />  */}
+    />  
         </div>)
 
         
@@ -141,6 +170,7 @@ const VideoForm = ({
                     <VideoUploader 
                       fieldChange={field.onChange}
                       mediaUrl={videourl} 
+           
                     />
                   </FormControl>
                  
@@ -156,7 +186,7 @@ const VideoForm = ({
 
       {
         videourl && !isEditing && (
-          <div className="text-xs text-muted-foreground mt-2">
+          <div className="text-sm text-muted-foreground mt-2">
             Videos can take a few minutes to process. Refresh the page if video does not appear.
           </div>
         )

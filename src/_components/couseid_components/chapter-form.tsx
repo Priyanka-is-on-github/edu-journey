@@ -33,7 +33,7 @@ interface ChapterFormProps {
     description: string;
     videourl: string;
     position: string;
-    ispublished: string;
+    ispublished: boolean;
     isfree: string;
     courseid: string;
     createdat: string;
@@ -84,7 +84,7 @@ const ChaptersForm = ( {chapters, setChapters, count }: ChapterFormProps) => {
       
 
       setChapters(updatedChapter);
-      window.location.reload();
+      
 
       toast.success("Chapter created");
       toggleCreating();
@@ -97,7 +97,7 @@ const ChaptersForm = ( {chapters, setChapters, count }: ChapterFormProps) => {
     setIsCreating((prevState) => !prevState);
   };
 
-  const onReorder = async (updateData:{id:string; position:string}[])=>{
+  const onReorder = async (updateData:{id:string; position:number}[])=>{
     try {
       setIsUpdating(true)
         await fetch('http://localhost:3001/api/v1/courses/chapters/reorder',{
@@ -110,7 +110,7 @@ const ChaptersForm = ( {chapters, setChapters, count }: ChapterFormProps) => {
 
 
       toast.success('chapters reordered')
-      // window.locate.reload();
+      
     } catch (error) {
       toast.error('Something went wrong')
     }finally{
@@ -129,7 +129,7 @@ const ChaptersForm = ( {chapters, setChapters, count }: ChapterFormProps) => {
 
   return (
 
-    <div className="mt-6 border p-4 bg-slate-100 relative  border-red-800">
+    <div className="mt-6 border p-4 bg-slate-100 relative ">
     {isUpdating && (<div className="absolute h-full w-full bg-slate-500/20 top-0 right-0 rounded-m flex items-center justify-center">
       <Loader2 className='animate-spin h-6 w-6 text-sky-700'/> 
     </div>)}

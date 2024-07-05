@@ -2,18 +2,29 @@ import { Button } from "@/components/ui/button";
 import { Trash } from "lucide-react";
 import ConfirmModal from "@/components/modals/confirm-modal";
 import toast from "react-hot-toast";
-import { useState } from "react";
+import { Dispatch, SetStateAction, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 
+
+type NewChapterDetail ={
+
+    title:string,
+    description: string,
+    videourl:string,
+    isfree: string,
+    ispublished:boolean,
+}
 interface ChapterActionProps{
     disabled: boolean;
     ispublished: boolean;
+    setChapterDetail:Dispatch<SetStateAction<NewChapterDetail>>
 }
 
 
-const ChapterActions =({disabled,ispublished}:ChapterActionProps)=>{
+const ChapterActions =({disabled,ispublished, setChapterDetail}:ChapterActionProps)=>{
     const navigate = useNavigate();
     const params = useParams();
+  
 
 
   
@@ -25,7 +36,7 @@ const ChapterActions =({disabled,ispublished}:ChapterActionProps)=>{
            if(ispublished)
             {
                 ispublished=false;
-                await fetch(`http://localhost:3001/api/v1/courses/chapterdetail?chapterId=${params.chapterid}&ispublish=${ispublished}`,{
+                await fetch(`http://localhost:3001/api/v1/courses/chapterdetail?chapterId=${params.chapterid}&ispublish=${ispublished}&courseId=${params.id}`,{
                     method:'PUT',
                     headers:{
                         "Content-type":"application/json"
@@ -33,11 +44,13 @@ const ChapterActions =({disabled,ispublished}:ChapterActionProps)=>{
                 }) 
                 toast.success('Chapter unpublished')
                 
-            window.location.reload();
+         setChapterDetail((prevState)=>{
+            return({...prevState, ispublished:false})
+         })
             }
             else{
                 ispublished=true;
-                await fetch(`http://localhost:3001/api/v1/courses/chapterdetail?chapterId=${params.chapterid}&ispublish=${ispublished}`,{
+                await fetch(`http://localhost:3001/api/v1/courses/chapterdetail?chapterId=${params.chapterid}&ispublish=${ispublished}&courseId=${params.id}`,{
                     method:'PUT',
                     headers:{
                         "Content-type":"application/json"
@@ -45,7 +58,9 @@ const ChapterActions =({disabled,ispublished}:ChapterActionProps)=>{
                 })
                 toast.success('Chapter published')
                 
-            window.location.reload();
+                setChapterDetail((prevState)=>{
+                    return({...prevState, ispublished:true})
+                 })
             }
 
         } catch (error) { 
@@ -58,11 +73,14 @@ const ChapterActions =({disabled,ispublished}:ChapterActionProps)=>{
     const  onDelete =async()=>{
         try {
             setIsLoading(true);
-             await fetch(`http://localhost:3001/api/v1/courses/chapterdetail/${params.chapterid}`,{
+             await fetch(`http://localhost:3001/api/v1/courses/chapterdelete/${params.chapterid}`,{
                 method: 'DELETE',
                 headers:{
-                    'Content-type' : 'application/json',
+                    "Content-type" : "application/json"
                 },
+                body: JSON.stringify({courseid:params.id})
+
+               
             })
 
             toast.success('Chapter deleted');

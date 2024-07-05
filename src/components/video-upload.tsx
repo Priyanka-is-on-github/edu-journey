@@ -1,10 +1,13 @@
 import { Button } from "@/components/ui/button";
+import MuxPlayer from "@mux/mux-player-react";
 import { useCallback, useState } from "react";
 import { FileWithPath, useDropzone } from "react-dropzone";
 
 type VideoUploaderProps = {
   fieldChange: (files: File[]) => void;
   mediaUrl: string;
+  
+ 
 };
 
 const VideoUploader = ({ fieldChange, mediaUrl }: VideoUploaderProps) => {
@@ -15,7 +18,7 @@ const VideoUploader = ({ fieldChange, mediaUrl }: VideoUploaderProps) => {
     (acceptedFiles: FileWithPath[]) => {
       setFile(acceptedFiles);
       fieldChange(acceptedFiles);
-      console.log('url=',URL.createObjectURL(acceptedFiles[0]))
+     
       setFileUrl(URL.createObjectURL(acceptedFiles[0]));
     },
     [fieldChange]
@@ -34,14 +37,16 @@ const VideoUploader = ({ fieldChange, mediaUrl }: VideoUploaderProps) => {
       <input {...getInputProps()} />
       {fileUrl ? ( 
         <>
-          <div className="flex flex-1 justify-center w-full py-3 px-1  ">
-            <img
+          <div className="flex flex-1 justify-center w-full py-3 px-1  "> 
+            {/* <img
               src={fileUrl} 
-              alt="image"
+              alt="video"
               height={"100%"}
               width={"100%"}
               className="h-full lg:h-[330px] w-full rounded-[5px] object-cover object-top"
-            />
+            /> */}
+
+        
           </div>
           <p className="text-xs text-gray-400 text-center">
             Click or Drag video to replace

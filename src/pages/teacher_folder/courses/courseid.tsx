@@ -32,7 +32,7 @@ const CourseIdPage = () => {
     description: "",
     imageurl: "",
     price: "",
-    ispublished: "",
+    ispublished: false, 
     categoryid: "",
     createdat: "",
     updatedat: "",
@@ -41,8 +41,8 @@ const CourseIdPage = () => {
 
   const [attachments, setAttachments]= useState([]);
   const [categories, setCategories] = useState([]);
-  const [chapters, setChapters] =useState<{id:string, title:string,courseid: string,createdat: string,description: string,isfree:string,ispublished: string,muxdata: string,position: string,updatedat:string,videourl:string}[]>([]); 
-console.log('ch=',chapters)
+  const [chapters, setChapters] =useState<{id:string, title:string,courseid: string,createdat: string,description: string,isfree:string,ispublished: boolean,muxdata: string,position: string,updatedat:string,videourl:string}[]>([]); 
+
   useEffect(() => {
    
 
@@ -112,7 +112,6 @@ try {
     newCourseFields.imageurl,
     newCourseFields.price,
     newCourseFields.categoryid,
-    // newCourseFields.chapters.some(chapter=> chapter.ispublished) 
     chapters[0]?.ispublished,
   ];
 
@@ -128,7 +127,7 @@ try {
        {!newCourseFields.ispublished && (
         <Banner variant='warning' label='This course is unpublished. It will not be visible to the students'/>
       )}
-      <div className="p-6">
+      <div className="p-6   ">
         <div className="flex items-center justify-between">
           <div className="flex flex-col gap-y-2 ">
             <h1 className="text-2xl font-medium">Course setup</h1>
@@ -138,10 +137,10 @@ try {
             </span>
           </div>
 
-          <CourseActions disabled={!isComplete} ispublished={Boolean(newCourseFields.ispublished)}/>
+          <CourseActions disabled={!isComplete} ispublished={Boolean(newCourseFields.ispublished)} setNewCourseField={setNewCourseField}/>  
 
         </div>
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mt-16">
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mt-16  ">
           <div>
             <div className="flex items-center gap-x-2 ">
               <IconBadge icon={LayoutDashboard} />
@@ -173,7 +172,7 @@ try {
             />
           </div>
 
-          <div className="space-y-6 ">
+          <div className="space-y-6 relative ">
             <div>
               <div className="flex items-center gap-x-2 ">
                 <IconBadge icon={ListChecks} />
