@@ -54,6 +54,8 @@ const VideoForm = ({
     // },
   });
 
+  console.log('upv=',updatedVideo.playbackId)
+
   const { isSubmitting, isValid } = form.formState;
 
   const onSubmit = async (values: z.infer<typeof formSchema>) => {

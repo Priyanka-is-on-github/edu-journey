@@ -1,0 +1,76 @@
+import { Button } from '@/components/ui/button'
+import formatPrice from '@/lib/format'
+import React, { useState } from 'react'
+import toast from 'react-hot-toast';
+import { useAuth } from '@clerk/clerk-react';
+import { useLocation, useNavigate, useParams } from 'react-router-dom';
+
+
+interface CourseEnrollButtonProps{
+    price:number;
+    courseId:string;
+}
+
+
+function CourseEnrollButton({price, courseId}:CourseEnrollButtonProps) {
+  
+    const [isLoading, setIsLoading]= useState(false);
+    const { getToken } = useAuth();
+    const navigate = useNavigate()
+    const params = useParams()
+    const location = useLocation();
+    
+
+    const onClick = async ()=>{
+     
+        try {
+            setIsLoading(true)
+
+            const token = await getToken();
+            console.log('Access Token:', token);
+
+            const response = await fetch(`http://localhost:3001/api/v1/courses/checkout/${courseId}`,{ 
+              method:'POST',
+              headers:{
+                 'Content-Type': 'application/json',
+                  Authorization: `Bearer ${token}` 
+              },
+              
+            }) 
+            const data = await response.json();
+         
+            if (response.ok) {
+                window.location.assign(data.url); 
+              } else {
+                toast.error(data.message || 'Something went wrong');
+              }
+
+    //           const queryParams = new URLSearchParams(location.search);
+    // const success = queryParams.get('success');
+    // const courseId = queryParams.get('courseId');
+    // const chapterId = queryParams.get('chapterId');
+
+    // if (success) {
+    //   // Payment was successful, navigate to the desired page
+    //   toast.success('Payment successful!');
+    //   if (courseId && chapterId) {
+    //     navigate(`/courses/${courseId}/chapters/${chapterId}`);
+    //   }
+    // }
+
+
+        } catch (error) {
+            toast.error('Somethig went wrong');
+        }finally{
+            setIsLoading(false)
+        }
+    }
+  return (
+
+  <Button size='sm' className='w-full md:w-auto' onClick={onClick} disabled={isLoading}> 
+    Enroll for {formatPrice(price)}
+  </Button>
+  )
+}
+
+export default CourseEnrollButton

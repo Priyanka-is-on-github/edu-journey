@@ -8,6 +8,7 @@ import CreatePage from "./pages/teacher_folder/courses/create";
 import CourseIdPage from "./pages/teacher_folder/courses/courseid";
 import ChapterIdPage from "./pages/teacher_folder/courses/chapterid";
 import CoursesIdPage from "./pages/dashboard_folder/browse/courses-id-page";
+import PublishedChapterIdPage  from './pages/dashboard_folder/browse/PublishedChapterIdPage'
 
 
 const router = createBrowserRouter([
@@ -23,12 +24,12 @@ const router = createBrowserRouter([
     errorElement: <Error />,
   },
 
-  {
-    path:'/courses/:id',
-    element:<CoursesIdPage/>,
-    errorElement:<Error/>,
+  // {
+  //   path:'/courses/:courseId',
+  //   element:<CoursesIdPage/>,
+  //   errorElement:<Error/>,
 
-  },
+  // },
 
   {
     path: "/teacher/courses",
@@ -56,6 +57,11 @@ const router = createBrowserRouter([
   {
     path:"teacher/courses/:id/chapters/:chapterid", 
     element: <ChapterIdPage/>,
+    errorElement:<Error/>
+  },
+  {
+    path:"courses/:id/chapters/:chapterId",
+    element:<PublishedChapterIdPage/>,
     errorElement:<Error/>
   }
 ]);

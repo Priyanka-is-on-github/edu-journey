@@ -16,7 +16,7 @@ const SearchPage = ({ searchParams }: SearchPageProps) => {
   );
   const [courses, setCourses] = useState<
     {
-      categoryid: number;
+      categoryid: string;
       createdat: string;
       description: string;
       id: string;
@@ -28,6 +28,9 @@ const SearchPage = ({ searchParams }: SearchPageProps) => {
       userid: null;
     }[]
   >([]);
+
+  
+ 
 
   useEffect(() => {
     (async () => {

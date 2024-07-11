@@ -29,18 +29,18 @@ const CourseIdPage = () => {
     id: "",
     userid: "",
     title: "",
-    description: "",
+    description: "", 
     imageurl: "",
     price: "",
     ispublished: false, 
-    categoryid: "",
+    categoryid: "", 
     createdat: "",
-    updatedat: "",
+    updatedat: "", 
     // chapters: "",
   });
 
   const [attachments, setAttachments]= useState([]);
-  const [categories, setCategories] = useState([]);
+  const [categories, setCategories] = useState([]);  
   const [chapters, setChapters] =useState<{id:string, title:string,courseid: string,createdat: string,description: string,isfree:string,ispublished: boolean,muxdata: string,position: string,updatedat:string,videourl:string}[]>([]); 
 
   useEffect(() => {
@@ -53,7 +53,7 @@ const CourseIdPage = () => {
         );
 
         const course = await response.json();
-        console.log('course=',course)
+        
         setNewCourseField(course); 
 
         const categoryResponse = await fetch(
@@ -94,7 +94,7 @@ const CourseIdPage = () => {
 try {
   const response = await fetch(`http://localhost:3001/api/v1/courses/chapter/${params.id}`)
   const updatedChapter = await response.json();
-  console.log('up=',updatedChapter)
+ 
   setCount(updatedChapter.length)
  
   setChapters(updatedChapter)
@@ -159,7 +159,7 @@ try {
             <ImageForm imageurl={newCourseFields.imageurl}  setnewcoursefield={setNewCourseField}/>
 
             <CategoryForm
-              categoryid={newCourseFields?.categoryid}
+              categoryid={newCourseFields?.categoryid} 
               options={categories?.map(
                 (category: { id: string; name: string }) => {
                   return {
@@ -168,7 +168,7 @@ try {
                   };
                 }
               )}
-              setnewcoursefield={setNewCourseField}
+              setnewcoursefield={setNewCourseField} 
             />
           </div>
 

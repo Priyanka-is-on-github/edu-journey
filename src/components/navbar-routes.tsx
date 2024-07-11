@@ -14,6 +14,8 @@ import SearchInput from "./search-input";
 const NavbarRoutes = () => {
   const { pathname } = useLocation();
 const isSearchPage = pathname === '/search';
+const isTeacherPage = pathname?.startsWith("/teacher");
+const isPlayerPage = pathname?.includes('/courses')
 
 
   return (
@@ -21,12 +23,15 @@ const isSearchPage = pathname === '/search';
    {isSearchPage && (<div className="hidden md:block">
     <SearchInput/>
     </div>)}
+
+
     <div className="flex gap-x-2 ml-auto items-center">
-      {pathname === "/teacher/courses" || pathname === "/teacher/create" ? (
+
+      {isTeacherPage || isPlayerPage ? (
         <Link to="/">
           <Button size="sm" variant="ghost">
-            {" "}
             <LogOut className="h-4 w-4 mr-2" />
+            Exit
           </Button>
         </Link>
       ) : (

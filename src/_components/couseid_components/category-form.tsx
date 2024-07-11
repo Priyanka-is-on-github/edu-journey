@@ -31,10 +31,11 @@ const formSchema = z.object({
 });
 
 const CategoryForm = ({
-  categoryid,
+  categoryid, 
   options,
   setnewcoursefield,
 }: CategoryFormProps) => {
+
   const [isEditing, setIsEditing] = useState(false);
   const params = useParams();
   
@@ -51,8 +52,9 @@ const CategoryForm = ({
 
   const { isSubmitting, isValid } = form.formState;
 
-  const onSubmit = async (values: z.infer<typeof formSchema>) => {
+  const onSubmit = async (values: z.infer<typeof formSchema>) => { 
    
+
 
     const request = {
       userid: null,
@@ -61,14 +63,14 @@ const CategoryForm = ({
       imageurl: null,
       price: null,
       ispublished: null,
-      categoryid: values?.categoryname,
+      categoryid: values?.categoryname, 
       createdat: null,
       updatedat: null,
     };
 
 
 
-    try {
+    try { 
       const response = await fetch(
         `http://localhost:3001/api/v1/courses/${params.id}`,
         {
@@ -80,6 +82,7 @@ const CategoryForm = ({
         }
       );
       const updatedCategory = await response.json();
+     
 
       setnewcoursefield(updatedCategory);
 
@@ -96,7 +99,7 @@ const CategoryForm = ({
 
   const selectedOption = options.find((option)=>{
     return(
-      option.value === String(categoryid)
+      option.label === String(categoryid)
     )
     
   })
@@ -133,7 +136,7 @@ const CategoryForm = ({
             <FormField
               control={form.control}
               name="categoryname"
-              render={({ field }) => (
+              render={({ field }) => ( 
                 <FormItem>
                   <FormControl>
                     <Combobox options={options} {...field} />

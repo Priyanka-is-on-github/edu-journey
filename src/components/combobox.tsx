@@ -15,21 +15,25 @@ import {
   PopoverContent,
   PopoverTrigger,
 } from "@/components/ui/popover";
+import { useAsyncValue } from "react-router-dom";
 
 interface ComboboxProps {
   options: { label: string; value: string }[];
-  value?: string;
+ 
   onChange: (value: string) => void;
 }
 
+
+
 const Combobox = React.forwardRef<HTMLDivElement, ComboboxProps>(
-  ({ options, onChange }, ref) => {
+
+  ({ options, onChange }, ref) => {  
     const [open, setOpen] = React.useState(false);
     const [value, setValue] = React.useState("");
 
-    
+    console.log('value1=', value)
 
-    return (
+    return ( 
       <Popover open={open} onOpenChange={setOpen}>
         <PopoverTrigger asChild>
           <Button
@@ -41,7 +45,7 @@ const Combobox = React.forwardRef<HTMLDivElement, ComboboxProps>(
           >
             {value
               ? options.find(
-                  (option) => option.value.toLowerCase() === value.toLowerCase()
+                  (option) => option.label.toLowerCase() === value.toLowerCase() 
                 )?.label
               : "Select option..."}
 
@@ -58,28 +62,29 @@ const Combobox = React.forwardRef<HTMLDivElement, ComboboxProps>(
                   
                   return (
                     <CommandItem
-                      key={option.value}
-                      value={option.value}
-                      onSelect={(currentValue) => {
-                        console.log("current value", currentValue);
+                      key={option.label}
+                      value={option.label}
+                      onSelect={(currentValue) => { 
+                       
+                        console.log('cv=',currentValue, option) 
 
                         onChange(
-                          option.value.toLowerCase() === value.toLowerCase()
+                          option.label.toLowerCase() === value.toLowerCase()
                             ? ""
-                            : option.value
+                            : option.label
                         );
                         setValue(
-                          currentValue.toLowerCase() === value.toLowerCase()
+                          currentValue.toLowerCase() === value.toLowerCase() 
                             ? ""
                             : currentValue
                         );
                         setOpen(false);
-                      }}
+                      }} 
                     >
                       <Check
                         className={cn(
                           "mr-2 h-4 w-4",
-                          value.toLowerCase() === option.value.toLowerCase()
+                          value.toLowerCase() === option.label.toLowerCase()
                             ? "opacity-100"
                             : "opacity-0"
                         )}
