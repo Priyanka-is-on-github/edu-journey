@@ -4,6 +4,7 @@ import React, { useState } from 'react'
 import toast from 'react-hot-toast';
 import { useAuth } from '@clerk/clerk-react';
 import { useLocation, useNavigate, useParams } from 'react-router-dom';
+import { CloudCog } from 'lucide-react';
 
 
 interface CourseEnrollButtonProps{
@@ -35,11 +36,13 @@ function CourseEnrollButton({price, courseId}:CourseEnrollButtonProps) {
                  'Content-Type': 'application/json',
                   Authorization: `Bearer ${token}` 
               },
+              body:JSON.stringify({chapterId:params.chapterId})
               
             }) 
             const data = await response.json();
          
             if (response.ok) {
+              console.log("sripe generated url",data.url)
                 window.location.assign(data.url); 
               } else {
                 toast.error(data.message || 'Something went wrong');

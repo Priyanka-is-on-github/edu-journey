@@ -1,5 +1,6 @@
 import React from 'react'
-import {FcEngineering, FcFilmReel, FcMultipleDevices, FcMusic, FcOldTimeCamera, FcSalesPerformance, FcSportsMode} from 'react-icons/fc'
+import {FcEngineering, FcFilmReel, FcGallery, FcMoneyTransfer, FcMultipleDevices, FcMusic, FcOldTimeCamera, FcReadingEbook, FcSalesPerformance, FcSettings, FcSportsMode} from 'react-icons/fc'
+import { MdFunctions } from 'react-icons/md';
 import {IconType} from 'react-icons'
 import CategoryItem from './category-item';
 
@@ -8,13 +9,18 @@ interface CategoriesProps{
 }
 
 const iconMap: Record<string, IconType>={
-// "Music": FcMusic,
-"Photography": FcOldTimeCamera,
-"Fitnes":FcSportsMode,
-// "Accounting" : FcSalesPerformance,
-"Computer Science" : FcMultipleDevices,
-"Filming": FcFilmReel,
-"Engineering":FcEngineering,
+"Music": FcMusic,
+  "Photography": FcOldTimeCamera,
+  "Fitness": FcSportsMode,
+  "Accounting": FcSalesPerformance,
+  "Computer Science": FcMultipleDevices,
+  "Filming": FcFilmReel,
+  "Engineering": FcEngineering,
+  "Mathematics": MdFunctions,
+  "Business & Finance": FcMoneyTransfer,
+  "Art & Design": FcGallery,
+  "Technology": FcSettings,
+  "Language & Linguistics": FcReadingEbook,
 
 
 }
