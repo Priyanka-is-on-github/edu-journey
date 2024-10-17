@@ -3,7 +3,23 @@ import Categories from "@/_components/browsepage_components/categories";
 import CoursesList from "@/components/course-list";
 import SearchInput from "@/components/search-input";
 import { useEffect, useState } from "react";
+import { createContext } from "react";
+import { useLocation, useParams } from "react-router-dom";
 
+type Course = {
+  categoryid: string;
+  createdat: string;
+  description: string;
+  id: string;
+  imageurl: string;
+  ispublished: boolean;
+  price: number;
+  title: string;
+  updatedat: string;
+  userid: string | null;
+  progress_percentage: number;
+};
+export const setCoursesContext = createContext<{setCourses: React.Dispatch<React.SetStateAction<Course[]>>;}>({setCourses : ()=>{}})
 interface SearchPageProps {
   searchParams: {
     title: string;
@@ -15,22 +31,11 @@ const SearchPage = ({ searchParams }: SearchPageProps) => {
     []
   );
   const [courses, setCourses] = useState<
-    {
-      categoryid: string;
-      createdat: string;
-      description: string;
-      id: string;
-      imageurl: string;
-      ispublished: boolean;
-      price: number;
-      title: string;
-      updatedat: string;
-      userid: null;
-    }[]
+  Course[]
   >([]);
 
   
- 
+
 
   useEffect(() => {
     (async () => {
@@ -59,6 +64,7 @@ const SearchPage = ({ searchParams }: SearchPageProps) => {
 
   return (
     <DashboardLayout>
+      <setCoursesContext.Provider value={{setCourses}}>
       <div className="px-6 pt-6 md:hidden md:mb-0 block">
         <SearchInput />
       </div>
@@ -66,6 +72,7 @@ const SearchPage = ({ searchParams }: SearchPageProps) => {
         <Categories items={categories} />
       </div>
       <CoursesList items={courses} />
+      </setCoursesContext.Provider>
     </DashboardLayout>
   );
 };

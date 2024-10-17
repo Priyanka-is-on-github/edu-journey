@@ -4,13 +4,14 @@ import { BookOpen } from "lucide-react";
 import "../index.css";
 import formatPrice from "@/lib/format";
 import { useEffect, useState } from "react";
+import CourseProgress from "./course-progress";
 
 interface CourseCardProps {
   id: string;
   title: string;
   imageUrl: string;
   price: number;
-  //   progress: number | null;
+    progress_percentage: number;
     category: string;
 }
 
@@ -19,11 +20,12 @@ const CourseCard = ({
   title,
   imageUrl,
   price,
-  //   progress,
+  progress_percentage,
   category,
 }: 
 
 CourseCardProps) => {
+
 
   const [publishedChapter, setPublishedChapter] = useState<
     {
@@ -41,6 +43,8 @@ CourseCardProps) => {
     }[]
   >([]);
 
+  const [purchase, setPurchase] = useState(false);
+
   useEffect(() => {
     (async () => {
       try {
@@ -50,6 +54,15 @@ CourseCardProps) => {
 
         const publishedChapters = await response.json();
         setPublishedChapter(publishedChapters);
+
+       
+        const purchase_response = await fetch(
+          `http://localhost:3001/api/v1/getpurchase/coursePurchase?courseId=${id}`
+        );
+
+        const purchase = await purchase_response.json();
+        setPurchase(purchase);
+
       } catch (error) {
         console.log(error);
       }
@@ -58,7 +71,7 @@ CourseCardProps) => {
 
   return (
     <Link to={`/courses/${id}/chapters/${publishedChapter[0]?.id}`}>
-      <div className="group hover:shadow-sm transition overflow-hidden borser rounded-lg p-3 h-full hover:shadow-lg ">
+      <div className="group  transition overflow-hidden borser rounded-lg p-3 h-full hover:shadow-lg ">
         <div className="relative w-full  aspect-video rounded-md overflow-hidden">
           <img className="object-cover" alt={title} src={imageUrl} />
         </div>
@@ -80,8 +93,13 @@ CourseCardProps) => {
             </div>
           </div>
 
-          {null !== null ? (
-            <div>TODO</div>
+          {purchase? (
+             <div className="  w-[100%]"> 
+
+              <CourseProgress size='sm' variant={progress_percentage === 100 ? 'success' : 'default'} value={progress_percentage}/>   
+            
+
+           </div>
           ) : (
             <p className="text-md md:text-sm font-medium text-slate-700">
               {formatPrice(price)}

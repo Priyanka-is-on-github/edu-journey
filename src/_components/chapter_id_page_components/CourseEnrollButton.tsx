@@ -42,10 +42,10 @@ function CourseEnrollButton({price, courseId}:CourseEnrollButtonProps) {
             const data = await response.json();
          
             if (response.ok) {
-              console.log("sripe generated url",data.url)
+              console.log("stripe generated url",data.url)
                 window.location.assign(data.url); 
               } else {
-                toast.error(data.message || 'Something went wrong');
+                toast.error(data.message || 'Something went wrong'); 
               }
 
     //           const queryParams = new URLSearchParams(location.search);

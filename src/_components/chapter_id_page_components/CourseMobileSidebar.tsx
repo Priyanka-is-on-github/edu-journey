@@ -3,8 +3,31 @@ import CourseSidebar from './CourseSidebar'
 import { Menu } from 'lucide-react'
 import React from 'react'
 
-function CourseMobileSidebar({courseTitle, chapters}) {
-    console.log(courseTitle)
+
+interface Chapters{
+
+  courseid: number;
+  createdat: string;
+  description: string;
+  id: number;
+  isfree: boolean;
+  ispublished: boolean;
+  muxdata: null;
+  position: number;
+  title: string;
+  updatedat: string;
+  videourl: string;
+
+}
+interface CourseTitle{
+  title : string;
+  chapters:Chapters[];
+  progressCount: number;
+}
+
+
+function CourseMobileSidebar({title, chapters, progressCount} : CourseTitle) {
+   
   return (
   <Sheet>
     <SheetTrigger className='md:hidden pr-4 hover:opacity-75 transition'>
@@ -12,7 +35,7 @@ function CourseMobileSidebar({courseTitle, chapters}) {
     </SheetTrigger>
 
     <SheetContent side='left' className='p-0 bg-white w-72'>
-        <CourseSidebar  courseTitle={courseTitle} chapters={chapters}/>
+        <CourseSidebar  courseTitle={title} chapters={chapters}  progressCount={progressCount}/>
     </SheetContent>
   </Sheet>
   )

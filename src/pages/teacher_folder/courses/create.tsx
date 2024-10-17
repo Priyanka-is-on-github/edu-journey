@@ -14,8 +14,9 @@ import {
 } from "@/components/ui/form";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
-import { Link } from "react-router-dom";
+import { Link, Navigate } from "react-router-dom";
 import toast from "react-hot-toast";
+import { useUser } from "@clerk/clerk-react";
 import { useNavigate } from "react-router-dom";
 
 const formSchema = z.object({
@@ -23,6 +24,7 @@ const formSchema = z.object({
 });
 
 const CreatePage = () => {
+  const {  user } = useUser();
   const navigate = useNavigate();
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
@@ -31,17 +33,23 @@ const CreatePage = () => {
     },
   });
 
+  if(!user?.id){
+    return <Navigate to="/teacher/courses" replace />;
+  }
+
+  
   const { isSubmitting, isValid } = form.formState;
 
   const onSubmit = async (values: z.infer<typeof formSchema>) => {
   
+    
     try {
       const response = await fetch("http://localhost:3001/api/v1/courses", {  
         method: "POST",
         headers: {
           "Content-type": "application/json",
         },
-        body: JSON.stringify(values),
+        body: JSON.stringify({values, userId : user?.id}),
       });
       const newcourse = await response.json();
       

@@ -24,6 +24,7 @@ interface Course {
     title: string;
     updatedat: string;
     userid: null | string;
+    progress_percentage: number;
   }
 
   interface CoursesListProps{
@@ -45,7 +46,7 @@ const CoursesList = ({ items }: CoursesListProps) => {
             imageUrl={item.imageurl}
             // chaptersLength={item.chapters.length}
             price={item.price}
-            // progress={item.progress}
+            progress_percentage={item.progress_percentage}
             category={item?.categoryid}
           />
         ))}

@@ -27,7 +27,7 @@ const CourseIdPage = () => {
   const [count, setCount] =useState(0);
   const [newCourseFields, setNewCourseField] = useState({  
     id: "",
-    userid: "",
+    teacherid: "",
     title: "",
     description: "", 
     imageurl: "",

@@ -1,18 +1,32 @@
 import React, { useEffect, useState } from "react";
-import { useNavigate, useParams } from "react-router-dom";
-import CourseSidebar from '../_components/chapter_id_page_components/CourseSidebar.js' 
+import { Navigate, useNavigate, useParams } from "react-router-dom";
+import CourseSidebar from "../_components/chapter_id_page_components/CourseSidebar.js";
 import CourseNavbar from "@/_components/chapter_id_page_components/course-navbar.js";
+import { useUser } from "@clerk/clerk-react";
+import { createContext } from "react";
+
+export const ProgressCountContext  = createContext<
+{setProgressCount: React.Dispatch<React.SetStateAction<number>>;}
+>({
+  setProgressCount: ()=>{}
+});
 
 function CourseLayout({ children }: { children: React.ReactNode }) {
+  const navigate = useNavigate();
+ const {isSignedIn, user} = useUser()
   // const {userId} = auth();
   // if(!userId)
   // {
-  //     Navigate('/')
+  //     navigate('/')
   // }
-  
-  const params= useParams()
-  const [publishedChapter, setPublishedChapter ]= useState<{
-    courseid: number;
+
+  // if(!course){
+  //   navigate('/')
+  // }
+  const { id} = useParams();
+  const [publishedChapter, setPublishedChapter] = useState<
+    {
+      courseid: number;
       createdat: string;
       description: string;
       id: number;
@@ -23,64 +37,79 @@ function CourseLayout({ children }: { children: React.ReactNode }) {
       title: string;
       updatedat: string;
       videourl: string;
-  }[]>([])
-  const [courseTitle, setCourseTitle] = useState<{title:string}>({title:''})
+    }[]
+  >([]);
+  const [courseTitle, setCourseTitle] = useState("");
+  const [progressCount, setProgressCount] = useState(0.0);
 
-console.log('params=',params)
-
-  useEffect(()=>{
-    (async()=>{
+  useEffect(() => {
+    (async () => {
       try {
-        const response = await fetch(`http://localhost:3001/api/v1/getcourses/publishedchapters/${params.id}`)
-
+        const response = await fetch(
+          `http://localhost:3001/api/v1/getcourses/publishedchapters/${id}`
+        );
 
         const publishedChapters = await response.json();
-        setPublishedChapter(publishedChapters)
-
+        setPublishedChapter(publishedChapters);
       } catch (error) {
-
-        console.log(error)
+        console.log(error);
       }
+    })();
+  }, []);
 
-    })()
-  },[])
+  useEffect(() => {
+    if (!user?.id) return; // Wait until user is available
 
-  useEffect(()=>{
-  (async()=>{
-
-    try {
-      const response = await fetch(`http://localhost:3001/api/v1/getcourses/coursetitle/${params.id}`)
-      const title = await response.json()
-
-      setCourseTitle(title)
-
-    } catch (error) {
-      console.log(error)
-    }
-   
-
-  })()
-  },[])
+    (async () => {
+      try {
 
 
+        const response = await fetch(
+          `http://localhost:3001/api/v1/getcourses/coursetitle/${id}`
+        );
+        const title = await response.json();
+
+        setCourseTitle(title.title);
+
+        const progressPercentage = await fetch(
+          `http://localhost:3001/api/v1/getprogress/progressPercentage?courseId=${id}&userId=${user?.id}`
+        );
+
+        const progressPercentageCount = await progressPercentage.json();
+        const progressPercentageValue =progressPercentageCount.progressPercentage;
+      
+
+        setProgressCount(progressPercentageValue);
+      } catch (error) {
+        console.log(error);
+      }
+    })();
+  }, [user, id]);
+
+  
   return (
-    <div className="h-full">
-    
-
+    <ProgressCountContext.Provider value={{setProgressCount}}>
+    <div className="h-full"> 
       <div className="h-[80px] md:pl:80 fixed inset-y-0 w-full z-50">
-    <CourseNavbar courseTitle ={courseTitle} chapters={publishedChapter}/>
+        <CourseNavbar
+          title={courseTitle}
+          chapters={publishedChapter}
+          progressCount={progressCount}
+        />
+
       </div>
 
       <div className="hidden md:flex h-full w-80 flex-col fixed inset-y-0 z-50 bg-white ">
-        {/* <CourseSidebar course={course} progressCount={progressCount}/> */}
-
-        <CourseSidebar courseTitle ={courseTitle} chapters={publishedChapter}/>
-  
+        <CourseSidebar  
+          courseTitle={courseTitle} 
+          chapters={publishedChapter}
+          progressCount={progressCount}
+        />
       </div>
 
-      <main className="md:pl-80 pt-[80px] h-full">{children}</main>
-
+      <main className="md:pl-80 pt-[80px] h-full">{children}</main> 
     </div>
+    </ProgressCountContext.Provider>
   );
 }
 
