@@ -1,7 +1,7 @@
 import { Button } from "@/components/ui/button";
 import { useConfettiStore } from "@/hooks/use-confetti-store";
 import { CheckCircle, XCircle } from "lucide-react";
-import React, { useContext, useEffect, useState } from "react";
+import  { useContext,  useState } from "react";
 import toast from "react-hot-toast";
 import { useNavigate } from "react-router-dom";
 import { useUser } from "@clerk/clerk-react";
@@ -23,7 +23,7 @@ function CourseProgressButton({
   const navigate = useNavigate();
   const confetti = useConfettiStore();
   const [isLoading, setIsLoading] = useState(false);
-  const { isSignedIn, user } = useUser();
+  const {  user } = useUser();
 
   const { setIsCompleted } = useContext(IsCompletedContext);
   const { setProgressCount } = useContext(ProgressCountContext); 
@@ -33,8 +33,7 @@ function CourseProgressButton({
   const onClick = async () => {
     try {
       setIsLoading(true);
-
-      const response = await fetch(   
+        await fetch(   
         `http://localhost:3001/api/v1/getprogress/courseprogress?chapterId=${chapterId}`,
         {
           method: "PUT",

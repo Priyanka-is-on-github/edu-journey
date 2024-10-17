@@ -16,7 +16,6 @@ import PriceForm from "@/_components/couseid_components/price-form";
 import ChaptersForm from "@/_components/couseid_components/chapter-form";
 import ImageForm from "@/_components/couseid_components/image-form";
 import AttachmentForm from "@/_components/couseid_components/attachment-form";
-import ChapterActions from "@/_components/chapterid_components/chapter-actions";
 import Banner from "@/components/banner";
 import CourseActions from "@/_components/couseid_components/course-actions";
 

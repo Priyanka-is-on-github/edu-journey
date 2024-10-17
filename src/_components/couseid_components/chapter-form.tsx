@@ -4,26 +4,24 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 
 import { Button } from "@/components/ui/button";
-import { Link,  useNavigate } from "react-router-dom";
+import {  useNavigate } from "react-router-dom";
 
 import {
   Form,
   FormControl,
-  FormDescription,
   FormField,
   FormItem,
-  FormLabel,
   FormMessage,
 } from "@/components/ui/form";
 
 import { Input } from "@/components/ui/input";
 
-import { Loader2, Pencil, PlusCircle } from "lucide-react";
-import { useEffect, useState } from "react";
+import { Loader2, PlusCircle } from "lucide-react";
+import {  useState } from "react";
 import toast from "react-hot-toast";
 import { useParams } from "react-router-dom";
 import { cn } from "@/lib/utils";
-import { Textarea } from "@/components/ui/textarea";
+
 import ChapterList from "@/components/chapter-list";
 
 interface ChapterFormProps {

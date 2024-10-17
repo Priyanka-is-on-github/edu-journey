@@ -1,7 +1,7 @@
 import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
 import CourseSidebar from './CourseSidebar'
 import { Menu } from 'lucide-react'
-import React from 'react'
+
 
 
 interface Chapters{

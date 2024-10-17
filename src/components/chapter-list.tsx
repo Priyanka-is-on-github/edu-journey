@@ -1,7 +1,7 @@
 import {DragDropContext, Droppable,Draggable, DropResult,} from '@hello-pangea/dnd'
 import {cn} from '@/lib/utils'
 import { useEffect, useState } from 'react';
-import { Badge, Grip, Pencil } from 'lucide-react';
+import {  Grip, Pencil } from 'lucide-react';
 
 
 interface ChapterListProps{
@@ -23,6 +23,7 @@ interface ChapterListProps{
 
 
 const ChapterList =({onEdit, onReorder, items}: ChapterListProps)=>{
+  
     const [isMounted, setIsMounted] = useState(false)
     const [chapters, setChapters]=useState(items)
 
@@ -37,7 +38,7 @@ const ChapterList =({onEdit, onReorder, items}: ChapterListProps)=>{
     },[])
 
     const onDragEnd =(result: DropResult)=>{
-        console.log('result=', result)
+ 
         if(!result.destination) return;
 
         const items = Array.from(chapters);

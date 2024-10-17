@@ -1,5 +1,5 @@
 import { Button } from "@/components/ui/button";
-import MuxPlayer from "@mux/mux-player-react";
+
 import { useCallback, useState } from "react";
 import { FileWithPath, useDropzone } from "react-dropzone";
 
@@ -14,6 +14,7 @@ const VideoUploader = ({ fieldChange, mediaUrl }: VideoUploaderProps) => {
   const [file, setFile] = useState<File[]>([]);
   const [fileUrl, setFileUrl] = useState<string>(mediaUrl); 
 
+  console.log(file)
   const onDrop = useCallback(
     (acceptedFiles: FileWithPath[]) => {
       setFile(acceptedFiles);
@@ -38,13 +39,7 @@ const VideoUploader = ({ fieldChange, mediaUrl }: VideoUploaderProps) => {
       {fileUrl ? ( 
         <>
           <div className="flex flex-1 justify-center w-full py-3 px-1  "> 
-            {/* <img
-              src={fileUrl} 
-              alt="video"
-              height={"100%"}
-              width={"100%"}
-              className="h-full lg:h-[330px] w-full rounded-[5px] object-cover object-top"
-            /> */}
+           
 
         
           </div>
@@ -54,12 +49,7 @@ const VideoUploader = ({ fieldChange, mediaUrl }: VideoUploaderProps) => {
         </>
       ) : (
         <div className="flex justify-center items-center flex-center flex-col p-7 h-72 bg-gray-100 rounded-xl">
-          {/* <img
-            src="/assets/upload.svg"
-            alt="file-upload"
-            height={77}
-            width={106} 
-          /> */}
+         
           <h3>Drag video here</h3>
         
           <Button className=" my-2">Select from Device</Button>

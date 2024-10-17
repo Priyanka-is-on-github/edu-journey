@@ -1,10 +1,10 @@
 import { Button } from '@/components/ui/button'
 import formatPrice from '@/lib/format'
-import React, { useState } from 'react'
+import { useState } from 'react'
 import toast from 'react-hot-toast';
 import { useAuth } from '@clerk/clerk-react';
-import { useLocation, useNavigate, useParams } from 'react-router-dom';
-import { CloudCog } from 'lucide-react';
+import { useParams } from 'react-router-dom';
+
 
 
 interface CourseEnrollButtonProps{
@@ -17,9 +17,8 @@ function CourseEnrollButton({price, courseId}:CourseEnrollButtonProps) {
   
     const [isLoading, setIsLoading]= useState(false);
     const { getToken } = useAuth();
-    const navigate = useNavigate()
     const params = useParams()
-    const location = useLocation();
+    
     
 
     const onClick = async ()=>{

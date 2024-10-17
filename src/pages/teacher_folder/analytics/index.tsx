@@ -1,12 +1,12 @@
 import DashboardLayout from "@/Layout/layout";
 import DataCard from "./_components/data-card";
 import { useUser } from "@clerk/clerk-react";
-import { Navigate, redirect } from "react-router-dom";
+import { Navigate } from "react-router-dom";
 import Chart from "./_components/chart";
 import { useEffect, useState } from "react";
 
 const Analytics = () => {
-  const {isSignedIn, user} = useUser();
+  const { user} = useUser();
   const [totalSales, setTotalSales] = useState(0);
   const [totalRevenue, setTotalRevenue] = useState(0);
   const [data, setData] = useState([]);

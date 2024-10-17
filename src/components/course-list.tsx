@@ -1,10 +1,10 @@
 import CourseCard from "./course-card";
 
-type CourseWithProgressWithCategory = Course & {
-  category: Category | null;
-  chapters: { id: string }[];
-  progress: number | null;
-};
+// type CourseWithProgressWithCategory = Course & {
+//   category: Category | null;
+//   chapters: { id: string }[];
+//   progress: number | null;
+// };
 
 // interface CoursesListProps {
 //   items: CourseWithProgressWithCategory[];
@@ -25,6 +25,10 @@ interface Course {
     updatedat: string;
     userid: null | string;
     progress_percentage: number;
+ 
+
+
+    
   }
 
   interface CoursesListProps{
@@ -46,7 +50,7 @@ const CoursesList = ({ items }: CoursesListProps) => {
             imageUrl={item.imageurl}
             // chaptersLength={item.chapters.length}
             price={item.price}
-            progress_percentage={item.progress_percentage}
+             progress_percentage={item.progress_percentage}
             category={item?.categoryid}
           />
         ))}

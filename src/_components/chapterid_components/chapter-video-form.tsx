@@ -8,21 +8,17 @@ import { useForm } from "react-hook-form";
 import {
   Form,
   FormControl,
-  FormDescription,
   FormField,
   FormItem,
   FormLabel,
-  FormMessage,
 } from "@/components/ui/form";
 
-import { Input } from "@/components/ui/input";
+
 import { Button } from "@/components/ui/button";
-import { ImageDown, ImageIcon, Loader2, Pencil, PlusCircle, Video } from "lucide-react";
+import { Loader2, Pencil, PlusCircle, Video } from "lucide-react";
 import { useEffect, useState } from "react";
 import toast from "react-hot-toast";
 import { useParams } from "react-router-dom";
-import { cn } from "@/lib/utils";
-import { Textarea } from "@/components/ui/textarea";
 import VideoUploader from "@/components/video-upload";
 import MuxPlayer from '@mux/mux-player-react';
 

@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { Navigate, useNavigate, useParams } from "react-router-dom";
+import {  useParams } from "react-router-dom";
 import CourseSidebar from "../_components/chapter_id_page_components/CourseSidebar.js";
 import CourseNavbar from "@/_components/chapter_id_page_components/course-navbar.js";
 import { useUser } from "@clerk/clerk-react";
@@ -12,17 +12,8 @@ export const ProgressCountContext  = createContext<
 });
 
 function CourseLayout({ children }: { children: React.ReactNode }) {
-  const navigate = useNavigate();
- const {isSignedIn, user} = useUser()
-  // const {userId} = auth();
-  // if(!userId)
-  // {
-  //     navigate('/')
-  // }
-
-  // if(!course){
-  //   navigate('/')
-  // }
+ 
+  const {user} = useUser()
   const { id} = useParams();
   const [publishedChapter, setPublishedChapter] = useState<
     {

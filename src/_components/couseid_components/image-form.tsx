@@ -1,29 +1,22 @@
-import {
-  generateUploadButton,
-  generateUploadDropzone,
-} from "@uploadthing/react";
+
 
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import * as z from "zod";
 
-import { UploadDropzone } from "@uploadthing/react";
 
 import { Button } from "@/components/ui/button";
-import { ImageDown, ImageIcon, Pencil, PlusCircle } from "lucide-react";
-import { useEffect, useState } from "react";
+import {  ImageIcon, Pencil, PlusCircle } from "lucide-react";
+import { useState } from "react";
 import toast from "react-hot-toast";
 import { useParams } from "react-router-dom";
-import FileUpload from "@/components/file-upload";
-import { OurFileRouter } from "../../../../server/uploadthing";
 
 import {
   Form,
   FormControl,
-  FormDescription,
   FormField,
   FormItem,
   FormLabel,
-  FormMessage,
+
 } from "@/components/ui/form";
 import FileUploader from "@/components/file-uploader";
 import { useForm } from "react-hook-form";

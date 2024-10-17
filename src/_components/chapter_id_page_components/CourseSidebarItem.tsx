@@ -1,8 +1,7 @@
 import { cn } from '@/lib/utils';
-import PublishedChapterIdPage from '@/pages/dashboard_folder/browse/PublishedChapterIdPage';
 import { CheckCircle, Lock, PlayCircle } from 'lucide-react';
-import React, { useEffect, useState } from 'react'
-import { useLocation, useNavigate, useParams } from 'react-router-dom';
+import { useEffect, useState } from 'react'
+import { useLocation, useNavigate} from 'react-router-dom';
 import { useUser } from '@clerk/clerk-react';
 
 interface CourseSidebarItemPprops{
@@ -16,11 +15,10 @@ interface CourseSidebarItemPprops{
 
 const  CourseSidebarItem =({label, id, chapterId, isLocked,   purchased}: CourseSidebarItemPprops)=> {
 
-  // const {id} = useParams();
   const navigate = useNavigate();  
   const location = useLocation();
  const [isCompleted, setIsCompleted] = useState(false)
-  const {isSignedIn, user} = useUser()
+  const { user} = useUser()
 
 
 

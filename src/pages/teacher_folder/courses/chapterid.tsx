@@ -6,7 +6,6 @@ import ChapterTitleForm from "@/_components/chapterid_components/chapter-title-f
 import VideoForm from "@/_components/chapterid_components/chapter-video-form";
 import Banner from "@/components/banner";
 import { IconBadge } from "@/components/icon-badge";
-import { Button } from "@/components/ui/button";
 import { ArrowLeft, Eye, LayoutDashboard, Video } from "lucide-react";
 import { useEffect, useState } from "react";
 import { useParams, Link } from "react-router-dom";

@@ -6,21 +6,18 @@ import { useForm } from "react-hook-form";
 import {
   Form,
   FormControl,
-  FormDescription,
   FormField,
   FormItem,
-  FormLabel,
   FormMessage,
 } from "@/components/ui/form";
 
-import { Input } from "@/components/ui/input";
+
 import { Button } from "@/components/ui/button";
 import { Pencil } from "lucide-react";
 import { useEffect, useState } from "react";
 import toast from "react-hot-toast";
 import { useParams } from "react-router-dom";
 import { cn } from "@/lib/utils";
-import { Textarea } from "@/components/ui/textarea";
 import Editor from "@/components/editor";
 import Preview from "@/components/preview";
 

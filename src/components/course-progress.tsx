@@ -1,10 +1,10 @@
-import React from 'react'
+
 import { Progress } from '@/components/ui/progress';  
 import { cn } from '@/lib/utils';
 
-interface CourseProgressProps{
+type CourseProgressProps={
     value:number;
-    variant?: 'dafault' | 'success' ;
+    variant?:  'success'  ;
     size?: "default"|"sm";
 };
 
@@ -20,6 +20,9 @@ const sizeByvariant ={
 }
 
 function CourseProgress( {value, variant, size}: CourseProgressProps) {
+
+    if(!variant) return;
+
   return (
     <div>
 

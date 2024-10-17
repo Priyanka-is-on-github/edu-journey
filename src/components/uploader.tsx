@@ -1,8 +1,8 @@
 import { Button } from "@/components/ui/button";
-import { Loader } from "lucide-react";
+
 import { useCallback, useState } from "react";
 import { FileWithPath, useDropzone } from "react-dropzone";
-import ProgressBar from "@ramonak/react-progress-bar";
+
 
 type UploaderProps = {
   fieldChange: (files: File[]) => void;
@@ -10,15 +10,16 @@ type UploaderProps = {
 };
 
 const Uploader = ({ fieldChange, mediaUrl }: UploaderProps) => {
- console.log(',url=',mediaUrl)
+ 
   const [file, setFile] = useState<File[]>([]);
   const [fileUrl, setFileUrl] = useState<string>(mediaUrl); 
 
+  console.log(file)
   const onDrop = useCallback(
     (acceptedFiles: FileWithPath[]) => {
       setFile(acceptedFiles);
       fieldChange(acceptedFiles);
-      console.log('g=',URL.createObjectURL(acceptedFiles[0]))
+     
       setFileUrl(URL.createObjectURL(acceptedFiles[0]));
     },
     [fieldChange]

@@ -15,7 +15,7 @@ import {
   PopoverContent,
   PopoverTrigger,
 } from "@/components/ui/popover";
-import { useAsyncValue } from "react-router-dom";
+
 
 interface ComboboxProps {
   options: { label: string; value: string }[];
@@ -25,7 +25,7 @@ interface ComboboxProps {
 
 
 
-const Combobox = React.forwardRef<HTMLDivElement, ComboboxProps>(
+const Combobox = React.forwardRef<HTMLButtonElement, ComboboxProps>(
 
   ({ options, onChange }, ref) => {  
     const [open, setOpen] = React.useState(false);

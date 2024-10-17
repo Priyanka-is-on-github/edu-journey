@@ -4,7 +4,7 @@ import CoursesList from "@/components/course-list";
 import SearchInput from "@/components/search-input";
 import { useEffect, useState } from "react";
 import { createContext } from "react";
-import { useLocation, useParams } from "react-router-dom";
+
 
 type Course = {
   categoryid: string;
@@ -20,13 +20,13 @@ type Course = {
   progress_percentage: number;
 };
 export const setCoursesContext = createContext<{setCourses: React.Dispatch<React.SetStateAction<Course[]>>;}>({setCourses : ()=>{}})
-interface SearchPageProps {
-  searchParams: {
-    title: string;
-    categoryId: string;
-  };
-}
-const SearchPage = ({ searchParams }: SearchPageProps) => {
+// interface SearchPageProps {
+//   searchParams: {
+//     title: string;
+//     categoryId: string;
+//   };
+// }
+const SearchPage = () => {
   const [categories, setCategories] = useState<{ id: string; name: string }[]>(
     []
   );

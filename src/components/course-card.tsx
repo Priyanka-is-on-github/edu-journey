@@ -96,7 +96,7 @@ CourseCardProps) => {
           {purchase? (
              <div className="  w-[100%]"> 
 
-              <CourseProgress size='sm' variant={progress_percentage === 100 ? 'success' : 'default'} value={progress_percentage}/>   
+              <CourseProgress size='sm' variant='success' value={progress_percentage}/>   
             
 
            </div>
@@ -111,3 +111,4 @@ CourseCardProps) => {
   );
 };
 export default CourseCard;
+// variant={progress_percentage === 100 ? 'success' : 'default'}

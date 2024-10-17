@@ -1,6 +1,6 @@
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import formatPrice from "@/lib/format";
-import React from "react";
+
 
 interface DataCardProps {
   value: number;

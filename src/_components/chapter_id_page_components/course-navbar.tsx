@@ -1,5 +1,4 @@
 import NavbarRoutes from '@/components/navbar-routes'
-import React from 'react'
 import CourseMobileSidebar from './CourseMobileSidebar'
 
 

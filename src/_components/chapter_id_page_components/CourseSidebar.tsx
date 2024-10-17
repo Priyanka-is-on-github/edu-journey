@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import  { useEffect, useState } from "react";
 import CourseSidebarItem from "./CourseSidebarItem";
 import CourseProgress from "@/components/course-progress";
 import { useParams } from "react-router-dom";
@@ -34,10 +34,10 @@ function CourseSidebar({
 }: ChapterListProps) {
   
   const { chapterId, id } = useParams();
-  const {isSignedIn, user} = useUser();
+  const { user} = useUser();
 
   const [purchase, setPurchase] = useState(false);
-  const [chapterCompleted, setChapterCompleted] = useState(false);
+ 
   
   // const {userId} = auth();
   // if(!userId)
@@ -60,12 +60,7 @@ function CourseSidebar({
         const purchase = await purchase_response.json();
         setPurchase(purchase);
 
-        // const chapterCompleted = await fetch(
-        //   `http://localhost:3001/api/v1/getprogress/chapterCompleted?chapterId=${chapterId}&userId=${user?.id}`
-        // );
-        // const completeChapter = await chapterCompleted.json();
-       
-        // setChapterCompleted(completeChapter?.iscompleted);
+      
        
       } catch (error) {
         console.log(error);

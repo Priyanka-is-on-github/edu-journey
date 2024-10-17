@@ -25,6 +25,8 @@ const [purchasedCourses, setPurchasedCourses] = useState<
   title: string;
   updatedat: string;
   userid: null | string;
+  progress_percentage: number;
+
 }[]
 
 >([])
@@ -50,7 +52,8 @@ const [purchasedCourses, setPurchasedCourses] = useState<
         const Courses = await purchasedCourses.json();
         setCompletedCourses(Courses.completedCount)
         setCoursesInProgress(Courses.progress)
-        setPurchasedCourses(Courses.courses)
+      console.log('course=', Courses)
+       setPurchasedCourses(Courses.courses)
        
       } catch (error) {
         console.log(error);
@@ -91,6 +94,7 @@ const [purchasedCourses, setPurchasedCourses] = useState<
 
 
         <CoursesList items={purchasedCourses}/>
+
       </div>
     </DashboardLayout>
   );

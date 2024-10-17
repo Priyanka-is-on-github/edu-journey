@@ -5,7 +5,7 @@ import Banner from "@/components/banner";
 import Preview from "@/components/preview";
 import { Separator } from "@/components/ui/separator";
 import CourseLayout from "@/Layout/layout2";
-import { CloudFog, File } from "lucide-react";
+import {  File } from "lucide-react";
 import React, { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import { useUser } from "@clerk/clerk-react";
@@ -20,8 +20,8 @@ export const IsCompletedContext = createContext<{
 });
 
 function PublishedChapterIdPage() {
-  // const {userId} = auth();
-  const { isSignedIn, user } = useUser();
+
+  const {  user } = useUser();
   const navigate = useNavigate();
   const [isCompleted, setIsCompleted] = useState(false);
   const { chapterId, id } = useParams();

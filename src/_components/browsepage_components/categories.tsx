@@ -1,4 +1,3 @@
-import React from 'react'
 import {FcEngineering, FcFilmReel, FcGallery, FcMoneyTransfer, FcMultipleDevices, FcMusic, FcOldTimeCamera, FcReadingEbook, FcSalesPerformance, FcSettings, FcSportsMode} from 'react-icons/fc'
 import { MdFunctions } from 'react-icons/md';
 import {IconType} from 'react-icons'

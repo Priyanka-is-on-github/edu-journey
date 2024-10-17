@@ -10,7 +10,7 @@ import { useState, Dispatch, SetStateAction } from 'react';
 
 type NewCourseField = {
     id: string;
-    userid: string;
+    
     title: string;
     description: string;
     imageurl: string;
@@ -19,6 +19,7 @@ type NewCourseField = {
     categoryid: string;
     createdat: string;
     updatedat: string;
+    teacherid:string;
     // chapters?: string; // Uncomment if you need the chapters field
   };
 interface CourseActionProps{

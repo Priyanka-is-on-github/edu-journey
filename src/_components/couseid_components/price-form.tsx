@@ -6,10 +6,8 @@ import { useForm } from "react-hook-form";
 import {
   Form,
   FormControl,
-  FormDescription,
   FormField,
   FormItem,
-  FormLabel,
   FormMessage,
 } from "@/components/ui/form";
 
@@ -20,8 +18,6 @@ import { useEffect, useState } from "react";
 import toast from "react-hot-toast";
 import { useParams } from "react-router-dom";
 import { cn } from "@/lib/utils";
-import { Textarea } from "@/components/ui/textarea";
-import FormatPrice from "@/lib/format";
 import formatPrice from "@/lib/format";
 
 interface PriceFormProps {
