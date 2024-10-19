@@ -56,7 +56,7 @@ import Uploader from "@/components/uploader";
       setIsUpdating(true)
        try {
         const response = await fetch(
-          `http://localhost:3001/api/v1/fileupload/courseAttachment?courseId=${params.id}`, 
+          `${import.meta.env.SERVER_URL}/api/v1/fileupload/courseAttachment?courseId=${params.id}`, 
           {
             method: "POST", 
            
@@ -86,7 +86,7 @@ import Uploader from "@/components/uploader";
    
     try {
       setDeletingId(id)
-      const response=await fetch(`http://localhost:3001/api/v1/fileupload/courseAttachmentDelete?courseId=${params.id}&attachmentId=${id}`, {
+      const response=await fetch(`${import.meta.env.SERVER_URL}/api/v1/fileupload/courseAttachmentDelete?courseId=${params.id}&attachmentId=${id}`, {
         method: 'DELETE',
         headers: {
           'Content-Type': 'application/json',

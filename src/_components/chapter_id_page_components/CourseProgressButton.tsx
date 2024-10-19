@@ -34,7 +34,7 @@ function CourseProgressButton({
     try {
       setIsLoading(true);
         await fetch(   
-        `http://localhost:3001/api/v1/getprogress/courseprogress?chapterId=${chapterId}`,
+        `${import.meta.env.SERVER_URL}/api/v1/getprogress/courseprogress?chapterId=${chapterId}`,
         {
           method: "PUT",
           headers: {
@@ -52,7 +52,7 @@ function CourseProgressButton({
       if (!isCompleted && !nextChapterId) {
         
         const progressPercentage = await fetch(
-          `http://localhost:3001/api/v1/getprogress/progressPercentage?courseId=${courseId}&userId=${user?.id}`
+          `${import.meta.env.SERVER_URL}/api/v1/getprogress/progressPercentage?courseId=${courseId}&userId=${user?.id}`
         );
 
         const progressPercentageCount = await progressPercentage.json();
@@ -66,7 +66,7 @@ function CourseProgressButton({
 
       if (!isCompleted && nextChapterId) {
         const progressPercentage = await fetch(
-          `http://localhost:3001/api/v1/getprogress/progressPercentage?courseId=${courseId}&userId=${user?.id}`
+          `${import.meta.env.SERVER_URL}/api/v1/getprogress/progressPercentage?courseId=${courseId}&userId=${user?.id}`
         );
 
         const progressPercentageCount = await progressPercentage.json();
@@ -81,7 +81,7 @@ function CourseProgressButton({
 
       if(isCompleted === true){
         const progressPercentage = await fetch(
-            `http://localhost:3001/api/v1/getprogress/progressPercentage?courseId=${courseId}&userId=${user?.id}`
+            `${import.meta.env.SERVER_URL}/api/v1/getprogress/progressPercentage?courseId=${courseId}&userId=${user?.id}`
           );
   
           const progressPercentageCount = await progressPercentage.json();

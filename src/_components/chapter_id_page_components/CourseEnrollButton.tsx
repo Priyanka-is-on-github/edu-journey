@@ -29,7 +29,7 @@ function CourseEnrollButton({price, courseId}:CourseEnrollButtonProps) {
             const token = await getToken();
             console.log('Access Token:', token);
 
-            const response = await fetch(`http://localhost:3001/api/v1/courses/checkout/${courseId}`,{ 
+            const response = await fetch(`${import.meta.env.SERVER_URL}/api/v1/courses/checkout/${courseId}`,{ 
               method:'POST',
               headers:{
                  'Content-Type': 'application/json',

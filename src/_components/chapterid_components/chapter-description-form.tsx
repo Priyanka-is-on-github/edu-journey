@@ -62,7 +62,7 @@ const ChapterDescriptionForm = ({
     
     try {
       const response = await fetch(
-        `http://localhost:3001/api/v1/courses/chapterdetail/${params.chapterid}`, 
+        `${import.meta.env.SERVER_URL}/api/v1/courses/chapterdetail/${params.chapterid}`, 
         {
           method: "POST",
           headers: {

@@ -37,7 +37,7 @@ function CourseLayout({ children }: { children: React.ReactNode }) {
     (async () => {
       try {
         const response = await fetch(
-          `http://localhost:3001/api/v1/getcourses/publishedchapters/${id}`
+          `${import.meta.env.SERVER_URL}/api/v1/getcourses/publishedchapters/${id}`
         );
 
         const publishedChapters = await response.json();
@@ -56,14 +56,14 @@ function CourseLayout({ children }: { children: React.ReactNode }) {
 
 
         const response = await fetch(
-          `http://localhost:3001/api/v1/getcourses/coursetitle/${id}`
+          `${import.meta.env.SERVER_URL}/api/v1/getcourses/coursetitle/${id}`
         );
         const title = await response.json();
 
         setCourseTitle(title.title);
 
         const progressPercentage = await fetch(
-          `http://localhost:3001/api/v1/getprogress/progressPercentage?courseId=${id}&userId=${user?.id}`
+          `${import.meta.env.SERVER_URL}/api/v1/getprogress/progressPercentage?courseId=${id}&userId=${user?.id}`
         );
 
         const progressPercentageCount = await progressPercentage.json();

@@ -39,7 +39,7 @@ const SearchPage = () => {
 
   useEffect(() => {
     (async () => {
-      const response = await fetch("http://localhost:3001/api/v1/category");
+      const response = await fetch(`${import.meta.env.SERVER_URL}/api/v1/category`);
 
       const category = await response.json();
 
@@ -51,7 +51,7 @@ const SearchPage = () => {
     (async () => {
       try {
         const response = await fetch(
-          "http://localhost:3001/api/v1/getcourses/publishedcourses"
+          `${import.meta.env.SERVER_URL}/api/v1/getcourses/publishedcourses`
         );
         const publishedCourses = await response.json();
 

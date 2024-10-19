@@ -48,7 +48,7 @@ const CourseIdPage = () => {
     (async () => {
       try {
         const response = await fetch(
-          `http://localhost:3001/api/v1/courses/${params.id}`
+          `${import.meta.env.SERVER_URL}/api/v1/courses/${params.id}`
         );
 
         const course = await response.json();
@@ -56,7 +56,7 @@ const CourseIdPage = () => {
         setNewCourseField(course); 
 
         const categoryResponse = await fetch(
-          "http://localhost:3001/api/v1/category"
+          `${import.meta.env.SERVER_URL}/api/v1/category`
         );
         const category = await categoryResponse.json();
         console.log("caterory=", category);
@@ -74,7 +74,7 @@ const CourseIdPage = () => {
     (async()=>{
 
       try {
-        const response = await fetch( `http://localhost:3001/api/v1/fileupload/courseAttachment?courseId=${params.id}`,
+        const response = await fetch( `${import.meta.env.SERVER_URL}/api/v1/fileupload/courseAttachment?courseId=${params.id}`,
          )
 
          const updatedAttachment= await response.json();
@@ -91,7 +91,7 @@ const CourseIdPage = () => {
   useEffect(()=>{ 
     (async()=>{
 try {
-  const response = await fetch(`http://localhost:3001/api/v1/courses/chapter/${params.id}`)
+  const response = await fetch(`${import.meta.env.SERVER_URL}/api/v1/courses/chapter/${params.id}`)
   const updatedChapter = await response.json();
  
   setCount(updatedChapter.length)

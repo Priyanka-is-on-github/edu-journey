@@ -49,7 +49,7 @@ CourseCardProps) => {
     (async () => {
       try {
         const response = await fetch(
-          `http://localhost:3001/api/v1/getcourses/publishedchapters/${id}`
+          `${import.meta.env.SERVER_URL}/api/v1/getcourses/publishedchapters/${id}`
         );
 
         const publishedChapters = await response.json();
@@ -57,7 +57,7 @@ CourseCardProps) => {
 
        
         const purchase_response = await fetch(
-          `http://localhost:3001/api/v1/getpurchase/coursePurchase?courseId=${id}`
+          `${import.meta.env.SERVER_URL}/api/v1/getpurchase/coursePurchase?courseId=${id}`
         );
 
         const purchase = await purchase_response.json();

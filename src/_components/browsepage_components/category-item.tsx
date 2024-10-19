@@ -44,7 +44,7 @@ function CategoryItem({ label, value, icon: Icon }: CategoryItemProps) {
 
     try {
       const courses = await fetch(
-        `http://localhost:3001/api/v1/getCourses?categoryTitle=${label}`
+        `${import.meta.env.SERVER_URL}/api/v1/getCourses?categoryTitle=${label}`
       );
       const Courses = await courses.json();
 

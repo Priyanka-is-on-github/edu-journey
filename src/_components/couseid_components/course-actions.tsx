@@ -45,7 +45,7 @@ const CourseActions =({disabled,ispublished, setNewCourseField}:CourseActionProp
            if(ispublished)
             {
                 ispublished=false;
-                await fetch(`http://localhost:3001/api/v1/courses?Id=${params.id}&ispublish=${ispublished}`,{
+                await fetch(`${import.meta.env.SERVER_URL}/api/v1/courses?Id=${params.id}&ispublish=${ispublished}`,{
                     method:'PUT',
                     headers:{
                         "Content-type":"application/json"
@@ -61,7 +61,7 @@ const CourseActions =({disabled,ispublished, setNewCourseField}:CourseActionProp
             }
             else{
                ispublished=true;
-                await fetch(`http://localhost:3001/api/v1/courses?Id=${params.id}&ispublish=${ispublished}`,{
+                await fetch(`${import.meta.env.SERVER_URL}/api/v1/courses?Id=${params.id}&ispublish=${ispublished}`,{
                     method:'PUT',
                     headers:{
                         "Content-type":"application/json"

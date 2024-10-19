@@ -64,7 +64,7 @@ const PriceForm = ({
     
     try {
       const response = await fetch(
-        `http://localhost:3001/api/v1/courses/${params.id}`, 
+        `${import.meta.env.SERVER_URL}/api/v1/courses/${params.id}`, 
         {
           method: "POST",
           headers: {

@@ -63,7 +63,7 @@ const VideoForm = ({
     setIsUpdating(true)
      try {
       const response = await fetch(
-       `http://localhost:3001/api/v1/videoupload/chapterVideo/${params.chapterid}`, 
+       `${import.meta.env.SERVER_URL}/api/v1/videoupload/chapterVideo/${params.chapterid}`, 
         {
           method: "POST",
           
@@ -96,7 +96,7 @@ useEffect(()=>{
 
   (async()=>{
     try {
-      const response = await fetch(`http://localhost:3001/api/v1/videoupload/chapterVideo/${params.chapterid}`)
+      const response = await fetch(`${import.meta.env.SERVER_URL}/api/v1/videoupload/chapterVideo/${params.chapterid}`)
       const updatedvideo = await response.json();
       console.log('upv=',updatedvideo)
 

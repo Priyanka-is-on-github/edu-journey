@@ -39,7 +39,7 @@ const ChapterIdPage = () => {
     (async()=>{
 
       try {
-        const response = await fetch( `http://localhost:3001/api/v1/courses/chapterdetail/${params.chapterid}`)
+        const response = await fetch( `${import.meta.env.SERVER_URL}/api/v1/courses/chapterdetail/${params.chapterid}`)
       const chapterDetail = await response.json();
 
     

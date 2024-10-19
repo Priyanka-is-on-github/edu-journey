@@ -1,0 +1,37 @@
+# Query: http://localhost:3001
+# Flags: CaseSensitive
+# ContextLines: 1
+
+7 results - 4 files
+
+edu-journey\src\_components\couseid_components\course-actions.tsx:
+  88              setIsLoading(true);
+  89:              await fetch(`${import.meta.env.SERVER_URL}/api/v1/courses/${params.id}`,{
+  90                  method: 'DELETE'
+
+edu-journey\src\pages\teacher_folder\courses\courseid.tsx:
+  50          const response = await fetch(
+  51:           `${import.meta.env.SERVER_URL}/api/v1/courses/${params.id}`
+  52          );
+
+  58          const categoryResponse = await fetch(
+  59:           `${import.meta.env.SERVER_URL}/api/v1/category`
+  60          );
+
+  76        try {
+  77:         const response = await fetch( `${import.meta.env.SERVER_URL}/api/v1/fileupload/courseAttachment?courseId=${params.id}`,
+  78           )
+
+  93  try {
+  94:   const response = await fetch(`${import.meta.env.SERVER_URL}/api/v1/courses/chapter/${params.id}`)
+  95    const updatedChapter = await response.json();
+
+edu-journey\src\pages\teacher_folder\courses\create.tsx:
+  46      try {
+  47:       const response = await fetch(`${import.meta.env.SERVER_URL}/api/v1/courses`, {  
+  48          method: "POST",
+
+edu-journey\src\pages\teacher_folder\courses\index.tsx:
+  16      const fetchData = async () => {
+  17:       const result = await fetch(`${import.meta.env.SERVER_URL}/api/v1/courses`);
+  18        const courses = await result.json();

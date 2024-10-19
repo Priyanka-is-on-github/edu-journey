@@ -32,14 +32,15 @@ const [purchasedCourses, setPurchasedCourses] = useState<
 >([])
 
   useEffect(() => {
-    if (!isSignedIn) {
-      return navigate("/search");
-    }
+    // if (!isSignedIn) {
+    //   return navigate("/search");
+    // }
+
     (
       async () => {
       try {
         const purchasedCourses = await fetch(
-          "http://localhost:3001/api/v1/getpurchase/getpurchased",
+          `${import.meta.env.SERVER_URL}/api/v1/getpurchase/getpurchased`,
           {
             method: "GET",
             headers: {
