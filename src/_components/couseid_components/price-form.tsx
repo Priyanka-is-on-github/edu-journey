@@ -64,7 +64,7 @@ const PriceForm = ({
     
     try {
       const response = await fetch(
-        `${import.meta.env.SERVER_URL}/api/v1/courses/${params.id}`, 
+        `${import.meta.env.VITE_SERVER_URL}/api/v1/courses/${params.id}`, 
         {
           method: "POST",
           headers: {

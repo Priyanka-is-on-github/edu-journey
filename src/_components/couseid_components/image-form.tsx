@@ -51,7 +51,7 @@ formData.append(`file`, values.file[0]);
 
      try {
       const response = await fetch(
-        `${import.meta.env.SERVER_URL}/api/v1/fileupload/courseImage?courseId=${params.id}`,
+        `${import.meta.env.VITE_SERVER_URL}/api/v1/fileupload/courseImage?courseId=${params.id}`,
         {
           method: "POST",
          

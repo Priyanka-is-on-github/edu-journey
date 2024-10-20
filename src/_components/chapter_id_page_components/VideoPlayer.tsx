@@ -38,7 +38,7 @@ function VideoPlayer({
     try {
       if (completeOnEnd) {
       await fetch(
-          `${import.meta.env.SERVER_URL}/api/v1/getprogress/courseprogress?chapterId=${chapterId}`,
+          `${import.meta.env.VITE_SERVER_URL}/api/v1/getprogress/courseprogress?chapterId=${chapterId}`,
           {
             method: "PUT",
             headers: {
@@ -55,7 +55,7 @@ function VideoPlayer({
 
         if (completeOnEnd && nextChapterId) {
           const progressPercentage = await fetch(
-            `${import.meta.env.SERVER_URL}/api/v1/getprogress/progressPercentage?courseId=${courseId}&userId=${userid}`
+            `${import.meta.env.VITE_SERVER_URL}/api/v1/getprogress/progressPercentage?courseId=${courseId}&userId=${userid}`
           );
 
           const progressPercentageCount = await progressPercentage.json();

@@ -69,7 +69,7 @@ const ChaptersForm = ( {chapters, setChapters, count }: ChapterFormProps) => {
   
     try {
       const response = await fetch(
-        `${import.meta.env.SERVER_URL}/api/v1/courses/chapter/${params.id}`, 
+        `${import.meta.env.VITE_SERVER_URL}/api/v1/courses/chapter/${params.id}`, 
         {
           method: "POST",
           headers: {
@@ -98,7 +98,7 @@ const ChaptersForm = ( {chapters, setChapters, count }: ChapterFormProps) => {
   const onReorder = async (updateData:{id:string; position:number}[])=>{
     try {
       setIsUpdating(true)
-        await fetch('${import.meta.env.SERVER_URL}/api/v1/courses/chapters/reorder',{
+        await fetch(`${import.meta.env.VITE_SERVER_URL}/api/v1/courses/chapters/reorder`,{
         method:'PUT',
         headers:{
           "Content-type" : "application/json",

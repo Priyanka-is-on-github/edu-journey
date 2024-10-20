@@ -54,7 +54,7 @@ function CourseSidebar({
     (async () => {
       try {
         const purchase_response = await fetch( 
-          `${import.meta.env.SERVER_URL}/api/v1/getpurchase/coursePurchase?courseId=${id}`
+          `${import.meta.env.VITE_SERVER_URL}/api/v1/getpurchase/coursePurchase?courseId=${id}`
         );
 
         const purchase = await purchase_response.json();

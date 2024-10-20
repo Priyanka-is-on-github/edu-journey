@@ -24,7 +24,7 @@ const Analytics = () => {
     (async()=>{
 
       try {
-        const analytics = await fetch(`${import.meta.env.SERVER_URL}/api/v1/getanalytics/sales?teacherid=${user?.id}`)
+        const analytics = await fetch(`${import.meta.env.VITE_SERVER_URL}/api/v1/getanalytics/sales?teacherid=${user?.id}`)
         const response = await analytics.json();
    
        setTotalRevenue(response.total[0].total_revenue);

@@ -103,7 +103,7 @@ function PublishedChapterIdPage() {
     
       try {
         const response1 = await fetch(
-          `${import.meta.env.SERVER_URL}/api/v1/getcourses/chapter/${chapterId}`
+          `${import.meta.env.VITE_SERVER_URL}/api/v1/getcourses/chapter/${chapterId}`
         );
 
         const chapter = await response1.json();
@@ -111,28 +111,28 @@ function PublishedChapterIdPage() {
         setChapter(chapter);
 
         const response2 = await fetch(
-          `${import.meta.env.SERVER_URL}/api/v1/fileupload/courseAttachment?courseId=${id}`
+          `${import.meta.env.VITE_SERVER_URL}/api/v1/fileupload/courseAttachment?courseId=${id}`
         );
 
         const attachmentResponse = await response2.json();
         setAttachment(attachmentResponse);
 
         const response3 = await fetch(
-          `${import.meta.env.SERVER_URL}/api/v1/videoupload/chapterVideo/${chapterId}`
+          `${import.meta.env.VITE_SERVER_URL}/api/v1/videoupload/chapterVideo/${chapterId}`
         );
 
         const playbackid = await response3.json();
         setPlaybackId(playbackid.playbackId);
 
         const response4 = await fetch(
-          `${import.meta.env.SERVER_URL}/api/v1/courses/${id}`
+          `${import.meta.env.VITE_SERVER_URL}/api/v1/courses/${id}`
         );
 
         const course = await response4.json();
         setCourse(course);
 
         const purchase_response = await fetch(
-          `${import.meta.env.SERVER_URL}/api/v1/getpurchase/coursePurchase?courseId=${id}`
+          `${import.meta.env.VITE_SERVER_URL}/api/v1/getpurchase/coursePurchase?courseId=${id}`
         );
 
         const purchase = await purchase_response.json();
@@ -140,7 +140,7 @@ function PublishedChapterIdPage() {
         setPurchase(purchase);
 
         const nextChapterId = await fetch(
-          `${import.meta.env.SERVER_URL}/api/v1/courses/next-chapter/${chapterId}/${id}`
+          `${import.meta.env.VITE_SERVER_URL}/api/v1/courses/next-chapter/${chapterId}/${id}`
         );
         const nextChapterIdjson = await nextChapterId.json();
 
@@ -149,7 +149,7 @@ function PublishedChapterIdPage() {
         setNextchapterid(nextChapterIdjson);
 
         const IscompletedResponse = await fetch(
-          `${import.meta.env.SERVER_URL}/api/v1/getprogress/chapterCompleted?chapterId=${chapterId}&userId=${user?.id}`
+          `${import.meta.env.VITE_SERVER_URL}/api/v1/getprogress/chapterCompleted?chapterId=${chapterId}&userId=${user?.id}`
         );
 
         const chapterCompleted = await IscompletedResponse.json();

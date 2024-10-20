@@ -33,7 +33,7 @@ const ChapterActions = ({
       if (ispublished) {
         ispublished = false;
         await fetch(
-          `${import.meta.env.SERVER_URL}/api/v1/courses/chapterdetail?chapterId=${params.chapterid}&ispublish=${ispublished}&courseId=${params.id}`,
+          `${import.meta.env.VITE_SERVER_URL}/api/v1/courses/chapterdetail?chapterId=${params.chapterid}&ispublish=${ispublished}&courseId=${params.id}`,
           {
             method: "PUT",
             headers: {
@@ -49,7 +49,7 @@ const ChapterActions = ({
       } else {
         ispublished = true;
         await fetch(
-          `${import.meta.env.SERVER_URL}/api/v1/courses/chapterdetail?chapterId=${params.chapterid}&ispublish=${ispublished}&courseId=${params.id}`,
+          `${import.meta.env.VITE_SERVER_URL}/api/v1/courses/chapterdetail?chapterId=${params.chapterid}&ispublish=${ispublished}&courseId=${params.id}`,
           {
             method: "PUT",
             headers: {
@@ -74,7 +74,7 @@ const ChapterActions = ({
     try {
       setIsLoading(true);
       await fetch(
-        `${import.meta.env.SERVER_URL}/api/v1/courses/chapterdelete/${params.chapterid}`,
+        `${import.meta.env.VITE_SERVER_URL}/api/v1/courses/chapterdelete/${params.chapterid}`,
         {
           method: "DELETE",
           headers: {

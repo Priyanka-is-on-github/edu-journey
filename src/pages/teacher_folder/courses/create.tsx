@@ -44,7 +44,7 @@ const CreatePage = () => {
   
     
     try {
-      const response = await fetch(`${import.meta.env.SERVER_URL}/api/v1/courses`, {  
+      const response = await fetch(`${import.meta.env.VITE_SERVER_URL}/api/v1/courses`, {  
         method: "POST",
         headers: {
           "Content-type": "application/json",

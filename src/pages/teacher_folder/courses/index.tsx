@@ -14,7 +14,7 @@ const CoursesPage: React.FC = () => {
   console.log(loading)
   useEffect(() => {
     const fetchData = async () => {
-      const result = await fetch(`${import.meta.env.SERVER_URL}/api/v1/courses`);
+      const result = await fetch(`${import.meta.env.VITE_SERVER_URL}/api/v1/courses`);
       const courses = await result.json();
       setData(courses);
       setLoading(false);

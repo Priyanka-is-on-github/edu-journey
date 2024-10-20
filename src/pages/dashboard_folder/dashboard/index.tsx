@@ -40,7 +40,7 @@ const [purchasedCourses, setPurchasedCourses] = useState<
       async () => {
       try {
         const purchasedCourses = await fetch(
-          `${import.meta.env.SERVER_URL}/api/v1/getpurchase/getpurchased`,
+          `${import.meta.env.VITE_SERVER_URL}/api/v1/getpurchase/getpurchased`,
           {
             method: "GET",
             headers: {

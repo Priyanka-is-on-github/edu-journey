@@ -49,7 +49,7 @@ if(purchased){
     try {
       (async()=>{
         const chapterCompleted = await fetch( 
-          `${import.meta.env.SERVER_URL}/api/v1/getprogress/chapterCompleted?chapterId=${chapterId}&userId=${user?.id}`
+          `${import.meta.env.VITE_SERVER_URL}/api/v1/getprogress/chapterCompleted?chapterId=${chapterId}&userId=${user?.id}`
         );
         const completeChapter = await chapterCompleted.json();
        

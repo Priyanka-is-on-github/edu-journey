@@ -63,7 +63,7 @@ const ChapterAccessForm = ({
 
   try {
       const response = await fetch(
-        `${import.meta.env.SERVER_URL}/api/v1/courses/chapterdetail/${params.chapterid}`, 
+        `${import.meta.env.VITE_SERVER_URL}/api/v1/courses/chapterdetail/${params.chapterid}`, 
         {
           method: "POST",
           headers: {
