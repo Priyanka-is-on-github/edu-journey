@@ -4,7 +4,7 @@ import DashboardLayout from "@/Layout/layout";
 import { useUser } from "@clerk/clerk-react";
 import { CheckCircle, Clock } from "lucide-react";
 import { useEffect, useState } from "react";
-import { useNavigate } from "react-router-dom";
+// import { useNavigate } from "react-router-dom";
 
 const Dashboard = () => {
   // const navigate = useNavigate();
