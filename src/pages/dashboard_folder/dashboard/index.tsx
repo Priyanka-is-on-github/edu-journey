@@ -4,11 +4,11 @@ import DashboardLayout from "@/Layout/layout";
 import { useUser } from "@clerk/clerk-react";
 import { CheckCircle, Clock } from "lucide-react";
 import { useEffect, useState } from "react";
-// import { useNavigate } from "react-router-dom";
+ import { useNavigate } from "react-router-dom";
 
 const Dashboard = () => {
-  // const navigate = useNavigate();
-  const {  user} = useUser();//isSignedIn,
+   const navigate = useNavigate();
+  const { isSignedIn, user} = useUser();
 
   const [CoursesInProgress, setCoursesInProgress] = useState(0);
   const [ completedCourses, setCompletedCourses] = useState(0)
@@ -32,9 +32,9 @@ const [purchasedCourses, setPurchasedCourses] = useState<
 >([])
 
   useEffect(() => {
-    // if (!isSignedIn) {
-    //   return navigate("/search");
-    // }
+    if (!isSignedIn) {
+      return navigate("/search");
+    }
 
     (
       async () => {
