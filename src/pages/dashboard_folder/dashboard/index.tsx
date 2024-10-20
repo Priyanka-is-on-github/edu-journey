@@ -7,8 +7,8 @@ import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 
 const Dashboard = () => {
-  const navigate = useNavigate();
-  const { isSignedIn, user} = useUser();
+  // const navigate = useNavigate();
+  const {  user} = useUser();//isSignedIn,
 
   const [CoursesInProgress, setCoursesInProgress] = useState(0);
   const [ completedCourses, setCompletedCourses] = useState(0)
