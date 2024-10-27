@@ -1,6 +1,5 @@
 import DashboardLayout from "@/Layout/layout";
 import Categories from "@/_components/browsepage_components/categories";
-import Shimmer from "@/components/Shimmer";
 import CoursesList from "@/components/course-list";
 import SearchInput from "@/components/search-input";
 import { useEffect, useState } from "react";
@@ -69,7 +68,7 @@ const SearchPage = () => {
     <DashboardLayout>
       <setCoursesContext.Provider value={{setCourses}}>
       <div className="px-6 pt-6 md:hidden md:mb-0 block">
-        <SearchInput  items={courses}/>
+        <SearchInput />
       </div>
       <div className="p-6 space-y-4">
         <Categories items={categories} />

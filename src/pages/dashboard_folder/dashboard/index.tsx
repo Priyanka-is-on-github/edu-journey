@@ -12,6 +12,7 @@ const Dashboard = () => {
 
   const [CoursesInProgress, setCoursesInProgress] = useState(0);
   const [ completedCourses, setCompletedCourses] = useState(0)
+  const [loading, setLoading] = useState(true);
 
 const [purchasedCourses, setPurchasedCourses] = useState<
 {
@@ -38,6 +39,7 @@ const [purchasedCourses, setPurchasedCourses] = useState<
 
     (
       async () => {
+        setLoading(true);
       try {
         const purchasedCourses = await fetch(
           `${import.meta.env.VITE_SERVER_URL}/api/v1/getpurchase/getpurchased`,
@@ -55,6 +57,7 @@ const [purchasedCourses, setPurchasedCourses] = useState<
         setCoursesInProgress(Courses.progress)
       console.log('course=', Courses)
        setPurchasedCourses(Courses.courses)
+       setLoading(false);
        
       } catch (error) {
         console.log(error);
@@ -94,7 +97,7 @@ const [purchasedCourses, setPurchasedCourses] = useState<
         </div>
 
 
-        <CoursesList items={purchasedCourses}/>
+        <CoursesList items={purchasedCourses} loading={loading}/>
 
       </div>
     </DashboardLayout>

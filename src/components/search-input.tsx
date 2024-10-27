@@ -7,28 +7,28 @@ import qs from 'query-string';
 
 
 
-interface Course {
-    categoryid: string;
-    createdat: string;
-    description: string;
-    id: string;
-    imageurl: string;
-    ispublished: boolean;
-    price: number;
-    title: string;
-    updatedat: string;
-    userid: null | string;
-    progress_percentage: number;
+// interface Course {
+//     categoryid: string;
+//     createdat: string;
+//     description: string;
+//     id: string;
+//     imageurl: string;
+//     ispublished: boolean;
+//     price: number;
+//     title: string;
+//     updatedat: string;
+//     userid: null | string;
+//     progress_percentage: number;
  
 
 
     
-  };
+//   };
 
-  interface CourseProps{
-    items:Course[];
-  }
-function SearchInput( {items}: CourseProps) {
+  // interface CourseProps{
+  //   items:Course[];
+  // }
+function SearchInput( ) {
     const [searchCourse, setSearchCourse] = useState("");
     const [debouncedValue] = useDebounce(searchCourse);
 
@@ -40,17 +40,17 @@ function SearchInput( {items}: CourseProps) {
 
     const currentCategoryId = params.get("categoryId");
 
-    const SearchCourses =(text: string)=>{
+    // const SearchCourses =(text: string)=>{
 
-        console.log('text=', text)
+    //     console.log('text=', text)
 
-     const filterCourse =   items.filter((item)=>{
+    //  const filterCourse =   items.filter((item)=>{
 
-            return item?.title?.toLowerCase()?.includes(text?.toLowerCase())
-        })
+    //         return item?.title?.toLowerCase()?.includes(text?.toLowerCase())
+    //     })
 
-        console.log(filterCourse)
-    }
+    //     console.log(filterCourse)
+    // }
 
 
     useEffect(()=>{
