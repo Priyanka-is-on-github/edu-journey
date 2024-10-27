@@ -71,7 +71,7 @@ CourseCardProps) => {
 
   return (
     <Link to={`/courses/${id}/chapters/${publishedChapter[0]?.id}`}>
-      <div className="group  transition overflow-hidden borser rounded-lg p-3 h-full hover:shadow-lg ">
+      <div className="group  transition overflow-hidden border rounded-lg p-3 h-full hover:shadow-lg ">
         <div className="relative w-full  aspect-video rounded-md overflow-hidden">
           <img className="object-cover" alt={title} src={imageUrl} />
         </div>
