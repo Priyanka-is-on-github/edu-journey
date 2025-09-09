@@ -45,9 +45,7 @@ const ChapterTitleForm = ({ title, setChapterDetail }: ChapterTitleFormProps) =>
 
   const onSubmit = async (values: z.infer<typeof formSchema>) => {
    
-   
-
-    const request = {  
+   const request = {  
     
     title: values.title,
     description: null,

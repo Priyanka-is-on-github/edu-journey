@@ -1,7 +1,6 @@
-
-
 import { BarChart, Compass, Layout, List } from "lucide-react";
 import { Link, useLocation } from "react-router-dom";
+import { toast } from "react-hot-toast"; // or your toast library
 
 const guestRoutes = [
   {
@@ -9,7 +8,6 @@ const guestRoutes = [
     icon: <Layout />,
     link: "/",
   },
-
   {
     icon: <Compass />,
     label: "Browse",
@@ -23,7 +21,6 @@ const teacherRoutes = [
     label: "Courses",
     link: "/teacher/courses",
   },
-
   {
     icon: <BarChart />,
     label: "Analytics",
@@ -32,24 +29,33 @@ const teacherRoutes = [
 ];
 
 export const SidebarRoutes = () => {
-  // const routes = guestRoutes;
   const { pathname } = useLocation();
-  console.log("pathname=", pathname);
+  
+  // Check if user is authenticated (you'll need to implement this based on your auth system)
+  const isAuthenticated = false; 
+  const isTeacher = false; 
+
+  const handleDashboardClick = (e: React.MouseEvent, route: typeof guestRoutes[0]) => {
+    if (route.label === "Dashboard" && !isAuthenticated) {
+      e.preventDefault(); // Prevent navigation
+      toast.error("Please sign in first to access the Dashboard");
+    }
+  };
+
   const routes =
     pathname === "/" || pathname === "/search" ? guestRoutes : teacherRoutes;
-
-  // const isActiveRoute = (routeLink) => {
-  //   return pathname.startsWith(routeLink);
-  // };
 
   return (
     <>
       <div className="flex flex-col w-full ">
         {routes.map((route) => (
-          <Link key={route.label} to={route.link}>
+          <Link 
+            key={route.label} 
+            to={route.link}
+            onClick={(e) => handleDashboardClick(e, route)}
+          >
             <div
-              key={route.label}
-              className={`flex item-center gap-x-2 text-slate-500 text-smfont-[500] pl-6 transition-all 
+              className={`flex item-center gap-x-2 text-slate-500 text-sm font-[500] pl-6 transition-all 
                hover:text-slate-600 hover:bg-slate-300/20  ${
                  pathname === route.link
                    ? "text-sky-700 bg-sky-200/20 hover:bg-sky-200/20 hover:text-sky-700 border-r-4  border-sky-700"

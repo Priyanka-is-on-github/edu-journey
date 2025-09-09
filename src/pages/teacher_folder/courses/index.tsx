@@ -11,7 +11,7 @@ const CoursesPage: React.FC = () => {
   const [data, setData] = useState<any[]>([]);
   const [loading, setLoading] = useState<boolean>(true);
 
-  console.log(loading)
+
   useEffect(() => {
     const fetchData = async () => {
       const result = await fetch(`${import.meta.env.VITE_SERVER_URL}/api/v1/courses`);

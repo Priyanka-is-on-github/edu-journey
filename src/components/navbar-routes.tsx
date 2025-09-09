@@ -21,7 +21,7 @@ const isPlayerPage = pathname?.includes('/courses')
   return (
     <>
    {isSearchPage && (<div className="hidden md:block">
-    <SearchInput/>
+    {/* <SearchInput/> */}
     </div>)}
 
 
