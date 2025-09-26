@@ -9,7 +9,7 @@ import { columns } from '@/_components/coursepage_components/columns';
 
 const CoursesPage: React.FC = () => {
   const [data, setData] = useState<any[]>([]);
-  const [loading, setLoading] = useState<boolean>(true);
+
 
 
   useEffect(() => {
@@ -17,7 +17,7 @@ const CoursesPage: React.FC = () => {
       const result = await fetch(`${import.meta.env.VITE_SERVER_URL}/api/v1/courses`);
       const courses = await result.json();
       setData(courses);
-      setLoading(false);
+    
     };
 
     fetchData();
