@@ -35,15 +35,11 @@ function CourseSidebar({
   
   const { chapterId, id } = useParams();
   const { user} = useUser();
+ 
 
   const [purchase, setPurchase] = useState(false);
  
   
-  // const {userId} = auth();
-  // if(!userId)
-  // {
-  //     Navigate('/')
-  // }
  
   useEffect(() => {
     if (!user?.id) return; // Wait until user is available

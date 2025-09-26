@@ -48,8 +48,9 @@ function CourseLayout({ children }: { children: React.ReactNode }) {
     })();
   }, []);
 
+
   useEffect(() => {
-    if (!user?.id) return; // Wait until user is available
+    // if (!user?.id) return; // Wait until user is available
 
     (async () => {
       try {

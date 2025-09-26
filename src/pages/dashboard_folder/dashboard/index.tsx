@@ -4,6 +4,7 @@ import DashboardLayout from "@/Layout/layout";
 import { useUser } from "@clerk/clerk-react";
 import { CheckCircle, Clock } from "lucide-react";
 import { useEffect, useState } from "react";
+import toast from "react-hot-toast";
  import { useNavigate } from "react-router-dom";
 
 const Dashboard = () => {
@@ -34,7 +35,9 @@ const [purchasedCourses, setPurchasedCourses] = useState<
 
   useEffect(() => {
     if (!isSignedIn) {
-      return navigate("/search");
+      toast.error("Please sign in to access your purchased courses");
+    navigate("/search");
+    return;
     }
 
     (
@@ -55,7 +58,7 @@ const [purchasedCourses, setPurchasedCourses] = useState<
         const Courses = await purchasedCourses.json();
         setCompletedCourses(Courses.completedCount)
         setCoursesInProgress(Courses.progress)
-      console.log('course=', Courses)
+      
        setPurchasedCourses(Courses.courses)
        setLoading(false);
        

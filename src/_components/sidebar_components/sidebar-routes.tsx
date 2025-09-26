@@ -31,16 +31,7 @@ const teacherRoutes = [
 export const SidebarRoutes = () => {
   const { pathname } = useLocation();
   
-  // Check if user is authenticated (you'll need to implement this based on your auth system)
-  const isAuthenticated = false; 
-  const isTeacher = false; 
-
-  const handleDashboardClick = (e: React.MouseEvent, route: typeof guestRoutes[0]) => {
-    if (route.label === "Dashboard" && !isAuthenticated) {
-      e.preventDefault(); // Prevent navigation
-      toast.error("Please sign in first to access the Dashboard");
-    }
-  };
+ 
 
   const routes =
     pathname === "/" || pathname === "/search" ? guestRoutes : teacherRoutes;
@@ -52,7 +43,7 @@ export const SidebarRoutes = () => {
           <Link 
             key={route.label} 
             to={route.link}
-            onClick={(e) => handleDashboardClick(e, route)}
+          
           >
             <div
               className={`flex item-center gap-x-2 text-slate-500 text-sm font-[500] pl-6 transition-all 

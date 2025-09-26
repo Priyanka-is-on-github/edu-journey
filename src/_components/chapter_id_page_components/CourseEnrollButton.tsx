@@ -44,25 +44,14 @@ function CourseEnrollButton({price, courseId}:CourseEnrollButtonProps) {
               console.log("stripe generated url",data.url)
                 window.location.assign(data.url); 
               } else {
-                toast.error(data.message || 'Something went wrong'); 
+                toast.error(data.message || 'Please first signin before enrolement'); 
               }
 
-    //           const queryParams = new URLSearchParams(location.search);
-    // const success = queryParams.get('success');
-    // const courseId = queryParams.get('courseId');
-    // const chapterId = queryParams.get('chapterId');
-
-    // if (success) {
-    //   // Payment was successful, navigate to the desired page
-    //   toast.success('Payment successful!');
-    //   if (courseId && chapterId) {
-    //     navigate(`/courses/${courseId}/chapters/${chapterId}`);
-    //   }
-    // }
+   
 
 
         } catch (error) {
-            toast.error('Somethig went wrong');
+            toast.error('Please first signin before enrolement');
         }finally{
             setIsLoading(false)
         }
